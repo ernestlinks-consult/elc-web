@@ -1,26 +1,206 @@
 @import "tailwindcss";
+/* In the theme layer so the next/font --font-sans on <html> always wins. */
+@import "../styles/tokens.css" layer(theme);
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Maps Tailwind's namespaces onto the variables in styles/tokens.css.
+ * `reference` stops Tailwind redefining them; `inline` makes utilities output
+ * var(--token) directly. Clearing each namespace removes Tailwind's defaults,
+ * so only design-system values are available (bg-blue-500, text-sm and md: do
+ * not exist here).
+ */
+@theme inline reference {
+  --color-*: initial;
+  --color-blue: var(--color-blue);
+  --color-blue-deep: var(--color-blue-deep);
+  --color-blue-mid: var(--color-blue-mid);
+  --color-blue-tint: var(--color-blue-tint);
+  --color-blue-tint-strong: var(--color-blue-tint-strong);
+  --color-line: var(--color-line);
+  --color-line-strong: var(--color-line-strong);
+  --color-line-on-deep: var(--color-line-on-deep);
+  --color-surface: var(--color-surface);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-on-blue: var(--color-on-blue);
+  --color-on-blue-muted: var(--color-on-blue-muted);
+  --color-red: var(--color-red);
+  --color-red-text: var(--color-red-text);
+  --color-red-tint: var(--color-red-tint);
+  --color-success: var(--color-success);
+  --color-success-tint: var(--color-success-tint);
+  --color-warning: var(--color-warning);
+  --color-warning-tint: var(--color-warning-tint);
+  --color-neutral-tint: var(--color-neutral-tint);
+
+  --font-*: initial;
+  --font-sans: var(--font-sans);
+
+  --text-*: initial;
+
+  /* Named space-N because p-5 keeps Tailwind's meaning (20px, not space-5). */
+  --spacing-space-1: var(--space-1);
+  --spacing-space-2: var(--space-2);
+  --spacing-space-3: var(--space-3);
+  --spacing-space-4: var(--space-4);
+  --spacing-space-5: var(--space-5);
+  --spacing-space-6: var(--space-6);
+  --spacing-space-7: var(--space-7);
+  --spacing-space-8: var(--space-8);
+
+  --radius-*: initial;
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-*: initial;
+  --shadow-float: var(--shadow-float);
+  --shadow-menu: var(--shadow-menu);
+  --shadow-bar: var(--shadow-bar);
+  --shadow-focus-ring: var(--focus-ring);
+
+  --breakpoint-*: initial;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/*
+ * The one hard breakpoint: phone: is 820px and up, max-phone: is below 820px.
+ * Media queries cannot read CSS variables, so 820px must match --bp-phone.
+ * These are variants, not a --breakpoint-phone theme value, because a theme
+ * breakpoint would make `container` set max-width: 820px above 820px.
+ */
+@custom-variant phone (@media (width >= 820px));
+@custom-variant max-phone (@media (width < 820px));
+
+@utility container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Fluid sizes run from the phone value to the desktop token. H2 stops at 46px, per the Design Spec. */
+@utility text-display {
+  font-size: clamp(40px, 5.6vw, var(--text-display-size));
+  line-height: var(--text-display-line);
+  font-weight: var(--text-display-weight);
+  letter-spacing: var(--text-display-tracking);
+}
+
+@utility text-h1 {
+  font-size: clamp(36px, 4.6vw, var(--text-h1-size));
+  line-height: var(--text-h1-line);
+  font-weight: var(--text-h1-weight);
+  letter-spacing: var(--text-h1-tracking);
+}
+
+@utility text-h2 {
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: var(--text-h2-line);
+  font-weight: var(--text-h2-weight);
+}
+
+@utility text-h3 {
+  font-size: clamp(22px, 2.3vw, var(--text-h3-size));
+  line-height: var(--text-h3-line);
+  font-weight: var(--text-h3-weight);
+}
+
+@utility text-h4 {
+  font-size: clamp(18px, 1.7vw, var(--text-h4-size));
+  line-height: var(--text-h4-line);
+  font-weight: var(--text-h4-weight);
+}
+
+@utility text-lead {
+  font-size: var(--text-lead-size);
+  line-height: var(--text-lead-line);
+  font-weight: var(--text-lead-weight);
+}
+
+@utility text-body {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line);
+  font-weight: var(--text-body-weight);
+}
+
+@utility text-body-sm {
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+  font-weight: var(--text-body-sm-weight);
+}
+
+@utility text-label {
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line);
+  font-weight: var(--text-label-weight);
+}
+
+@utility text-caption {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line);
+  font-weight: var(--text-caption-weight);
+}
+
+@utility text-eyebrow {
+  font-size: var(--text-eyebrow-size);
+  line-height: var(--text-eyebrow-line);
+  font-weight: var(--text-eyebrow-weight);
+  letter-spacing: var(--text-eyebrow-tracking);
+  text-transform: var(--text-eyebrow-transform);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-line);
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  /*
+   * red-text is the only red allowed for words; red itself is for the star and
+   * for fills with white text. Red text or icons must never sit on blue.
+   */
+  a {
+    color: var(--color-blue);
+    text-decoration: underline;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*
+ * Unlayered so shadow-* utilities cannot remove the ring. box-shadow already
+ * follows each element's border-radius. No other rule may remove outlines.
+ */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Forced-colors mode drops box-shadow, so the ring needs a real outline there. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

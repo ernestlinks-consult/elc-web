@@ -32,7 +32,7 @@
   --text-body-sm-size: 15px; --text-body-sm-line: 1.55; --text-body-sm-weight: 400;
   --text-label-size: 15px; --text-label-line: 1.35; --text-label-weight: 700;
   --text-caption-size: 13px; --text-caption-line: 1.4; --text-caption-weight: 500;
-  --text-eyebrow-size: 14px; --text-eyebrow-line: 1.4; --text-eyebrow-weight: 800; --text-eyebrow-tracking: 0.08em;
+  --text-eyebrow-size: 14px; --text-eyebrow-line: 1.4; --text-eyebrow-weight: 800; --text-eyebrow-tracking: 0.08em; --text-eyebrow-transform: uppercase;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;

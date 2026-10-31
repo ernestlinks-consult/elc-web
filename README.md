@@ -24,6 +24,10 @@ npx playwright install chromium   # first time only
 npm run test:e2e                  # end-to-end and accessibility tests
 ```
 
+## Design tokens
+
+`styles/tokens.css` is generated from `design-system/tokens.json`. Edit the JSON, then run `npm run tokens`; never edit the CSS by hand. The preview at http://localhost:3000/dev/tokens is available in development only.
+
 ## Specs
 
 The specification lives in [docs/](docs/). Start with [CLAUDE.md](CLAUDE.md), which lists each document and the rules the code must follow. Design tokens and components are in [design-system/](design-system/), and page mockups are in [mockups/canvas/](mockups/canvas/).
