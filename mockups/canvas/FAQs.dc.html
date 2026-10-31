@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Frequently asked questions</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+.elc{container-type:inline-size}
+:where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+</style>
+</helmet>
+<div class="elc" style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #FFFFFF; width: 100%">
+
+<dc-import name="Header" active="resources" hint-size="100%,130px"></dc-import>
+
+<section style="background: #F5F6FF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 48px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
+<p style="margin: 0; font-size: 14px; color: #4A4A68"><a href="Main.dc.html">Home</a> / <a href="Resources.dc.html">Blog &amp; Resources</a> / FAQs</p>
+<h1 style="margin: 0; font-size: clamp(36px, 4.6cqi, 58px); line-height: 1.04; font-weight: 900">Questions people ask us</h1>
+<label style="width: 100%; max-width: 620px; display: flex; flex-direction: column; gap: 8px; font-weight: 700; font-size: 15px">Search the FAQs
+<span style="display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1px solid #8A8FC7; border-radius: 14px; padding: 0 16px"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A4A68" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><input type="search" placeholder="e.g. express passport, refunds, IELTS" style="flex: 1; border: 0; outline: none; font-family: inherit; font-size: 16px; padding: 14px 0; background: transparent"></span>
+</label>
+</div>
+</section>
+
+<section style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 48px 24px 72px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+<nav aria-label="FAQ topics" style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="font-family: inherit; text-align: left; font-size: 16px; font-weight: {{c.weight}}; padding: 14px 16px; border-radius: 14px; border: 0; cursor: pointer; background: {{c.bg}}; color: {{c.fg}}; display: flex; justify-content: space-between">{{c.name}}<span style="opacity: 0.7">{{c.n}}</span></button>
+</sc-for>
+</nav>
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+<h2 style="margin: 0 0 8px; font-size: 26px; font-weight: 900">{{title}}</h2>
+<div style="border-top: 1px solid #DADDF5">
+<sc-for list="{{faqs}}" as="f" hint-placeholder-count="4">
+<div style="border-bottom: 1px solid #DADDF5">
+<button onClick="{{f.toggle}}" aria-expanded="{{f.open}}" style="width: 100%; background: none; border: 0; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: inherit; font-size: 19px; font-weight: 700; color: #0B0B1F; text-align: left; cursor: pointer">{{f.q}}<span aria-hidden="true" style="flex: none; width: 32px; height: 32px; border-radius: 16px; background: {{f.signBg}}; color: {{f.signFg}}; display: flex; align-items: center; justify-content: center; font-size: 20px">{{f.sign}}</span></button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{false}}"><p style="margin: 0 0 22px; font-size: 17px; line-height: 1.65; color: #4A4A68; max-width: 760px">{{f.a}}</p></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="margin-top: 40px; background: #0505C6; color: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 20px">Still have a question?</strong><span style="color: #D9DCFF">Ask it on our weekday TikTok LIVE or message us.</span></div>
+<a href="https://wa.me/233537783166?text=HELLO" style="background: #FFFFFF; color: #0505C6; text-decoration: none; font-weight: 800; padding: 14px 22px; border-radius: 999px">WhatsApp us</a>
+</div>
+</div>
+</div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,820px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2400}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { cat: 'General', open: 0 }; }
+  renderVals() {
+    const data = {
+      'General': [
+        { q: 'Is the consultation free?', a: 'Yes, on our TikTok LIVE every weekday afternoon, where a different ELC host answers questions. For a private plan on your case, book a one-on-one with our CEO: GH¢100 for 30 minutes or GH¢200 for an hour, on Mondays and Wednesdays.' },
+        { q: 'Where are your offices?', a: 'KNUST Engineering Gate (Ayeduase Gate) and Kotei Astro Turf, next to Unik Pub, both in Kumasi. We are open Monday to Friday, 8:00–17:00.' },
+        { q: 'Do you guarantee admissions, visas or jobs?', a: 'No. Schools, embassies and employers make those decisions. We make sure your application is complete, accurate and on time, and we tell you honestly where you stand.' },
+        { q: 'Can I do everything on WhatsApp?', a: 'Most steps, yes. Some appointments, like biometrics, need you in person.' }
+      ],
+      'Passports': [
+        { q: 'How much does a passport cost with ELC?', a: 'Standard is GH¢600 and takes about 1 month. Express is GH¢1,800. [CONFIRM whether government fees are included and the express timeline.]' },
+        { q: 'What do I need to bring?', a: '[CONFIRM list: Ghana Card, birth certificate, old passport for renewals, and anything else the Passport Office asks for.]' },
+        { q: 'Can you run a passport drive for our association?', a: 'Yes. We have run drives with KNUST colleges and associations. WhatsApp DRIVE to plan one.' }
+      ],
+      'School applications': [
+        { q: 'Which countries do you apply to?', a: 'The UK, Canada, the USA, Germany, Malta and Ireland, among others.' },
+        { q: 'Can you find me a scholarship?', a: 'We show you verified opportunities on Scholarship Hunt and help you apply. Awards are decided by the funder, so we never promise one.' },
+        { q: 'Do I need IELTS?', a: 'It depends on the school. Some accept other tests or waive it; we check for each programme.' }
+      ],
+      'Visas': [
+        { q: 'When should I start my student visa?', a: 'As soon as you accept an offer and have your confirmation document from the school. Some countries have long appointment waits.' },
+        { q: 'Do you book VFS appointments?', a: 'Yes. We book biometrics and embassy interviews and prepare you for both.' },
+        { q: 'How much is visa processing?', a: 'Government visa fees depend on the country. Our service fee is agreed in writing before we start. Ask on WhatsApp: VISA.' }
+      ],
+      'Exams': [
+        { q: 'Do you teach or only register?', a: 'Both. We register you for IELTS, TOEFL, SAT, GRE and GMAT and offer tuition to prepare.' },
+        { q: 'Which test should I take?', a: 'The one your chosen schools accept. We check before you pay for any test.' }
+      ],
+      'Payments & bookings': [
+        { q: 'How do I pay?', a: 'By MoMo [CONFIRM other methods].' },
+        { q: 'What is your refund policy?', a: '[CONFIRM: refund policy to be published before launch.]' }
+      ]
+    };
+    const cur = this.state.cat;
+    const cats = Object.keys(data).map(n => ({ name: n, n: data[n].length, on: n === cur, bg: n === cur ? '#0505C6' : '#F5F6FF', fg: n === cur ? '#FFFFFF' : '#0B0B1F', weight: n === cur ? 800 : 600, pick: () => this.setState({ cat: n, open: 0 }) }));
+    const o = this.state.open;
+    const faqs = data[cur].map((f, i) => ({ ...f, open: o === i, sign: o === i ? '−' : '+', signBg: o === i ? '#0505C6' : '#F5F6FF', signFg: o === i ? '#FFFFFF' : '#0505C6', toggle: () => this.setState({ open: o === i ? -1 : i }) }));
+    return { cats, faqs, title: cur };
+  }
+}
+</script>
+</body>
+</html>

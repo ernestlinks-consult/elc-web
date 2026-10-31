@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blog</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+.elc{container-type:inline-size}
+:where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+</style>
+</helmet>
+<div class="elc" style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #FFFFFF; width: 100%">
+
+<dc-import name="Header" active="resources" hint-size="100%,130px"></dc-import>
+
+<section style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 32px; display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; font-size: 14px; color: #4A4A68"><a href="Main.dc.html">Home</a> / <a href="Resources.dc.html">Blog &amp; Resources</a> / Blog</p>
+<h1 style="margin: 0; font-size: clamp(36px, 4.6cqi, 58px); line-height: 1.04; font-weight: 900">The ELC Blog</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.55; color: #4A4A68; max-width: 640px">Clear guides on passports, applications, visas and exams, written by the team that does the work.</p>
+</div>
+</section>
+
+<section aria-label="Featured post" style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 24px 40px">
+<a href="Blog-Post.dc.html" style="display: flex; flex-wrap: wrap; text-decoration: none; color: #0B0B1F; border-radius: 28px; overflow: hidden; border: 1px solid #DADDF5">
+<div style="flex: 1 1 480px; min-height: 320px; background: #0505C6; color: #D9DCFF; display: flex; align-items: center; justify-content: center; font-size: 15px; padding: 24px; box-sizing: border-box">[Featured image]</div>
+<div style="flex: 1 1 420px; min-width: 0; padding: 36px; display: flex; flex-direction: column; gap: 14px; justify-content: center">
+<span style="align-self: flex-start; background: #EA0606; color: #FFFFFF; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; padding: 5px 10px; border-radius: 999px">FEATURED</span>
+<span style="font-size: 14px; color: #4A4A68">School applications · [Date] · 6 min read</span>
+<h2 style="margin: 0; font-size: 32px; line-height: 1.15; font-weight: 900">How to plan your study abroad journey, month by month</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4A4A68">A realistic timeline from your first shortlist to your flight, and the documents to gather at each stage.</p>
+<span style="font-weight: 800; color: #0505C6">Read the guide →</span>
+</div>
+</a>
+</div>
+</section>
+
+<section aria-labelledby="all" style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 24px 72px; display: flex; flex-direction: column; gap: 24px">
+<h2 id="all" style="margin: 0; font-size: 26px; font-weight: 900">All posts</h2>
+<div role="group" aria-label="Filter by topic" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="7">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="font-family: inherit; font-size: 15px; font-weight: 700; padding: 10px 16px; border-radius: 999px; cursor: pointer; border: 1px solid {{c.border}}; background: {{c.bg}}; color: {{c.fg}}">{{c.name}}</button>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px">
+<sc-for list="{{posts}}" as="p" hint-placeholder-count="6">
+<a href="Blog-Post.dc.html" style="text-decoration: none; color: #0B0B1F; display: flex; flex-direction: column; gap: 12px">
+<div style="aspect-ratio: 16 / 10; background: {{p.tint}}; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #4A4A68; font-size: 14px">[Image]</div>
+<span style="font-size: 14px; color: #0505C6; font-weight: 800">{{p.cat}}<span style="color: #4A4A68; font-weight: 500"> · [Date] · {{p.mins}} min read</span></span>
+<strong style="font-size: 20px; line-height: 1.3">{{p.title}}</strong>
+<span style="font-size: 16px; line-height: 1.55; color: #4A4A68">{{p.ex}}</span>
+</a>
+</sc-for>
+</div>
+<nav aria-label="Pages" style="display: flex; gap: 8px; justify-content: center; padding-top: 8px">
+<a href="#" aria-current="page" style="width: 44px; height: 44px; border-radius: 22px; background: #0505C6; color: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800">1</a>
+<a href="#" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid #DADDF5; color: #0B0B1F; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 700">2</a>
+<a href="#" style="height: 44px; padding: 0 18px; border-radius: 22px; border: 1px solid #DADDF5; color: #0B0B1F; display: flex; align-items: center; text-decoration: none; font-weight: 700">Next</a>
+</nav>
+</div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,820px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { cat: 'All' }; }
+  renderVals() {
+    const all = [
+      { cat: 'Passports', mins: 4, title: 'Standard or express passport: which one do you need?', ex: 'Prices, timelines and when paying for speed actually makes sense.', tint: '#E8EAFF' },
+      { cat: 'School applications', mins: 5, title: 'Your documents kit: what to gather before you apply', ex: 'Transcripts, references, a statement of purpose and the details schools reject for.', tint: '#F5F6FF' },
+      { cat: 'Visas', mins: 6, title: 'Proof of funds: what embassies look for in your bank statement', ex: 'The red flags we fix before any student visa is submitted.', tint: '#E8EAFF' },
+      { cat: 'Exams', mins: 4, title: 'IELTS or TOEFL? How to choose, and three mistakes to avoid', ex: 'Which test your schools accept and how to prepare in six weeks.', tint: '#F5F6FF' },
+      { cat: 'Scholarships', mins: 5, title: 'Four doors to funding: scholarships, assistantships and more', ex: 'Why applying through more than one door raises your chances.', tint: '#E8EAFF' },
+      { cat: 'Student stories', mins: 3, title: '[Student story, with written permission]', ex: 'How one KNUST graduate went from shortlist to offer.', tint: '#F5F6FF' }
+    ];
+    const cur = this.state.cat;
+    const names = ['All', 'Passports', 'School applications', 'Visas', 'Exams', 'Scholarships', 'Student stories'];
+    const cats = names.map(n => ({ name: n, on: n === cur, bg: n === cur ? '#0505C6' : '#FFFFFF', fg: n === cur ? '#FFFFFF' : '#0B0B1F', border: n === cur ? '#0505C6' : '#DADDF5', pick: () => this.setState({ cat: n }) }));
+    return { cats, posts: cur === 'All' ? all : all.filter(p => p.cat === cur) };
+  }
+}
+</script>
+</body>
+</html>

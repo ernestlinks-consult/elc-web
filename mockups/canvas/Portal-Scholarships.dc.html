@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portal scholarships</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+:where(a,button,input,select,textarea):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+.fld{font-family:inherit;font-size:15px;padding:10px 12px;border:1px solid #8A8FC7;border-radius:10px;background:#FFFFFF;width:100%;box-sizing:border-box}
+</style>
+</helmet>
+<div style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #F5F6FF; width: 100%; display: flex; flex-wrap: wrap; min-height: 1000px">
+
+<div style="flex: 1 1 248px; max-width: 248px; min-width: 0; display: flex"><dc-import name="PortalNav" active="scholarships" hint-size="248px,1000px"></dc-import></div>
+
+<main style="flex: 999 1 640px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 20px; box-sizing: border-box">
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 30px; font-weight: 900">Scholarship Hunt</h1><span style="font-size: 14px; color: #4A4A68">Listings switch to Closed by themselves the day after the deadline. <span style="background: #FFF1D6; color: #8A4F00; font-weight: 800; font-size: 12px; padding: 3px 8px; border-radius: 999px">SAMPLE DATA</span></span></div>
+<button onClick="{{newOne}}" style="font-family: inherit; font-size: 15px; font-weight: 800; background: #0505C6; color: #FFFFFF; border: 0; border-radius: 12px; padding: 12px 18px; cursor: pointer">+ Add scholarship</button>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+
+<div style="flex: 3 1 460px; min-width: 0; background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; overflow-x: auto">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px">
+<thead><tr style="text-align: left; color: #4A4A68; font-size: 13px"><th scope="col" style="padding: 14px 16px">Scholarship</th><th scope="col" style="padding: 14px 8px">Status</th><th scope="col" style="padding: 14px 8px">Deadline</th><th scope="col" style="padding: 14px 8px">Verified</th><th scope="col" style="padding: 14px 16px 14px 8px">On site</th></tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+<tr onClick="{{r.pick}}" style="border-top: 1px solid #EEF0FB; cursor: pointer; background: {{r.bg}}">
+<td style="padding: 12px 16px"><button onClick="{{r.pick}}" style="all: unset; cursor: pointer; display: flex; flex-direction: column; line-height: 1.35"><strong style="font-size: 15px">{{r.name}}</strong><span style="color: #4A4A68; font-size: 13px">{{r.where}} · {{r.owner}}</span></button></td>
+<td style="padding: 12px 8px"><span style="font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 999px; background: {{r.sBg}}; color: {{r.sFg}}">{{r.status}}</span></td>
+<td style="padding: 12px 8px; color: {{r.dlColor}}; font-weight: {{r.dlWeight}}">{{r.deadline}}</td>
+<td style="padding: 12px 8px; color: #4A4A68">{{r.verified}}</td>
+<td style="padding: 12px 16px 12px 8px">{{r.pub}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+
+<form aria-label="Edit scholarship" style="flex: 2 1 380px; min-width: 0; background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 20px; font-weight: 900">{{formTitle}}</h2><span style="font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 999px; background: {{ed.sBg}}; color: {{ed.sFg}}">{{ed.status}}</span></div>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Name<input class="fld" value="{{ed.name}}"></label>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Official page link <span style="color: #C70404">*</span><input class="fld" type="url" value="{{ed.link}}" placeholder="https://… (the funder's own site)"></label>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Where<input class="fld" value="{{ed.where}}"></label>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Level<select class="fld"><option>{{ed.level}}</option><option>Bachelor's</option><option>Master's</option><option>PhD</option></select></label>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Opens<input class="fld" type="date"></label>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Deadline<input class="fld" type="date"></label>
+</div>
+<label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="checkbox" style="width: 18px; height: 18px; accent-color: #0505C6">Deadline varies (show text instead of a date)</label>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">What it covers<textarea class="fld" rows="2">{{ed.covers}}</textarea></label>
+<fieldset style="margin: 0; border: 1px solid #DADDF5; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+<legend style="font-size: 14px; font-weight: 800; padding: 0 6px">Before publishing</legend>
+<label style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.45"><input type="checkbox" checked="{{c1}}" onChange="{{t1}}" style="width: 18px; height: 18px; margin: 1px 0 0; accent-color: #0505C6; flex: none">I opened the official page today and the dates match.</label>
+<label style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.45"><input type="checkbox" checked="{{c2}}" onChange="{{t2}}" style="width: 18px; height: 18px; margin: 1px 0 0; accent-color: #0505C6; flex: none">It does not charge applicants to apply.</label>
+<span style="font-size: 13px; color: #4A4A68">“Verified on” will be set to today: 31 Oct 2026.</span>
+</fieldset>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" style="font-family: inherit; font-size: 15px; font-weight: 800; background: #FFFFFF; color: #0505C6; border: 1px solid #8A8FC7; border-radius: 999px; padding: 12px 18px; cursor: pointer">Save draft</button>
+<button type="button" aria-disabled="{{locked}}" style="font-family: inherit; font-size: 15px; font-weight: 800; background: {{pubBg}}; color: {{pubFg}}; border: 0; border-radius: 999px; padding: 12px 20px; cursor: {{pubCursor}}">{{pubLabel}}</button>
+</div>
+<span style="font-size: 13px; color: #4A4A68">Also posts to the WhatsApp channel and the footer alerts list when published [optional automation].</span>
+</form>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { sel: 0, c1: false, c2: false }; }
+  renderVals() {
+    const S = { 'Open': ['#E3F6EA', '#0B6B30'], 'Opening soon': ['#FFF1D6', '#8A4F00'], 'Closed': ['#EEEEF3', '#4A4A68'], 'Draft': ['#E8EAFF', '#0505C6'] };
+    const list = [
+      { name: 'Erasmus Mundus Joint Master’s', where: 'Europe', owner: 'Peace A.', status: 'Open', deadline: 'Varies', verified: '26 Oct', pub: 'Yes', level: 'Master’s', link: 'https://…', covers: 'Full award, including about €1,400 a month', soon: false },
+      { name: 'Funded graduate places', where: 'USA and Canada', owner: 'Peace A.', status: 'Open', deadline: 'Dec–Jan', verified: '26 Oct', pub: 'Yes', level: 'Master’s', link: 'https://…', covers: 'Tuition waiver and stipend', soon: false },
+      { name: '[Scholarship closing soon]', where: '[Country]', owner: 'Peace A.', status: 'Open', deadline: '6 Nov', verified: '29 Oct', pub: 'Yes', level: 'Master’s', link: 'https://…', covers: '[Coverage]', soon: true },
+      { name: 'Stipendium Hungaricum', where: 'Hungary', owner: 'Peace A.', status: 'Opening soon', deadline: 'Mid-Jan (TBC)', verified: '26 Oct', pub: 'Yes', level: 'Bachelor’s', link: 'https://…', covers: 'Tuition, stipend, housing support', soon: false },
+      { name: 'Chevening 2027/28', where: 'UK', owner: 'Peace A.', status: 'Closed', deadline: '6 Oct', verified: '26 Oct', pub: 'Yes', level: 'Master’s', link: 'https://…', covers: 'Full award', soon: false },
+      { name: '[New listing]', where: '[Country]', owner: 'Godfred A.', status: 'Draft', deadline: '—', verified: '—', pub: 'No', level: 'Master’s', link: '', covers: '', soon: false }
+    ];
+    const sel = this.state.sel;
+    const rows = list.map((s, i) => ({ ...s, sBg: S[s.status][0], sFg: S[s.status][1], dlColor: s.soon ? '#C70404' : '#0B0B1F', dlWeight: s.soon ? 800 : 500, bg: i === sel ? '#EEF0FB' : 'transparent', pick: () => this.setState({ sel: i, c1: false, c2: false }) }));
+    const e = list[sel];
+    const ed = { ...e, sBg: S[e.status][0], sFg: S[e.status][1] };
+    const ok = this.state.c1 && this.state.c2;
+    return {
+      rows, ed, formTitle: e.status === 'Draft' ? 'New scholarship' : 'Edit scholarship',
+      c1: this.state.c1, c2: this.state.c2,
+      t1: () => this.setState({ c1: !this.state.c1 }), t2: () => this.setState({ c2: !this.state.c2 }),
+      locked: !ok, pubBg: ok ? '#0505C6' : '#DADDF5', pubFg: ok ? '#FFFFFF' : '#4A4A68', pubCursor: ok ? 'pointer' : 'not-allowed',
+      pubLabel: ok ? 'Publish' : 'Publish (tick both checks)',
+      newOne: () => this.setState({ sel: 5, c1: false, c2: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

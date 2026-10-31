@@ -1,0 +1,12 @@
+<!-- @dsCard group="Actions" height=96 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Button — preview</title></head>
+<body>
+<div id="root" class="elc-row"></div>
+<script>
+  var E = window.ELC, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(E.Button, { variant: 'primary', size: 'lg' }, 'Start online'), h(E.Button, { variant: 'secondary', size: 'lg' }, 'Chat on WhatsApp'), h(E.Button, { variant: 'red' }, 'Choose Express'), h(E.Button, { variant: 'ghost' }, 'Finish later'), h(E.Button, { variant: 'primary', disabled: true }, 'Publish')));
+</script>
+</body>
+</html>

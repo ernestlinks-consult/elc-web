@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portal leads</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+:where(a,button,input,select,textarea):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+.row:hover{background:#F5F6FF}
+</style>
+</helmet>
+<div style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #F5F6FF; width: 100%; display: flex; flex-wrap: wrap; min-height: 1000px">
+
+<div style="flex: 1 1 248px; max-width: 248px; min-width: 0; display: flex"><dc-import name="PortalNav" active="leads" hint-size="248px,1000px"></dc-import></div>
+
+<main style="flex: 999 1 640px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 20px; box-sizing: border-box">
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<h1 style="margin: 0; font-size: 30px; font-weight: 900">Leads <span style="background: #FFF1D6; color: #8A4F00; font-weight: 800; font-size: 12px; padding: 3px 8px; border-radius: 999px; letter-spacing: 0.04em; vertical-align: middle">SAMPLE DATA</span></h1>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<label style="display: flex; flex-direction: column; font-size: 13px; font-weight: 700; gap: 4px">Service<select style="font-family: inherit; font-size: 15px; padding: 9px 12px; border: 1px solid #8A8FC7; border-radius: 10px; background: #FFFFFF"><option>All services</option><option>Passport</option><option>Birth certificate</option><option>School applications</option><option>Visa</option><option>Work abroad</option><option>Exams</option><option>Travel</option></select></label>
+<label style="display: flex; flex-direction: column; font-size: 13px; font-weight: 700; gap: 4px">Owner<select style="font-family: inherit; font-size: 15px; padding: 9px 12px; border: 1px solid #8A8FC7; border-radius: 10px; background: #FFFFFF"><option>Everyone</option><option>Mine</option><option>Unassigned</option></select></label>
+<button style="align-self: flex-end; font-family: inherit; font-size: 15px; font-weight: 800; background: #FFFFFF; color: #0505C6; border: 1px solid #8A8FC7; border-radius: 10px; padding: 10px 14px; cursor: pointer">Export CSV</button>
+</div>
+</div>
+
+<div role="tablist" aria-label="Status" style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6">
+<button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="font-family: inherit; font-size: 14px; font-weight: 800; padding: 9px 14px; border-radius: 999px; cursor: pointer; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}">{{t.name}} <span style="opacity: 0.75">{{t.n}}</span></button>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+
+<div style="flex: 3 1 520px; min-width: 0; background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; overflow-x: auto">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 620px">
+<thead><tr style="text-align: left; color: #4A4A68; font-size: 13px"><th scope="col" style="padding: 14px 16px">Name</th><th scope="col" style="padding: 14px 8px">Service</th><th scope="col" style="padding: 14px 8px">Form</th><th scope="col" style="padding: 14px 8px">Owner</th><th scope="col" style="padding: 14px 8px">Status</th><th scope="col" style="padding: 14px 16px 14px 8px">Waiting</th></tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+<tr class="row" onClick="{{r.select}}" style="border-top: 1px solid #EEF0FB; cursor: pointer; background: {{r.bg}}">
+<td style="padding: 12px 16px"><button onClick="{{r.select}}" style="all: unset; cursor: pointer; display: flex; flex-direction: column; line-height: 1.35"><strong style="font-size: 15px">{{r.name}}</strong><span style="color: #4A4A68; font-size: 13px">{{r.when}}</span></button></td>
+<td style="padding: 12px 8px">{{r.svc}}</td>
+<td style="padding: 12px 8px; color: #4A4A68">{{r.steps}}</td>
+<td style="padding: 12px 8px">{{r.owner}}</td>
+<td style="padding: 12px 8px"><span style="font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 999px; background: {{r.sBg}}; color: {{r.sFg}}">{{r.status}}</span></td>
+<td style="padding: 12px 16px 12px 8px; font-weight: 700; color: {{r.ageColor}}">{{r.age}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+
+<aside aria-label="Lead details" style="flex: 2 1 340px; min-width: 0; background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; gap: 10px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 4px"><h2 style="margin: 0; font-size: 22px; font-weight: 900">{{sel.name}}</h2><span style="font-size: 14px; color: #4A4A68">{{sel.ref}} · {{sel.svc}}</span></div>
+<span style="font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 999px; background: {{sel.sBg}}; color: {{sel.sFg}}">{{sel.status}}</span>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<a href="https://wa.me/" style="background: #0505C6; color: #FFFFFF; text-decoration: none; font-weight: 800; padding: 11px 16px; border-radius: 999px; font-size: 14px">WhatsApp {{sel.phone}}</a>
+<a href="tel:" style="border: 1px solid #8A8FC7; text-decoration: none; font-weight: 800; padding: 10px 15px; border-radius: 999px; font-size: 14px">Call</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 700">Status<select onChange="{{setStatus}}" style="font-family: inherit; font-size: 15px; padding: 9px 10px; border: 1px solid #8A8FC7; border-radius: 10px; background: #FFFFFF"><sc-for list="{{statusOpts}}" as="o"><option selected="{{o.on}}">{{o.name}}</option></sc-for></select></label>
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 700">Owner<select style="font-family: inherit; font-size: 15px; padding: 9px 10px; border: 1px solid #8A8FC7; border-radius: 10px; background: #FFFFFF"><option>{{sel.owner}}</option><option>Peace A.</option><option>Grace Y.</option><option>Nathaniel A.</option><option>Priscilla A.</option></select></label>
+</div>
+<div style="background: #F5F6FF; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+<strong style="font-size: 14px">Form answers ({{sel.steps}})</strong>
+<sc-for list="{{sel.answers}}" as="a" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px"><span style="color: #4A4A68">{{a.k}}</span><span style="font-weight: 600; text-align: right">{{a.v}}</span></div></sc-for>
+<a href="#" style="font-size: 14px; font-weight: 700">See all answers</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<strong style="font-size: 14px">Timeline</strong>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; border-left: 2px solid #DADDF5; padding-left: 14px">
+<sc-for list="{{sel.timeline}}" as="e" hint-placeholder-count="3"><li style="font-size: 14px; line-height: 1.4"><strong>{{e.t}}</strong> <span style="color: #4A4A68">· {{e.when}}</span></li></sc-for>
+</ol>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Add a note<textarea rows="3" placeholder="e.g. Called, will bring documents Monday" style="font-family: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid #8A8FC7; border-radius: 10px"></textarea></label>
+<button onClick="{{markContacted}}" style="font-family: inherit; font-size: 15px; font-weight: 800; background: #0505C6; color: #FFFFFF; border: 0; border-radius: 999px; padding: 13px; cursor: pointer">Save note and mark contacted</button>
+</aside>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'All', sel: 0, st: {} };
+  }
+  renderVals() {
+    const S = { 'New': ['#FDE8E8', '#C70404'], 'Contacted': ['#E8EAFF', '#0505C6'], 'Started': ['#FFF1D6', '#8A4F00'], 'Paid': ['#E3F6EA', '#0B6B30'], 'Closed': ['#EEEEF3', '#4A4A68'] };
+    const base = [
+      { name: 'Akosua O.', ref: 'ELC-PP-1042', svc: 'Passport · Express', steps: 'Step 1 of 7', owner: 'Unassigned', status: 'New', age: '2 h 40 min', urgent: true, when: 'Today 10:52', phone: '024 XXX XX18',
+        answers: [['Package', 'Express · GH¢1,800'], ['Type', 'New passport'], ['Best time', 'Afternoon'], ['Came from', 'Passports page']], timeline: [['Saved step 1 on the website', 'Today 10:52'], ['Auto WhatsApp sent', 'Today 10:52']] },
+      { name: 'Kwame M.', ref: 'ELC-SA-2207', svc: 'School · Master’s', steps: 'All 5 steps', owner: 'Peace A.', status: 'New', age: '1 h 05 min', urgent: false, when: 'Today 12:27', phone: '055 XXX XX40',
+        answers: [['Countries', 'UK, Canada'], ['Field', 'Public health'], ['Budget', 'US$10,000–20,000'], ['Came from', 'TikTok LIVE']], timeline: [['Finished all steps', 'Today 12:27'], ['Assigned to Peace A.', 'Today 12:27']] },
+      { name: 'Efua B.', ref: 'ELC-BC-0318', svc: 'Birth certificate', steps: 'Step 3 of 6', owner: 'Grace Y.', status: 'New', age: '38 min', urgent: false, when: 'Today 12:54', phone: '020 XXX XX07',
+        answers: [['For', 'My child'], ['Type', 'New certificate'], ['Best time', 'Morning'], ['Came from', 'Home page']], timeline: [['Saved step 1', 'Today 12:50'], ['Stopped at step 3', 'Today 12:54']] },
+      { name: 'Yaw D.', ref: 'ELC-WA-0233', svc: 'Work abroad · Nursing', steps: 'All 3 steps', owner: 'Unassigned', status: 'New', age: '12 min', urgent: false, when: 'Today 13:20', phone: '027 XXX XX91',
+        answers: [['Interest', 'Bridging programme'], ['Licence', 'Yes'], ['Paid for an offer?', 'Yes, check it'], ['Came from', 'Work Abroad page']], timeline: [['Finished all steps', 'Today 13:20']] },
+      { name: 'Ama K.', ref: 'ELC-VS-0951', svc: 'Visa · Student UK', steps: 'All 4 steps', owner: 'Peace A.', status: 'Contacted', age: '—', urgent: false, when: 'Yesterday', phone: '024 XXX XX63',
+        answers: [['Offer', 'Yes, through ELC'], ['Travel', 'Jan 2027'], ['Refusals', 'No'], ['Came from', 'Visa page']], timeline: [['Finished all steps', 'Yesterday 09:14'], ['WhatsApp reply by Peace', 'Yesterday 09:40']] },
+      { name: 'Kojo A.', ref: 'ELC-EX-0412', svc: 'Exams · IELTS', steps: 'All 3 steps', owner: 'Grace Y.', status: 'Started', age: '—', urgent: false, when: 'Thu', phone: '050 XXX XX22',
+        answers: [['Exam', 'IELTS Academic'], ['Need', 'Both'], ['Month', 'Dec 2026'], ['Came from', 'Exams page']], timeline: [['Registered for test', 'Thu']] },
+      { name: 'Abena S.', ref: 'ELC-PP-1031', svc: 'Passport · Standard', steps: 'All 7 steps', owner: 'Priscilla A.', status: 'Paid', age: '—', urgent: false, when: 'Wed', phone: '024 XXX XX55',
+        answers: [['Package', 'Standard · GH¢600'], ['Type', 'Renewal'], ['Paid', 'MoMo'], ['Came from', 'Instagram']], timeline: [['Paid', 'Wed 15:02']] },
+      { name: 'Nana P.', ref: 'ELC-TR-0127', svc: 'Travel · Flight', steps: 'Step 1 of 3', owner: 'Nathaniel A.', status: 'Closed', age: '—', urgent: false, when: 'Mon', phone: '026 XXX XX30',
+        answers: [['Need', 'Flight'], ['Best time', 'Evening'], ['Reason closed', 'Booked elsewhere'], ['Came from', 'Google']], timeline: [['Closed: booked elsewhere', 'Tue']] }
+    ];
+    const all = base.map((l, i) => ({ ...l, status: this.state.st[i] || l.status }));
+    const tabNames = ['All', 'New', 'Contacted', 'Started', 'Paid', 'Closed'];
+    const tabs = tabNames.map(n => ({ name: n, n: n === 'All' ? all.length : all.filter(l => l.status === n).length, on: n === this.state.tab, bg: n === this.state.tab ? '#0505C6' : '#FFFFFF', fg: n === this.state.tab ? '#FFFFFF' : '#0B0B1F', border: n === this.state.tab ? '#0505C6' : '#8A8FC7', pick: () => this.setState({ tab: n }) }));
+    const rows = all.map((l, i) => ({ ...l, i })).filter(l => this.state.tab === 'All' || l.status === this.state.tab).map(l => ({ ...l, sBg: S[l.status][0], sFg: S[l.status][1], ageColor: l.urgent && l.status === 'New' ? '#C70404' : '#4A4A68', bg: l.i === this.state.sel ? '#EEF0FB' : 'transparent', select: () => this.setState({ sel: l.i }) }));
+    const s = all[this.state.sel];
+    const sel = { ...s, sBg: S[s.status][0], sFg: S[s.status][1], answers: s.answers.map(([k, v]) => ({ k, v })), timeline: s.timeline.map(([t, when]) => ({ t, when })) };
+    const statusOpts = Object.keys(S).map(n => ({ name: n, on: n === s.status }));
+    const setStatus = (e) => this.setState({ st: { ...this.state.st, [this.state.sel]: e.target.value } });
+    const markContacted = () => this.setState({ st: { ...this.state.st, [this.state.sel]: 'Contacted' } });
+    return { tabs, rows, sel, statusOpts, setStatus, markContacted };
+  }
+}
+</script>
+</body>
+</html>

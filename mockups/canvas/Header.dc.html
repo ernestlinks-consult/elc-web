@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Site header</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; width: 100%; position: relative; z-index: 20">
+
+<div style="background: #0505C6; color: #FFFFFF; font-size: 14px">
+<div style="max-width: 1240px; margin: 0 auto; padding: 9px 24px; display: flex; flex-wrap: wrap; gap: 6px 24px; align-items: center; justify-content: space-between">
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center">
+<a href="tel:+233537783166" style="color: #FFFFFF; text-decoration: none">+233 53 778 3166</a>
+<a href="tel:+233204010168" style="color: #FFFFFF; text-decoration: none">+233 20 401 0168</a>
+<span>Mon–Fri, 8:00–17:00</span>
+</div>
+<a href="https://www.tiktok.com/@_ernestlinksconsult" style="color: #FFFFFF; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px"><span style="background: #EA0606; color: #FFFFFF; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 999px">LIVE</span>Free Q&amp;A on TikTok every weekday afternoon</a>
+</div>
+</div>
+
+<header style="background: #FFFFFF; border-bottom: 1px solid #DADDF5">
+<div style="max-width: 1240px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 28px">
+<a href="Main.dc.html" aria-label="ErnestLinks Consult home" style="display: flex; align-items: center">
+<img src="/_blob/b70c709ca735a77f8afc866b49723709" alt="ErnestLinks Consult" style="height: 58px; width: auto; display: block">
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font-weight: 500; font-size: 16px">
+<a href="Main.dc.html" style="color: {{homeColor}}; font-weight: {{homeWeight}}; text-decoration: none; padding: 10px 12px; border-radius: 10px">Home</a>
+<button onClick="{{toggleServices}}" aria-expanded="{{servicesOpen}}" style="font-family: inherit; font-size: 16px; font-weight: {{servicesWeight}}; color: {{servicesColor}}; background: {{servicesBg}}; border: 0; padding: 10px 12px; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px">Services<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button onClick="{{toggleResources}}" aria-expanded="{{resourcesOpen}}" style="font-family: inherit; font-size: 16px; font-weight: {{resourcesWeight}}; color: {{resourcesColor}}; background: {{resourcesBg}}; border: 0; padding: 10px 12px; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px">Blog &amp; Resources<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+<a href="About.dc.html" style="color: {{aboutColor}}; font-weight: {{aboutWeight}}; text-decoration: none; padding: 10px 12px; border-radius: 10px">About</a>
+<a href="Contact.dc.html" style="color: {{contactColor}}; font-weight: {{contactWeight}}; text-decoration: none; padding: 10px 12px; border-radius: 10px">Contact</a>
+</nav>
+<div style="display: flex; gap: 10px; align-items: center">
+<a href="https://wa.me/233537783166?text=HELLO" style="color: #0505C6; text-decoration: none; font-weight: 700; padding: 12px 16px; border-radius: 999px; font-size: 15px; border: 2px solid #0505C6">WhatsApp</a>
+<a href="Start-Online.dc.html" style="background: #0505C6; color: #FFFFFF; text-decoration: none; font-weight: 800; padding: 14px 20px; border-radius: 999px; font-size: 15px">Start online</a>
+</div>
+</div>
+</header>
+
+<sc-if value="{{servicesOpen}}" hint-placeholder-val="{{false}}">
+<div style="position: absolute; left: 0; right: 0; top: 100%; background: #FFFFFF; border-bottom: 1px solid #DADDF5; box-shadow: 0 24px 40px rgba(5,5,80,0.12)">
+<div style="max-width: 1240px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px">
+<a href="Passports.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Passports &amp; birth certificates</strong><span style="font-size: 14px; color: #4A4A68">New, renewal, express, mass drives</span></a>
+<a href="School-Applications.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">School applications</strong><span style="font-size: 14px; color: #4A4A68">Choosing, applying, offers, funding</span></a>
+<a href="Visa-Applications.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Visa applications</strong><span style="font-size: 14px; color: #4A4A68">Study, work and tourist visas</span></a>
+<a href="Work-Abroad.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Work abroad</strong><span style="font-size: 14px; color: #4A4A68">Verified openings and bridging programmes</span></a>
+<a href="Exams.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Proficiency exams</strong><span style="font-size: 14px; color: #4A4A68">Registration and tuition</span></a>
+<a href="Travel.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Travel &amp; tours</strong><span style="font-size: 14px; color: #4A4A68">Flights, hotels, conferences</span></a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{resourcesOpen}}" hint-placeholder-val="{{false}}">
+<div style="position: absolute; left: 0; right: 0; top: 100%; background: #FFFFFF; border-bottom: 1px solid #DADDF5; box-shadow: 0 24px 40px rgba(5,5,80,0.12)">
+<div style="max-width: 1240px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px">
+<a href="Blog.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Blog</strong><span style="font-size: 14px; color: #4A4A68">Guides, updates and student stories</span></a>
+<a href="Scholarship-Hunt.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Scholarship Hunt</strong><span style="font-size: 14px; color: #4A4A68">Verified opportunities and deadlines</span></a>
+<a href="Videos.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">Videos</strong><span style="font-size: 14px; color: #4A4A68">Our TikTok, Instagram and YouTube posts</span></a>
+<a href="FAQs.dc.html" style="text-decoration: none; color: #0B0B1F; padding: 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; background: #F5F6FF"><strong style="font-size: 16px">FAQs</strong><span style="font-size: 14px; color: #4A4A68">Answers by service</span></a>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["home","services","resources","about","contact"],"default":"home"},"$preview":{"width":1440,"height":130}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { menu: null }; }
+  renderVals() {
+    const a = this.props.active ?? 'home';
+    const m = this.state.menu;
+    const on = (k) => a === k || m === k;
+    return {
+      homeColor: a === 'home' ? '#0505C6' : '#0B0B1F', homeWeight: a === 'home' ? 800 : 500,
+      servicesColor: on('services') ? '#0505C6' : '#0B0B1F', servicesWeight: on('services') ? 800 : 500, servicesBg: m === 'services' ? '#F5F6FF' : 'transparent',
+      resourcesColor: on('resources') ? '#0505C6' : '#0B0B1F', resourcesWeight: on('resources') ? 800 : 500, resourcesBg: m === 'resources' ? '#F5F6FF' : 'transparent',
+      aboutColor: a === 'about' ? '#0505C6' : '#0B0B1F', aboutWeight: a === 'about' ? 800 : 500,
+      contactColor: a === 'contact' ? '#0505C6' : '#0B0B1F', contactWeight: a === 'contact' ? 800 : 500,
+      servicesOpen: m === 'services', resourcesOpen: m === 'resources',
+      toggleServices: () => this.setState({ menu: m === 'services' ? null : 'services' }),
+      toggleResources: () => this.setState({ menu: m === 'resources' ? null : 'resources' })
+    };
+  }
+}
+</script>
+</body>
+</html>

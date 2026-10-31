@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Videos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+.elc{container-type:inline-size}
+:where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+</style>
+</helmet>
+<div class="elc" style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #FFFFFF; width: 100%">
+
+<dc-import name="Header" active="resources" hint-size="100%,130px"></dc-import>
+
+<section style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 28px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 14px; color: #4A4A68"><a href="Main.dc.html">Home</a> / <a href="Resources.dc.html">Blog &amp; Resources</a> / Videos</p>
+<h1 style="margin: 0; font-size: clamp(36px, 4.6cqi, 58px); line-height: 1.04; font-weight: 900">Watch ELC</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.55; color: #4A4A68; max-width: 640px">Our latest videos from TikTok, Instagram, Facebook and YouTube. They play right here, and every view and like counts on the platform.</p>
+</div>
+<div role="group" aria-label="Filter by platform" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+<button onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="font-family: inherit; font-size: 15px; font-weight: 700; padding: 10px 16px; border-radius: 999px; cursor: pointer; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}">{{t.name}}</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section aria-label="Videos" style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 8px 24px 72px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px">
+<sc-for list="{{videos}}" as="v" hint-placeholder-count="8">
+<article style="border: 1px solid #DADDF5; border-radius: 22px; overflow: hidden; background: #FFFFFF; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px">
+<img src="/_blob/cb117de7a76a849f762a031d98eb8406" alt="" style="width: 34px; height: 34px; border-radius: 17px; border: 1px solid #DADDF5; padding: 4px; box-sizing: border-box; background: #FFFFFF">
+<span style="display: flex; flex-direction: column; line-height: 1.2; min-width: 0"><strong style="font-size: 14px">{{v.handle}}</strong><span style="font-size: 12px; color: #4A4A68">{{v.platform}}</span></span>
+<a href="{{v.profile}}" style="margin-left: auto; font-size: 13px; font-weight: 800; color: #0505C6; text-decoration: none; border: 1px solid #DADDF5; border-radius: 999px; padding: 6px 12px">Follow</a>
+</div>
+<div style="position: relative; aspect-ratio: 9 / 16; background: {{v.bg}}; display: flex; align-items: center; justify-content: center">
+<span style="position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: #FFFFFF; background: rgba(0,0,0,0.35); padding: 4px 8px; border-radius: 999px">{{v.platformTag}}</span>
+<button aria-label="Play video" style="width: 64px; height: 64px; border-radius: 32px; border: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,0.25)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path fill="#0505C6" d="M8 5v14l11-7z"></path></svg></button>
+<span style="position: absolute; bottom: 12px; right: 12px; font-size: 12px; font-weight: 700; color: #FFFFFF; background: rgba(0,0,0,0.35); padding: 4px 8px; border-radius: 6px">{{v.length}}</span>
+</div>
+<div style="padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px">
+<strong style="font-size: 16px; line-height: 1.35">{{v.title}}</strong>
+<span style="font-size: 13px; color: #4A4A68">WhatsApp keyword: <strong style="color: #C70404">{{v.kw}}</strong></span>
+<a href="{{v.profile}}" style="font-size: 14px; font-weight: 800; text-decoration: none">Watch on {{v.platform}} →</a>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="follow" style="background: #F5F6FF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 620px">
+<h2 id="follow" style="margin: 0; font-size: clamp(24px, 2.6cqi, 34px); font-weight: 900">Never miss a video or a LIVE.</h2>
+<p style="margin: 0; font-size: 17px; color: #4A4A68">We go LIVE on TikTok every weekday afternoon.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<a href="https://www.tiktok.com/@_ernestlinksconsult" style="background: #0505C6; color: #FFFFFF; text-decoration: none; font-weight: 800; padding: 13px 20px; border-radius: 999px">TikTok</a>
+<a href="https://www.instagram.com/_ernestlinksconsult/" style="background: #FFFFFF; color: #0505C6; border: 1px solid #DADDF5; text-decoration: none; font-weight: 800; padding: 12px 19px; border-radius: 999px">Instagram</a>
+<a href="https://web.facebook.com/profile.php?id=61576608208326" style="background: #FFFFFF; color: #0505C6; border: 1px solid #DADDF5; text-decoration: none; font-weight: 800; padding: 12px 19px; border-radius: 999px">Facebook</a>
+<a href="https://www.youtube.com/@ErnestLinksConsult" style="background: #FFFFFF; color: #0505C6; border: 1px solid #DADDF5; text-decoration: none; font-weight: 800; padding: 12px 19px; border-radius: 999px">YouTube</a>
+</div>
+</div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,820px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3300}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { p: 'All' }; }
+  renderVals() {
+    const P = {
+      TikTok: { handle: '@_ernestlinksconsult', profile: 'https://www.tiktok.com/@_ernestlinksconsult' },
+      Instagram: { handle: '@_ernestlinksconsult', profile: 'https://www.instagram.com/_ernestlinksconsult/' },
+      Facebook: { handle: 'ErnestLinks Consult', profile: 'https://web.facebook.com/profile.php?id=61576608208326' },
+      YouTube: { handle: '@ErnestLinksConsult', profile: 'https://www.youtube.com/@ErnestLinksConsult' }
+    };
+    const all = [
+      { platform: 'TikTok', title: 'Nsoro explains the biggest study abroad myth', kw: 'MYTH', length: '0:44', bg: '#0505C6' },
+      { platform: 'Instagram', title: 'Malta nursing bridging: 6 months, explained', kw: 'MALTA NURSING', length: '0:52', bg: '#04048F' },
+      { platform: 'TikTok', title: 'Getting your passport in Kumasi: what it costs', kw: 'PASSPORT', length: '1:00', bg: '#2A2AD4' },
+      { platform: 'YouTube', title: 'Public health in the USA: master’s and bachelor’s', kw: 'HEALTH', length: '0:48', bg: '#0505C6' },
+      { platform: 'Facebook', title: 'Early Childhood Education in Canada', kw: 'ECE', length: '0:46', bg: '#04048F' },
+      { platform: 'Instagram', title: 'A 12-month MBA in Malta', kw: 'MALTA MBA', length: '0:50', bg: '#2A2AD4' },
+      { platform: 'TikTok', title: 'Canada graduate certificates in supply chain and safety', kw: 'CANADA CERT', length: '0:47', bg: '#0505C6' },
+      { platform: 'YouTube', title: 'BSc Health & Social Care in Malta', kw: 'MALTA CARE', length: '0:49', bg: '#04048F' }
+    ];
+    const cur = this.state.p;
+    const names = ['All', 'TikTok', 'Instagram', 'Facebook', 'YouTube'];
+    const tabs = names.map(n => ({ name: n, on: n === cur, bg: n === cur ? '#0505C6' : '#FFFFFF', fg: n === cur ? '#FFFFFF' : '#0B0B1F', border: n === cur ? '#0505C6' : '#DADDF5', pick: () => this.setState({ p: n }) }));
+    const videos = (cur === 'All' ? all : all.filter(v => v.platform === cur)).map(v => ({ ...v, ...P[v.platform], platformTag: v.platform.toUpperCase() }));
+    return { tabs, videos };
+  }
+}
+</script>
+</body>
+</html>

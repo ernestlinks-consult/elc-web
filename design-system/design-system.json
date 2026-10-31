@@ -1,0 +1,35 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": { "v": 1, "at": "2026-10-31T14:30:00Z" },
+  "title": "ErnestLinks Consult Design System",
+  "namespace": "ELC",
+  "libraries": [{ "name": "react", "version": "18" }, { "name": "react-dom", "version": "18" }],
+  "sections": {},
+  "groups": ["Logos", "Pattern"],
+  "assetGroups": {
+    "Logos": {
+      "name": "Logos",
+      "tile": "l",
+      "order": ["elc-logo-stack.svg", "elc-logo-stack-white.svg", "elc-logo-wide.svg", "elc-mark.svg", "elc-star.svg"],
+      "files": {
+        "elc-logo-stack.svg": { "name": "elc-logo-stack.svg", "blob": "6c00e212d39bfafe25f4284b5980aa01", "size": 49290, "type": "image/svg+xml" },
+        "elc-logo-stack-white.svg": { "name": "elc-logo-stack-white.svg", "blob": "a8629df1f533e2bf1880738a69e43e7d", "size": 49200, "type": "image/svg+xml" },
+        "elc-logo-wide.svg": { "name": "elc-logo-wide.svg", "blob": "9024cc2555ec105d23b088ce00333841", "size": 47035, "type": "image/svg+xml" },
+        "elc-mark.svg": { "name": "elc-mark.svg", "blob": "6447dece9894c699c6da78a72186dff2", "size": 8667, "type": "image/svg+xml" },
+        "elc-star.svg": { "name": "elc-star.svg", "blob": "5bcd10ecfe9045763546554c421d1f80", "size": 247, "type": "image/svg+xml" }
+      }
+    },
+    "Pattern": {
+      "name": "Pattern",
+      "tile": "m",
+      "order": ["elc-pattern-tile.webp"],
+      "files": {
+        "elc-pattern-tile.webp": { "name": "elc-pattern-tile.webp", "blob": "4654c90279a6a89c59a53abda4e2c686", "size": 44712, "type": "image/webp" }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": { "readme": "project/README.md", "sections": [] },
+  "lastChange": { "by": "Godfred Awudi", "at": "2026-10-31T14:30:00Z", "via": "Claude chat", "note": "First version from the ELC logo masters and the approved website redesign." }
+}

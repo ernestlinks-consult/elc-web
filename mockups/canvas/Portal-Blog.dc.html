@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portal blog editor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+:where(a,button,input,select,textarea):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+.fld{font-family:inherit;font-size:15px;padding:10px 12px;border:1px solid #8A8FC7;border-radius:10px;background:#FFFFFF;width:100%;box-sizing:border-box}
+.tb{font-family:inherit;font-size:14px;font-weight:700;border:0;background:transparent;color:#0B0B1F;padding:8px 10px;border-radius:8px;cursor:pointer}
+.tb:hover{background:#EEF0FB}
+</style>
+</helmet>
+<div style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #F5F6FF; width: 100%; display: flex; flex-wrap: wrap; min-height: 1000px">
+
+<div style="flex: 1 1 248px; max-width: 248px; min-width: 0; display: flex"><dc-import name="PortalNav" active="blog" hint-size="248px,1000px"></dc-import></div>
+
+<main style="flex: 999 1 640px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box">
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<p style="margin: 0; font-size: 14px; color: #4A4A68"><a href="Portal-Blog.dc.html">Blog</a> / Edit post <span style="background: #FFF1D6; color: #8A4F00; font-weight: 800; font-size: 12px; padding: 3px 8px; border-radius: 999px">SAMPLE DATA</span></p>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><a href="Blog-Post.dc.html" style="font-size: 15px; font-weight: 800; text-decoration: none; border: 1px solid #8A8FC7; border-radius: 999px; padding: 10px 16px">Preview</a><button style="font-family: inherit; font-size: 15px; font-weight: 800; background: #FFFFFF; color: #0505C6; border: 1px solid #8A8FC7; border-radius: 999px; padding: 10px 16px; cursor: pointer">Save</button></div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+
+<div style="flex: 3 1 480px; min-width: 0; background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; overflow: hidden">
+<div style="padding: 24px 28px 8px; display: flex; flex-direction: column; gap: 10px">
+<label style="font-size: 13px; font-weight: 700; color: #4A4A68">Title<input value="Proof of funds: what embassies look for in your bank statement" style="display: block; width: 100%; border: 0; outline: none; font-family: inherit; font-size: 30px; font-weight: 900; color: #0B0B1F; padding: 6px 0; margin-top: 4px"></label>
+<label style="font-size: 13px; font-weight: 700; color: #4A4A68">Summary (shown on the blog list)<input class="fld" value="The red flags we fix before any student visa is submitted." style="margin-top: 4px"></label>
+</div>
+<div role="toolbar" aria-label="Formatting" style="display: flex; flex-wrap: wrap; gap: 2px; padding: 8px 20px; border-top: 1px solid #EEF0FB; border-bottom: 1px solid #EEF0FB; background: #FBFBFF">
+<button class="tb">Heading</button><button class="tb">Bold</button><button class="tb">Italic</button><button class="tb">Bullet list</button><button class="tb">Numbered list</button><button class="tb">Link</button><button class="tb">Image</button><button class="tb">Embed video</button><button class="tb">Start online box</button>
+</div>
+<div style="padding: 24px 28px 32px; display: flex; flex-direction: column; gap: 14px; font-size: 17px; line-height: 1.7; color: #1E1E38">
+<p style="margin: 0">A visa officer reads your bank statement to answer one question: can this person pay for the course and living costs without breaking the rules? Here is what they look for.</p>
+<h2 style="margin: 6px 0 0; font-size: 22px; font-weight: 900; color: #0B0B1F">1. Money that has been there long enough</h2>
+<p style="margin: 0">Many countries want the funds held for a set period before you apply. A large deposit the week before raises questions.</p>
+<div style="background: #FFF8E1; border-left: 4px solid #8A4F00; border-radius: 8px; padding: 12px 14px; font-size: 14px; line-height: 1.55"><strong>Review comment from Godfred A.:</strong> Add “rules differ by country, we check yours” after this paragraph.</div>
+<h2 style="margin: 6px 0 0; font-size: 22px; font-weight: 900; color: #0B0B1F">2. A clear story of where it came from</h2>
+<p style="margin: 0; color: #4A4A68">[Continue writing…]</p>
+</div>
+</div>
+
+<aside aria-label="Post settings" style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<div style="background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<strong style="font-size: 16px">Status</strong>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; gap: 6px; font-size: 13px; font-weight: 800">
+<sc-for list="{{stages}}" as="s" hint-placeholder-count="3"><li style="flex: 1; text-align: center; padding: 8px 4px; border-radius: 8px; background: {{s.bg}}; color: {{s.fg}}">{{s.name}}</li></sc-for>
+</ol>
+<span style="font-size: 14px; color: #4A4A68; line-height: 1.5">{{stageNote}}</span>
+<button onClick="{{advance}}" style="font-family: inherit; font-size: 15px; font-weight: 800; background: {{btnBg}}; color: #FFFFFF; border: 0; border-radius: 999px; padding: 12px; cursor: pointer">{{btnLabel}}</button>
+<sc-if value="{{canBack}}" hint-placeholder-val="{{false}}"><button onClick="{{backStage}}" style="font-family: inherit; font-size: 14px; font-weight: 700; background: none; color: #0505C6; border: 0; text-decoration: underline; cursor: pointer">Send back to draft</button></sc-if>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Publish date<input class="fld" type="date"></label>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Category<select class="fld"><option>Visas</option><option>Passports</option><option>School applications</option><option>Exams</option><option>Scholarships</option><option>Student stories</option></select></label>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Author<select class="fld"><option>Peace A.</option><option>Godfred A.</option><option>Grace Y.</option></select></label>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Cover image<div style="height: 110px; border: 2px dashed #8A8FC7; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #4A4A68; font-size: 14px">Drop an image or click to upload</div><span style="font-weight: 500; font-size: 12px; color: #4A4A68">Resized automatically to keep the page fast.</span></div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<strong style="font-size: 16px">Search &amp; sharing</strong>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Google title<input class="fld" value="Proof of funds for a student visa | ErnestLinks Consult"></label>
+<label style="display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 700">Google description<textarea class="fld" rows="2">What embassies look for in your bank statement, and how to fix red flags before you apply.</textarea></label>
+</div>
+</aside>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { st: 1 }; }
+  renderVals() {
+    const names = ['Draft', 'In review', 'Published'];
+    const st = this.state.st;
+    const stages = names.map((n, i) => ({ name: n, bg: i === st ? '#0505C6' : i < st ? '#E3F6EA' : '#EEF0FB', fg: i === st ? '#FFFFFF' : i < st ? '#0B6B30' : '#4A4A68' }));
+    const notes = ['Only you and admins can see this post.', 'Waiting for an admin. Godfred A. left 1 comment.', 'Live on the website and shared to the blog list.'];
+    const labels = ['Send for review', 'Approve and publish', 'Unpublish'];
+    return {
+      stages, stageNote: notes[st], btnLabel: labels[st], btnBg: st === 2 ? '#4A4A68' : '#0505C6', canBack: st === 1,
+      advance: () => this.setState({ st: st === 2 ? 0 : st + 1 }), backStage: () => this.setState({ st: 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ErnestLinks Consult</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--surface); color:var(--ink); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .blue { fill:var(--blue); }
+  .deep { fill:var(--blue-deep); }
+  .tint { fill:var(--blue-tint-strong); }
+  .red { fill:var(--red); }
+  .white { fill:var(--surface); }
+  .xl { rx:var(--radius-xl); }
+  .lg { rx:var(--radius-lg); }
+  .md { rx:var(--radius-md); }
+  .words { position:absolute; left:var(--space-6); bottom:var(--space-6); max-width:440px; }
+  .name { margin:0; font-size:64px; line-height:.95; font-weight:900; letter-spacing:-.02em; color:var(--ink); }
+  .tag { margin:var(--space-2) 0 0 2px; font-size:14px; line-height:20px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      blue 176x272 slab bled off the top (the logo blue, largest) · blue-deep 208x144 · blue-tint-strong 176x232 bled off the right · red 64x64 once (the star's colour, small because it is an accent) — about 40% of 960x288
+  arrangement one tall blue slab with satellites, bottoms on one line space-6 above the edge, space-4 gutters
+  pattern     the literal motif: the logo's five-point star, white stars cut into the blue slab, red stars on the tint, never red on blue (README: "Never put red on blue")
+  scales      sides in space-4 multiples; gutters space-4 (16); corners radius-xl on the slab, radius-lg on the deep block and tint, radius-md on the red square
+-->
+<rect class="blue xl" x="16" y="-16" width="176" height="272" rx="30"/>
+<rect class="red md" x="208" y="32" width="64" height="64" rx="14"/>
+<rect class="deep lg" x="208" y="112" width="208" height="144" rx="22"/>
+<rect class="tint lg" x="288" y="-24" width="208" height="120" rx="22"/>
+<g class="white">
+<polygon transform="translate(48 120) scale(0.22)" points="14.32 14.32 63.31 30.94 104.77 0 104.11 51.72 146.34 81.59 96.94 96.94 81.59 146.34 51.72 104.11 0 104.77 30.94 63.31 14.32 14.32"/>
+<polygon transform="translate(112 168) scale(0.32)" points="14.32 14.32 63.31 30.94 104.77 0 104.11 51.72 146.34 81.59 96.94 96.94 81.59 146.34 51.72 104.11 0 104.77 30.94 63.31 14.32 14.32"/>
+<polygon transform="translate(56 200) scale(0.16)" points="14.32 14.32 63.31 30.94 104.77 0 104.11 51.72 146.34 81.59 96.94 96.94 81.59 146.34 51.72 104.11 0 104.77 30.94 63.31 14.32 14.32"/>
+<polygon transform="translate(336 184) scale(0.36)" points="14.32 14.32 63.31 30.94 104.77 0 104.11 51.72 146.34 81.59 96.94 96.94 81.59 146.34 51.72 104.11 0 104.77 30.94 63.31 14.32 14.32"/>
+</g>
+<g class="red">
+<polygon transform="translate(320 24) scale(0.26)" points="14.32 14.32 63.31 30.94 104.77 0 104.11 51.72 146.34 81.59 96.94 96.94 81.59 146.34 51.72 104.11 0 104.77 30.94 63.31 14.32 14.32"/>
+<polygon transform="translate(392 48) scale(0.16)" points="14.32 14.32 63.31 30.94 104.77 0 104.11 51.72 146.34 81.59 96.94 96.94 81.59 146.34 51.72 104.11 0 104.77 30.94 63.31 14.32 14.32"/>
+</g>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">ErnestLinks<br>Consult</h1>
+<p class="tag">Making Impact Through Education and Travels.</p>
+</div>
+</div>
+</body>
+</html>

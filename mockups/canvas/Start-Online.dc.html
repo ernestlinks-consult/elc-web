@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Start your application online</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+.elc{container-type:inline-size}
+:where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+.fld{font-family:inherit;font-size:16px;padding:12px 14px;border:1px solid #8A8FC7;border-radius:12px;background:#FFFFFF;color:#0B0B1F;width:100%;box-sizing:border-box}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid #8A8FC7;border-radius:999px;padding:9px 14px;font-weight:600;font-size:15px;cursor:pointer;background:#FFFFFF}
+.chip:has(input:checked){background:#0505C6;border-color:#0505C6;color:#FFFFFF}
+.chip input{accent-color:#FFFFFF;margin:0}
+</style>
+</helmet>
+<div class="elc" style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #F5F6FF; width: 100%">
+
+<dc-import name="Header" active="services" hint-size="100%,130px"></dc-import>
+
+<section style="background: #FFFFFF; border-bottom: 1px solid #DADDF5">
+<div style="max-width: 1240px; margin: 0 auto; padding: 48px 24px 28px; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 14px; color: #4A4A68"><a href="Main.dc.html">Home</a> / Start online</p>
+<h1 style="margin: 0; font-size: clamp(34px, 4.4cqi, 54px); line-height: 1.05; font-weight: 900">Start your application online</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.55; color: #4A4A68; max-width: 700px">No call needed. Tell us the basics in under a minute and we'll message you on WhatsApp. Add more details now, or stop after step 1.</p>
+<div role="tablist" aria-label="Choose a service" style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 8px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6">
+<button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="font-family: inherit; font-size: 15px; font-weight: 800; padding: 12px 18px; border-radius: 999px; cursor: pointer; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}">{{t.name}}</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1240px; margin: 0 auto; padding: 36px 24px 72px; display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+
+<div style="flex: 999 1 600px; min-width: 0; background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 26px; overflow: hidden">
+
+<sc-if value="{{notDone}}" hint-placeholder-val="{{true}}">
+<div style="padding: 24px 28px; border-bottom: 1px solid #DADDF5; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
+<strong style="font-size: 15px; color: #0505C6">{{serviceName}} · Step {{stepNo}} of {{stepCount}}</strong>
+<span style="font-size: 14px; color: #4A4A68">{{timeHint}}</span>
+</div>
+<div aria-hidden="true" style="height: 8px; background: #E8EAFF; border-radius: 999px; overflow: hidden"><div style="height: 100%; width: {{pct}}; background: #0505C6; border-radius: 999px"></div></div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px">
+<sc-for list="{{stepList}}" as="s" hint-placeholder-count="5">
+<li style="color: {{s.color}}; font-weight: {{s.weight}}">{{s.label}}</li>
+</sc-for>
+</ol>
+</div>
+
+<sc-if value="{{showSaved}}" hint-placeholder-val="{{false}}">
+<div role="status" style="margin: 20px 28px 0; background: #E3F6EA; color: #0B6B30; border-radius: 14px; padding: 14px 16px; font-size: 15px; font-weight: 600">Saved. We have your details and will message you, even if you stop here.</div>
+</sc-if>
+
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0; font-size: 26px; font-weight: 900">{{stepTitle}}</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A68">{{stepIntro}}</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px 16px">
+<sc-for list="{{fields}}" as="f" hint-placeholder-count="6">
+<div style="grid-column: {{f.span}}; min-width: 0">
+<sc-if value="{{f.isHeading}}" hint-placeholder-val="{{false}}"><h3 style="margin: 10px 0 0; font-size: 18px; font-weight: 800; padding-top: 14px; border-top: 1px solid #DADDF5">{{f.label}}</h3></sc-if>
+<sc-if value="{{f.isNote}}" hint-placeholder-val="{{false}}"><p style="margin: 0; background: #F5F6FF; border-radius: 14px; padding: 14px 16px; font-size: 15px; line-height: 1.55; color: #0B0B1F">{{f.label}}</p></sc-if>
+<sc-if value="{{f.isInput}}" hint-placeholder-val="{{true}}"><label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 15px"><span>{{f.label}}<span style="color: #C70404">{{f.star}}</span><span style="font-weight: 500; color: #4A4A68">{{f.opt}}</span></span><input class="fld" type="{{f.inputType}}" placeholder="{{f.ph}}"><sc-if value="{{f.hasHint}}" hint-placeholder-val="{{false}}"><span style="font-weight: 500; font-size: 13px; color: #4A4A68">{{f.hint}}</span></sc-if></label></sc-if>
+<sc-if value="{{f.isSelect}}" hint-placeholder-val="{{false}}"><label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 15px"><span>{{f.label}}<span style="color: #C70404">{{f.star}}</span><span style="font-weight: 500; color: #4A4A68">{{f.opt}}</span></span><select class="fld"><option value="">Choose…</option><sc-for list="{{f.opts}}" as="o"><option>{{o.t}}</option></sc-for></select></label></sc-if>
+<sc-if value="{{f.isChoice}}" hint-placeholder-val="{{false}}"><fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px"><legend style="font-weight: 700; font-size: 15px; padding: 0 0 8px">{{f.label}}<span style="color: #C70404">{{f.star}}</span><span style="font-weight: 500; color: #4A4A68">{{f.opt}}</span></legend><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{f.opts}}" as="o"><label class="chip"><input type="{{f.choiceType}}" name="{{f.name}}">{{o.t}}</label></sc-for></div></fieldset></sc-if>
+<sc-if value="{{f.isArea}}" hint-placeholder-val="{{false}}"><label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 15px"><span>{{f.label}}<span style="font-weight: 500; color: #4A4A68">{{f.opt}}</span></span><textarea class="fld" rows="3" placeholder="{{f.ph}}"></textarea></label></sc-if>
+<sc-if value="{{f.isTick}}" hint-placeholder-val="{{false}}"><label style="display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.5"><input type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #0505C6; flex: none"><span>{{f.label}}<span style="color: #C70404">{{f.star}}</span></span></label></sc-if>
+</div>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; padding-top: 6px; border-top: 1px solid #DADDF5; margin-top: 4px">
+<sc-if value="{{canBack}}" hint-placeholder-val="{{false}}"><button onClick="{{back}}" style="font-family: inherit; font-size: 16px; font-weight: 800; padding: 14px 22px; border-radius: 999px; border: 1px solid #8A8FC7; background: #FFFFFF; color: #0505C6; cursor: pointer; margin-top: 16px">Back</button></sc-if>
+<sc-if value="{{isFirst}}" hint-placeholder-val="{{true}}"><span style="font-size: 14px; color: #4A4A68; margin-top: 16px">Takes about 30 seconds.</span></sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 16px">
+<sc-if value="{{canSkip}}" hint-placeholder-val="{{false}}"><button onClick="{{finishNow}}" style="font-family: inherit; font-size: 15px; font-weight: 700; padding: 14px 6px; border: 0; background: none; color: #0505C6; text-decoration: underline; cursor: pointer">Finish later, just contact me</button></sc-if>
+<button onClick="{{next}}" style="font-family: inherit; font-size: 17px; font-weight: 800; padding: 15px 28px; border-radius: 999px; border: 0; background: #0505C6; color: #FFFFFF; cursor: pointer">{{nextLabel}}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+<div role="status" style="padding: 48px 32px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start">
+<div style="width: 64px; height: 64px; border-radius: 32px; background: #0505C6; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></div>
+<h2 style="margin: 0; font-size: 32px; font-weight: 900">Thank you. You're on our list.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #4A4A68; max-width: 620px">{{owner}} will message you on WhatsApp within 2 working hours [CONFIRM]. Your reference is <strong style="color: #0B0B1F">{{ref}}</strong>.</p>
+<div style="background: #F5F6FF; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; max-width: 640px">
+<strong style="font-size: 17px">What happens next</strong>
+<ol style="margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.8">
+<sc-for list="{{nextSteps}}" as="n" hint-placeholder-count="3"><li>{{n.t}}</li></sc-for>
+</ol>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="https://wa.me/233537783166" style="background: #0505C6; color: #FFFFFF; text-decoration: none; font-weight: 800; padding: 14px 22px; border-radius: 999px">Message us now instead</a>
+<button onClick="{{restart}}" style="font-family: inherit; font-size: 16px; font-weight: 800; padding: 14px 22px; border-radius: 999px; border: 1px solid #8A8FC7; background: #FFFFFF; color: #0505C6; cursor: pointer">Start another service</button>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<aside aria-label="Why it's safe" style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="background: #0505C6; color: #FFFFFF; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 14px">
+<strong style="font-size: 20px">No pressure, no payment to start</strong>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 1.5; color: #D9DCFF">
+<li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FFFFFF; font-weight: 900">✓</span>A real person replies within 2 working hours [CONFIRM].</li>
+<li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FFFFFF; font-weight: 900">✓</span>You pay nothing until you decide to go ahead.</li>
+<li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FFFFFF; font-weight: 900">✓</span>We only ever take payment to ErnestLinks Consult's official MoMo: [CONFIRM name and number].</li>
+<li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FFFFFF; font-weight: 900">✓</span>Your details are used only for your application.</li>
+</ul>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 12px">
+<strong style="font-size: 18px">We'll collect these later, in person or securely</strong>
+<ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.8; color: #4A4A68">
+<sc-for list="{{later}}" as="l" hint-placeholder-count="3"><li>{{l.t}}</li></sc-for>
+</ul>
+<span style="font-size: 13px; color: #4A4A68">We never ask for ID numbers or document copies on this website.</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DADDF5; border-radius: 24px; padding: 22px 26px; display: flex; flex-direction: column; gap: 10px">
+<strong style="font-size: 16px">Prefer to talk?</strong>
+<a href="https://wa.me/233537783166?text=HELLO" style="font-weight: 800">WhatsApp +233 53 778 3166</a>
+<a href="tel:+233322291161" style="font-weight: 800">Call 032 229 1161</a>
+</div>
+</aside>
+
+</section>
+
+<dc-import name="Footer" hint-size="100%,820px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"service":{"editor":"enum","options":["passport","birth","school","visa","work","exams","travel"],"default":"passport"},"$preview":{"width":1440,"height":2300}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { svc: null, step: 0, saved: false, done: false }; }
+  renderVals() {
+    const H = (label) => ({ k: 'h', label });
+    const N = (label) => ({ k: 'n', label });
+    const I = (label, o = {}) => ({ k: 'i', label, ...o });
+    const S = (label, opts, o = {}) => ({ k: 's', label, opts, ...o });
+    const C = (label, opts, o = {}) => ({ k: 'c', label, opts, ...o });
+    const M = (label, opts, o = {}) => ({ k: 'c', multi: true, label, opts, ...o });
+    const A = (label, o = {}) => ({ k: 'a', label, ...o });
+    const X = (label, o = {}) => ({ k: 't', label, ...o });
+    const W = { full: true };
+    const R = { req: true };
+    const time = C('Best time to reach you', ['Morning', 'Afternoon', 'Evening', 'Any time']);
+    const consent = X('I agree that ErnestLinks Consult may contact me on WhatsApp or by phone about this request and keep my details for my application. Privacy notice.', { req: true, full: true });
+    const startBasics = [I('Full name', { req: true, ph: 'As on your Ghana Card' }), I('WhatsApp number', { req: true, type: 'tel', ph: '024 000 0000' })];
+    const parent = (who) => [H(who), I('Surname'), I('First name'), C('Living', ['Yes', 'No']), I('Telephone', { type: 'tel' }), I('Email', { type: 'email', optional: true }), I('Hometown'), I('Nationality'), I('Residential address', W), I('Postal address', { optional: true, full: true })];
+    const guarantor = (n) => [H('Guarantor ' + n + ' (not a parent)'), I('Full name'), I('Occupation'), I('Telephone', { type: 'tel' }), I('Email', { type: 'email', optional: true }), I('Residential address', W), I('Postal address', { optional: true, full: true })];
+    const SV = {
+      passport: { name: 'Passport', owner: '[Passport desk name]', ref: 'ELC-PP-1042', time: 'About 8 minutes in total',
+        later: ['Ghana Card number (and SSNIT number, optional)', 'Biometric birth certificate', 'Passport picture', 'Payment, at the office or official MoMo'],
+        next: ['We confirm your package and check your details.', 'We collect your Ghana Card number, documents and payment.', 'We register you and book vetting and biometrics.'],
+        steps: [
+          { t: 'Start', intro: 'Just the basics. We can reach you once you tap Save.', f: [...startBasics, C('Package', ['Standard · GH¢600', 'Express · GH¢1,800'], R), C('This is a', ['New passport', 'Renewal', 'Replacement (lost or damaged)'], R), time, consent] },
+          { t: 'About you', intro: 'As it should appear on your passport.', f: [C('Title', ['Mr', 'Mrs', 'Miss', 'Dr']), C('Gender', ['Male', 'Female']), I('Surname'), I('First name'), I('Other name(s)', { optional: true }), I('Maiden name', { optional: true }), I('Previous names', { optional: true }), I('Date of birth', { type: 'date' }), I('City or town of birth'), I('Country of birth', { ph: 'Ghana' }), S('Marital status', ['Single', 'Married', 'Divorced', 'Widowed']), I('Profession'), I('Height', { ph: 'e.g. 1.72 m' }), I('Eye colour'), I('Hair colour'), I('Visible peculiarities', { optional: true, ph: 'e.g. scar on left cheek' }), C('Dual citizenship', ['No', 'Yes'])] },
+          { t: 'Contact & address', intro: 'Where you live and where your passport should be delivered.', f: [I('Secondary phone', { type: 'tel', optional: true }), I('Email', { type: 'email' }), I('House number'), I('Street name'), I('Digital address (GhanaPost GPS)', { ph: 'AK-000-0000' }), I('Postal address', { optional: true }), I('Suburb'), I('City of residence'), I('Country of residence', { ph: 'Ghana' }), I('Postal or ZIP code', { optional: true }), A('Delivery address', { full: true, ph: 'If different from your home address' })] },
+          { t: 'Education', intro: 'Your most recent school.', f: [I('Institution name', W), I('Start date', { type: 'month' }), I('Completion date', { type: 'month' }), I('School’s postal address', W)] },
+          { t: 'Family', intro: 'Your parents and one grandparent, as the Passport Office requires.', f: [...parent('Father'), ...parent('Mother (maiden name)'), ...parent('Grandparent')] },
+          { t: 'Guarantors', intro: 'Two people who know you and are not your parents. Please ask them first.', f: [...guarantor(1), ...guarantor(2)] }
+        ] },
+      birth: { name: 'Birth certificate', owner: '[Birth certificate desk name]', ref: 'ELC-BC-0318', time: 'About 4 minutes in total',
+        later: ['Informant’s Voter ID or Ghana Card number', 'Any existing birth record or weighing card', 'Payment, at the office or official MoMo'],
+        next: ['We check the details against the registry’s requirements.', 'We collect the informant’s ID number and payment.', 'We submit and keep you updated until collection.'],
+        steps: [
+          { t: 'Start', intro: 'Just the basics. We can reach you once you tap Save.', f: [...startBasics, C('The certificate is for', ['Me', 'My child', 'Someone else'], R), C('This is a', ['New certificate', 'Correction', 'Replacement'], R), time, consent] },
+          { t: 'The person', intro: 'Details of the person the certificate is for.', f: [I('First name'), I('Middle name', { optional: true }), I('Surname'), I('Date of birth', { type: 'date' }), C('Gender', ['Male', 'Female']), I('Contact number', { type: 'tel' })] },
+          { t: 'Father', intro: '', f: [I('First name'), I('Middle name', { optional: true }), I('Surname'), I('Occupation'), I('Religion', { hint: 'Asked for by the Births and Deaths Registry.' })] },
+          { t: 'Mother', intro: 'Use her maiden name.', f: [I('First name'), I('Middle name', { optional: true }), I('Surname (maiden name)')] },
+          { t: 'Informant', intro: 'The father or mother, if alive, who gives the information.', f: [I('First name'), I('Middle name', { optional: true }), I('Surname'), I('Telephone', { type: 'tel' }), S('Relation to the person', ['Father', 'Mother', 'Other']), N('We’ll collect the informant’s Voter ID or Ghana Card number when we contact you, not on this website.')] }
+        ] },
+      school: { name: 'School applications', owner: 'Peace, our Study Abroad Counselor,', ref: 'ELC-SA-2207', time: 'About 5 minutes in total',
+        later: ['Transcripts and certificates', 'Passport bio page', 'CV, references and statement of purpose', 'English test results'],
+        next: ['Peace reviews your profile and shortlists programmes.', 'We agree the plan and our service fee in writing.', 'We start your documents kit and applications.'],
+        steps: [
+          { t: 'Start', intro: 'Just the basics. We can reach you once you tap Save.', f: [...startBasics, C('Level', ['Diploma or certificate', 'Bachelor’s', 'Master’s', 'PhD', 'Bridging programme', 'Not sure'], R), S('When do you want to start?', ['Jan 2027', 'May 2027', 'Sep 2027', 'Jan 2028', 'Not sure']), time, consent] },
+          { t: 'Your goals', intro: 'Helps us shortlist programmes that fit.', f: [M('Countries you’re considering', ['UK', 'Canada', 'USA', 'Germany', 'Malta', 'Ireland', 'Open to advice'], W), I('Course or field of interest', { full: true, ph: 'e.g. Public health, Nursing, MBA' }), I('Saw a programme in our videos?', { optional: true, ph: 'Keyword, e.g. MALTA CARE' }), S('Yearly tuition you can afford', ['Under US$5,000', 'US$5,000–10,000', 'US$10,000–20,000', 'Over US$20,000', 'I need a full scholarship']), M('Who is paying?', ['Myself', 'Family', 'Sponsor or employer', 'Scholarship needed', 'Loan'], W)] },
+          { t: 'Education', intro: 'Your highest qualification so far.', f: [S('Highest qualification', ['WASSCE', 'Diploma or HND', 'Bachelor’s', 'Master’s']), I('Institution'), I('Course studied'), S('Class or grade', ['First class', 'Second class upper', 'Second class lower', 'Third class', 'Pass', 'WASSCE (enter aggregate below)']), I('Year completed or expected', { ph: 'e.g. 2025' }), S('National Service', ['Completed', 'Ongoing', 'Not yet', 'Not applicable']), I('Years of work experience', { optional: true, type: 'number' })] },
+          { t: 'Tests & documents', intro: 'Tell us what you already have. It’s fine if the answer is “not yet”.', f: [S('English test', ['IELTS', 'TOEFL', 'Other test', 'Not taken yet', 'Hoping for a waiver']), I('Score, if taken', { optional: true }), S('Passport', ['Valid', 'Expired', 'I don’t have one yet']), M('Documents ready', ['Transcript', 'Certificate', 'CV', 'References', 'Statement of purpose'], W), S('How did you hear about us?', ['TikTok LIVE', 'TikTok video', 'Instagram', 'Facebook', 'A friend', 'Passport drive', 'Google', 'Other']), A('Anything else we should know?', { optional: true, full: true })] }
+        ] },
+      visa: { name: 'Visa', owner: 'Peace, our Study Abroad Counselor,', ref: 'ELC-VS-0951', time: 'About 4 minutes in total',
+        later: ['Passport bio page', 'Offer, CAS, I-20 or invitation letter', 'Bank statements and sponsor letters'],
+        next: ['We check your case against the current rules.', 'We agree our service fee in writing.', 'We prepare your forms and book your appointment.'],
+        steps: [
+          { t: 'Start', intro: 'Just the basics. We can reach you once you tap Save.', f: [...startBasics, C('Visa type', ['Student', 'Work', 'Visitor or tourist', 'Conference', 'Family visit'], R), S('Destination', ['UK', 'Canada', 'USA', 'Germany', 'Malta', 'Ireland', 'Schengen (other)', 'Other']), time, consent] },
+          { t: 'Your trip', intro: '', f: [I('Planned travel date', { type: 'month' }), S('Length of stay', ['Under 1 month', '1–6 months', '6–12 months', 'Over 1 year']), C('Do you have an offer, CAS, I-20, job offer or invitation?', ['Yes', 'Not yet', 'Not needed'], W), C('Was it arranged through ELC?', ['Yes', 'No'], W), A('Purpose of the trip', { full: true, optional: true })] },
+          { t: 'Background', intro: 'Embassies look at these closely, so honest answers help us prepare you.', f: [S('Your passport', ['Valid', 'Expires within 6 months', 'Expired', 'No passport yet']), S('Current status', ['Student', 'National Service', 'Employed', 'Self-employed', 'Not working']), C('Travelled abroad before?', ['No', 'Yes']), I('Countries visited', { optional: true }), C('Ever been refused a visa?', ['No', 'Yes']), I('If yes, which country and year', { optional: true }), M('Who is paying for the trip?', ['Myself', 'Parent or family', 'Sponsor', 'Employer', 'Scholarship'], W), S('How did you hear about us?', ['TikTok LIVE', 'TikTok video', 'Instagram', 'Facebook', 'A friend', 'Google', 'Other'])] }
+        ] },
+      work: { name: 'Work abroad', owner: '[Work abroad desk name]', ref: 'ELC-WA-0233', time: 'About 3 minutes in total',
+        later: ['Professional licence and certificates', 'Passport bio page', 'CV and references'],
+        next: ['We review your profile against openings we have verified.', 'We tell you honestly which routes fit, and the costs in writing.', 'We prepare your application and, later, your visa.'],
+        steps: [
+          { t: 'Start', intro: 'Just the basics. We can reach you once you tap Save.', f: [...startBasics, C('I\u2019m interested in', ['A bridging programme', 'A job opening', 'Not sure yet'], R), S('Field', ['Nursing', 'Care work', 'Hospitality', 'Construction or trades', 'Logistics', 'Other']), time, consent] },
+          { t: 'Your experience', intro: 'Helps us match you only with routes you qualify for.', f: [I('Profession or job title', W), I('Years of experience', { type: 'number' }), S('Highest qualification', ['WASSCE', 'Certificate', 'Diploma or HND', 'Bachelor\u2019s', 'Master\u2019s']), C('Professional licence (for example nursing PIN)', ['Yes', 'No', 'Not applicable'], W), M('Countries you\u2019re open to', ['UAE', 'Malta', 'UK', 'Canada', 'Germany', 'Open to advice'], W), S('Your passport', ['Valid', 'Expired', 'No passport yet']), S('English test', ['IELTS', 'OET', 'Other', 'Not taken yet']), C('Has anyone asked you to pay for a job offer?', ['No', 'Yes, I\u2019d like you to check it'], W), S('How did you hear about us?', ['TikTok LIVE', 'TikTok video', 'Instagram', 'Facebook', 'A friend', 'Google', 'Other'])] }
+        ] },
+      exams: { name: 'Exams', owner: '[Exams desk name]', ref: 'ELC-EX-0412', time: 'About 2 minutes in total',
+        later: ['Passport or Ghana Card details for registration', 'Test fee payment'],
+        next: ['We confirm test dates and centres.', 'We agree registration and tuition fees.', 'We register you and schedule your classes.'],
+        steps: [
+          { t: 'Start', intro: 'Just the basics. We can reach you once you tap Save.', f: [...startBasics, C('Exam', ['IELTS Academic', 'IELTS General', 'TOEFL', 'SAT', 'GRE', 'GMAT', 'Not sure'], R), C('I need', ['Registration', 'Tuition', 'Both'], R), time, consent] },
+          { t: 'Your plan', intro: '', f: [I('Preferred test month', { type: 'month' }), S('Why are you taking it?', ['Study', 'Work', 'Migration', 'Other']), I('Target score', { optional: true }), I('Previous score, if any', { optional: true }), C('Tuition format', ['At our office', 'Online', 'Either']), M('When can you attend classes?', ['Weekdays', 'Evenings', 'Weekends'], W), S('How did you hear about us?', ['TikTok LIVE', 'TikTok video', 'Instagram', 'Facebook', 'A friend', 'Google', 'Other'])] }
+        ] },
+      travel: { name: 'Travel', owner: '[Travel desk name]', ref: 'ELC-TR-0127', time: 'About 2 minutes in total',
+        later: ['Passport details of each traveller', 'Payment, at the office or official MoMo'],
+        next: ['We send you options and prices on WhatsApp.', 'You choose and confirm.', 'We book and send your tickets or vouchers.'],
+        steps: [
+          { t: 'Start', intro: 'Just the basics. We can reach you once you tap Save.', f: [...startBasics, M('I need', ['Flight', 'Hotel', 'Tour package', 'Conference trip', 'Tourist visa'], { req: true, full: true }), time, consent] },
+          { t: 'Trip details', intro: '', f: [I('Flying from', { ph: 'e.g. Kumasi or Accra' }), I('Destination'), I('Departure date', { type: 'date' }), I('Return date', { type: 'date', optional: true }), C('Flexible dates?', ['Yes', 'No']), S('Cabin', ['Economy', 'Premium economy', 'Business']), I('Adults', { type: 'number' }), I('Children (2–11)', { type: 'number', optional: true }), I('Infants (under 2)', { type: 'number', optional: true }), S('Budget per person', ['Under GH¢5,000', 'GH¢5,000–15,000', 'GH¢15,000–30,000', 'Over GH¢30,000']), A('Hotel area or special requests', { optional: true, full: true })] }
+        ] }
+    };
+    const order = ['passport', 'birth', 'school', 'visa', 'work', 'exams', 'travel'];
+    const key = this.state.svc || this.props.service || 'passport';
+    const sv = SV[key];
+    const review = { t: 'Review & confirm', intro: 'Check your answers, then send. You can go back to any step.', f: [N('After you send, ' + sv.owner + ' will check everything and message you. Nothing is submitted to any government office until you confirm.'), X('I confirm that the information I have given is true and correct to the best of my knowledge.', { req: true, full: true })] };
+    const steps = [...sv.steps, review];
+    const st = Math.min(this.state.step, steps.length - 1);
+    const cur = steps[st];
+    let n = 0;
+    const fields = cur.f.map(f => {
+      n += 1;
+      const full = f.full || f.k === 'h' || f.k === 'n' || f.k === 'a' || (f.k === 'c' && f.opts.length > 4);
+      return {
+        label: f.label, isHeading: f.k === 'h', isNote: f.k === 'n', isInput: f.k === 'i', isSelect: f.k === 's', isChoice: f.k === 'c', isArea: f.k === 'a', isTick: f.k === 't',
+        span: full ? '1 / -1' : 'auto', star: f.req ? ' *' : '', opt: f.optional ? ' (optional)' : '',
+        inputType: f.type || 'text', ph: f.ph || '', hint: f.hint || '', hasHint: !!f.hint,
+        opts: (f.opts || []).map(t => ({ t })), choiceType: f.multi ? 'checkbox' : 'radio', name: key + '-' + st + '-' + n
+      };
+    });
+    const tabs = order.map(k => ({ name: SV[k].name, on: k === key, bg: k === key ? '#0505C6' : '#FFFFFF', fg: k === key ? '#FFFFFF' : '#0B0B1F', border: k === key ? '#0505C6' : '#8A8FC7', pick: () => this.setState({ svc: k, step: 0, saved: false, done: false }) }));
+    const stepList = steps.map((s, i) => ({ label: (i < st ? '✓ ' : (i + 1) + '. ') + s.t, color: i === st ? '#0505C6' : i < st ? '#0B6B30' : '#4A4A68', weight: i === st ? 800 : 600 }));
+    const last = st === steps.length - 1;
+    return {
+      tabs, fields, stepList,
+      serviceName: sv.name, stepNo: st + 1, stepCount: steps.length, timeHint: sv.time, pct: Math.round(((st + 1) / steps.length) * 100) + '%',
+      stepTitle: cur.t, stepIntro: cur.intro, notDone: !this.state.done, done: this.state.done,
+      showSaved: this.state.saved && st > 0, canBack: st > 0, isFirst: st === 0, canSkip: st > 0 && !last,
+      nextLabel: st === 0 ? 'Save and continue' : last ? 'Send my application' : 'Continue',
+      next: () => last ? this.setState({ done: true }) : this.setState({ step: st + 1, saved: true }),
+      back: () => this.setState({ step: Math.max(0, st - 1) }),
+      finishNow: () => this.setState({ done: true }),
+      restart: () => this.setState({ step: 0, saved: false, done: false }),
+      owner: sv.owner.replace(/,$/, ''), ref: sv.ref,
+      nextSteps: sv.next.map(t => ({ t })), later: sv.later.map(t => ({ t }))
+    };
+  }
+}
+</script>
+</body>
+</html>

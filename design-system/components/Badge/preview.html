@@ -1,0 +1,12 @@
+<!-- @dsCard group="Status" height=64 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Badge — preview</title></head>
+<body>
+<div id="root" class="elc-row"></div>
+<script>
+  var E = window.ELC, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(E.Badge, { tone: 'red' }, 'Live'), h(E.Badge, { tone: 'new' }, 'New'), h(E.Badge, { tone: 'success' }, 'Open'), h(E.Badge, { tone: 'warning' }, 'Opening soon'), h(E.Badge, { tone: 'neutral' }, 'Closed'), h(E.Badge, { tone: 'blue' }, 'Bridging'), h(E.Badge, { tone: 'solid' }, 'Fastest')));
+</script>
+</body>
+</html>

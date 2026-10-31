@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scholarship Hunt</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0505C6}a:hover{color:#04048F}
+.elc{container-type:inline-size}
+:where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #FFFFFF;outline-offset:0;box-shadow:0 0 0 6px #0505C6}
+.pattern{background-image:url(/_blob/5f6b2f5906698fff116766120e544d38);background-size:200px auto}
+</style>
+</helmet>
+<div class="elc" style="font-family: 'DM Sans', Arial, sans-serif; color: #0B0B1F; background: #FFFFFF; width: 100%">
+
+<dc-import name="Header" active="resources" hint-size="100%,130px"></dc-import>
+
+<section style="background: #0505C6; color: #FFFFFF; position: relative; overflow: hidden">
+<div style="max-width: 1240px; margin: 0 auto; padding: 60px 24px 64px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; font-size: 14px; color: #D9DCFF"><a href="Main.dc.html" style="color: #D9DCFF">Home</a> / <a href="Resources.dc.html" style="color: #D9DCFF">Blog &amp; Resources</a> / Scholarship Hunt</p>
+<h1 style="margin: 0; font-size: clamp(36px, 4.6cqi, 58px); line-height: 1.04; font-weight: 900">Scholarship Hunt</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.55; color: #D9DCFF; max-width: 620px">Verified opportunities for final-year students, NSS personnel and graduates. We check every deadline and link before it goes up.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="https://whatsapp.com/channel/0029VastSo8DTkK2lkyUSY0g" style="background: #FFFFFF; color: #0505C6; text-decoration: none; font-weight: 800; padding: 15px 24px; border-radius: 999px">Get alerts on WhatsApp</a>
+<a href="https://wa.me/233537783166?text=SCHOLAR" style="border: 2px solid #FFFFFF; color: #FFFFFF; text-decoration: none; font-weight: 700; padding: 13px 22px; border-radius: 999px">Ask for help: "SCHOLAR"</a>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="ops" style="background: #F5F6FF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 48px 24px 72px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center">
+<h2 id="ops" style="margin: 0; font-size: 26px; font-weight: 900">{{count}} opportunities</h2>
+<div role="group" aria-label="Filter by status" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+<button onClick="{{f.pick}}" aria-pressed="{{f.on}}" style="font-family: inherit; font-size: 15px; font-weight: 700; padding: 10px 16px; border-radius: 999px; cursor: pointer; border: 1px solid {{f.border}}; background: {{f.bg}}; color: {{f.fg}}">{{f.name}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px">
+<sc-for list="{{items}}" as="s" hint-placeholder-count="6">
+<article style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #DADDF5; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: center">
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; padding: 6px 10px; border-radius: 999px; background: {{s.badgeBg}}; color: {{s.badgeFg}}">{{s.status}}</span>
+<span style="font-size: 13px; color: #4A4A68; display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0505C6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg>Verified {{s.verified}}</span>
+</div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 800">{{s.name}}</h3>
+<dl style="margin: 0; display: grid; grid-template-columns: 110px 1fr; gap: 8px 12px; font-size: 15px">
+<dt style="color: #4A4A68">Where</dt><dd style="margin: 0; font-weight: 600">{{s.where}}</dd>
+<dt style="color: #4A4A68">Level</dt><dd style="margin: 0; font-weight: 600">{{s.level}}</dd>
+<dt style="color: #4A4A68">Covers</dt><dd style="margin: 0; font-weight: 600">{{s.covers}}</dd>
+<dt style="color: #4A4A68">Deadline</dt><dd style="margin: 0; font-weight: 800; color: {{s.deadlineColor}}">{{s.deadline}}</dd>
+</dl>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; padding-top: 6px">
+<a href="#" style="background: #0505C6; color: #FFFFFF; text-decoration: none; font-weight: 800; padding: 12px 18px; border-radius: 999px; font-size: 15px">Official page</a>
+<a href="https://wa.me/233537783166?text=SCHOLAR" style="border: 1px solid #DADDF5; color: #0505C6; text-decoration: none; font-weight: 800; padding: 11px 17px; border-radius: 999px; font-size: 15px">Get help applying</a>
+</div>
+</article>
+</sc-for>
+</div>
+<p style="margin: 0; font-size: 14px; color: #4A4A68">Always confirm details on the official page before you apply. Dates marked “to be confirmed” are expected, not announced.</p>
+</div>
+</section>
+
+<section aria-labelledby="how" style="background: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px; display: flex; flex-direction: column; gap: 24px">
+<h2 id="how" style="margin: 0; font-size: clamp(26px, 3cqi, 38px); font-weight: 900">How we verify</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
+<li style="background: #F5F6FF; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="color: #C70404; font-weight: 900">01</span><strong style="font-size: 18px">Official source only</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A68">We link to the funder's own page, never a reposting site.</span></li>
+<li style="background: #F5F6FF; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="color: #C70404; font-weight: 900">02</span><strong style="font-size: 18px">Dates checked</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A68">Each listing shows the day we last checked it.</span></li>
+<li style="background: #F5F6FF; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="color: #C70404; font-weight: 900">03</span><strong style="font-size: 18px">No pay-to-apply</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A68">We never list a scholarship that charges you to apply for it.</span></li>
+</ol>
+</div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,820px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { f: 'All' }; }
+  renderVals() {
+    const S = {
+      'Open': { bg: '#E3F6EA', fg: '#0B6B30' },
+      'Opening soon': { bg: '#FFF1D6', fg: '#8A4F00' },
+      'Closed': { bg: '#EEEEF3', fg: '#4A4A68' }
+    };
+    const all = [
+      { status: 'Open', name: 'Erasmus Mundus Joint Master’s', where: 'Europe (2+ countries)', level: 'Master’s', covers: 'Full award, including about €1,400 a month', deadline: 'Set per programme; many Oct–Jan', verified: '26 Oct 2026' },
+      { status: 'Open', name: 'Funded graduate places (assistantships)', where: 'USA and Canada', level: 'Master’s and PhD', covers: 'Tuition waiver and stipend, varies by school', deadline: 'Many in Dec–Jan', verified: '26 Oct 2026' },
+      { status: 'Opening soon', name: 'Stipendium Hungaricum', where: 'Hungary', level: 'Bachelor’s, Master’s, PhD', covers: 'Tuition, monthly stipend, housing support', deadline: 'Expected mid-January (to be confirmed)', verified: '26 Oct 2026' },
+      { status: 'Closed', name: 'Chevening Scholarships 2027/28', where: 'United Kingdom', level: 'Master’s', covers: 'Full award', deadline: 'Closed 6 Oct 2026', verified: '26 Oct 2026' },
+      { status: 'Closed', name: 'Commonwealth Master’s Scholarships', where: 'United Kingdom', level: 'Master’s', covers: 'Full award', deadline: 'Closed 20 Oct 2026', verified: '26 Oct 2026' },
+      { status: 'Closed', name: 'DAAD EPOS (development-related courses)', where: 'Germany', level: 'Master’s', covers: 'Full award', deadline: 'Most course deadlines have passed', verified: '26 Oct 2026' }
+    ];
+    const cur = this.state.f;
+    const names = ['All', 'Open', 'Opening soon', 'Closed'];
+    const filters = names.map(n => ({ name: n, on: n === cur, bg: n === cur ? '#0505C6' : '#FFFFFF', fg: n === cur ? '#FFFFFF' : '#0B0B1F', border: n === cur ? '#0505C6' : '#DADDF5', pick: () => this.setState({ f: n }) }));
+    const items = (cur === 'All' ? all : all.filter(s => s.status === cur)).map(s => ({ ...s, badgeBg: S[s.status].bg, badgeFg: S[s.status].fg, deadlineColor: s.status === 'Closed' ? '#4A4A68' : '#C70404' }));
+    return { filters, items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>

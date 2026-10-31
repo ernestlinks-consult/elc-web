@@ -1,0 +1,12 @@
+<!-- @dsCard group="Forms" height=120 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Stepper — preview</title></head>
+<body>
+<div id="root" class=""></div>
+<script>
+  var E = window.ELC, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(E.Stepper, { title: 'Passport', note: 'About 8 minutes in total', steps: ['Start', 'About you', 'Contact & address', 'Education', 'Family', 'Guarantors', 'Review'], current: 2 }));
+</script>
+</body>
+</html>

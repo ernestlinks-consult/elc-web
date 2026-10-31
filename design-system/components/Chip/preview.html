@@ -1,0 +1,12 @@
+<!-- @dsCard group="Forms" height=120 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Chip — preview</title></head>
+<body>
+<div id="root" class="elc-row"></div>
+<script>
+  var E = window.ELC, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(E.Chip, { name: 'pkg', label: 'Standard \u00b7 GH\u00a2600', defaultChecked: true }), h(E.Chip, { name: 'pkg', label: 'Express \u00b7 GH\u00a21,800' }), h(E.Chip, { multiple: true, label: 'UK', defaultChecked: true }), h(E.Chip, { multiple: true, label: 'Canada', defaultChecked: true }), h(E.Chip, { multiple: true, label: 'Malta' })));
+</script>
+</body>
+</html>

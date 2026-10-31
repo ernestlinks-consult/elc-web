@@ -1,0 +1,12 @@
+<!-- @dsCard group="Forms" height=260 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Field — preview</title></head>
+<body>
+<div id="root" class="elc-stack"></div>
+<script>
+  var E = window.ELC, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(E.Field, { label: 'WhatsApp number', type: 'tel', required: true, placeholder: '024 000 0000', hint: 'We message you here. No calls unless you ask.' }), h(E.Field, { label: 'Email', type: 'email', optional: true, defaultValue: 'ama@', error: 'Enter a full email address, like ama@gmail.com.' })));
+</script>
+</body>
+</html>

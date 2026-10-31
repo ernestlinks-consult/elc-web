@@ -1,0 +1,395 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 5600,
+      "is_interactive": true,
+      "title": "Home (desktop)",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "page": "services"
+    },
+    "Home-Phone.dc.html": {
+      "h": 9800,
+      "title": "Home (phone, 390 px)",
+      "w": 390,
+      "x": 1520,
+      "y": 0,
+      "page": "services",
+      "is_interactive": true
+    },
+    "Passports.dc.html": {
+      "expand": "fill",
+      "h": 3700,
+      "title": "Passports & Birth Certificates",
+      "w": 1440,
+      "x": 1990,
+      "y": 0,
+      "page": "services",
+      "is_interactive": true
+    },
+    "School-Applications.dc.html": {
+      "expand": "fill",
+      "h": 4100,
+      "title": "School Applications",
+      "w": 1440,
+      "x": 3510,
+      "y": 0,
+      "page": "services",
+      "is_interactive": true
+    },
+    "Visa-Applications.dc.html": {
+      "expand": "fill",
+      "h": 4000,
+      "title": "Visa Applications",
+      "w": 1440,
+      "x": 5030,
+      "y": 0,
+      "page": "services",
+      "is_interactive": true
+    },
+    "Resources.dc.html": {
+      "expand": "fill",
+      "h": 2500,
+      "title": "Blog & Resources (hub)",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "page": "resources",
+      "is_interactive": true
+    },
+    "Blog.dc.html": {
+      "expand": "fill",
+      "h": 2700,
+      "title": "Blog",
+      "w": 1440,
+      "x": 1520,
+      "y": 0,
+      "page": "resources",
+      "is_interactive": true
+    },
+    "Scholarship-Hunt.dc.html": {
+      "expand": "fill",
+      "h": 2900,
+      "title": "Scholarship Hunt",
+      "w": 1440,
+      "x": 3040,
+      "y": 0,
+      "page": "resources",
+      "is_interactive": true
+    },
+    "Videos.dc.html": {
+      "expand": "fill",
+      "h": 3300,
+      "title": "Videos (social embeds)",
+      "w": 1440,
+      "x": 4560,
+      "y": 0,
+      "page": "resources",
+      "is_interactive": true
+    },
+    "FAQs.dc.html": {
+      "expand": "fill",
+      "h": 2400,
+      "title": "FAQs",
+      "w": 1440,
+      "x": 6080,
+      "y": 0,
+      "page": "resources",
+      "is_interactive": true
+    },
+    "Header.dc.html": {
+      "expand": "fill",
+      "h": 130,
+      "title": "Header (shared by every page)",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "page": "parts",
+      "is_interactive": true
+    },
+    "Footer.dc.html": {
+      "expand": "fill",
+      "h": 820,
+      "title": "Footer (shared by every page)",
+      "w": 1440,
+      "x": 0,
+      "y": 580,
+      "page": "parts"
+    },
+    "Start-Online.dc.html": {
+      "expand": "fill",
+      "h": 2300,
+      "title": "Start online (6 step-by-step forms)",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "page": "forms",
+      "is_interactive": true
+    },
+    "Work-Abroad.dc.html": {
+      "expand": "fill",
+      "h": 3400,
+      "title": "Work Abroad",
+      "w": 1440,
+      "x": 6550,
+      "y": 0,
+      "page": "services",
+      "is_interactive": true
+    },
+    "Exams.dc.html": {
+      "expand": "fill",
+      "h": 2900,
+      "title": "Proficiency Exams",
+      "w": 1440,
+      "x": 8070,
+      "y": 0,
+      "page": "services",
+      "is_interactive": true
+    },
+    "Travel.dc.html": {
+      "expand": "fill",
+      "h": 3000,
+      "title": "Travel & Tours",
+      "w": 1440,
+      "x": 9590,
+      "y": 0,
+      "page": "services",
+      "is_interactive": true
+    },
+    "About.dc.html": {
+      "expand": "fill",
+      "h": 3500,
+      "title": "About us",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "page": "company",
+      "is_interactive": true
+    },
+    "Contact.dc.html": {
+      "expand": "fill",
+      "h": 2700,
+      "title": "Contact",
+      "w": 1440,
+      "x": 1520,
+      "y": 0,
+      "page": "company",
+      "is_interactive": true
+    },
+    "Blog-Post.dc.html": {
+      "expand": "fill",
+      "h": 3500,
+      "title": "Blog article (template)",
+      "w": 1440,
+      "x": 7600,
+      "y": 0,
+      "page": "resources",
+      "is_interactive": true
+    },
+    "Portal-Dashboard.dc.html": {
+      "expand": "fill",
+      "h": 1150,
+      "title": "Portal: Dashboard",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "page": "portal",
+      "is_interactive": true
+    },
+    "Portal-Leads.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "title": "Portal: Leads inbox",
+      "w": 1440,
+      "x": 1520,
+      "y": 0,
+      "page": "portal",
+      "is_interactive": true
+    },
+    "Portal-Scholarships.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "title": "Portal: Scholarship Hunt",
+      "w": 1440,
+      "x": 3040,
+      "y": 0,
+      "page": "portal",
+      "is_interactive": true
+    },
+    "Portal-Videos.dc.html": {
+      "expand": "fill",
+      "h": 1150,
+      "title": "Portal: Videos",
+      "w": 1440,
+      "x": 4560,
+      "y": 0,
+      "page": "portal",
+      "is_interactive": true
+    },
+    "Portal-Blog.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "title": "Portal: Blog editor",
+      "w": 1440,
+      "x": 6080,
+      "y": 0,
+      "page": "portal",
+      "is_interactive": true
+    },
+    "Portal-Settings.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "title": "Portal: Settings & team",
+      "w": 1440,
+      "x": 7600,
+      "y": 0,
+      "page": "portal",
+      "is_interactive": true
+    },
+    "PortalNav.dc.html": {
+      "h": 900,
+      "title": "Portal sidebar (shared)",
+      "w": 248,
+      "x": 0,
+      "y": 1330,
+      "page": "portal"
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-31T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas",
+    "page": "services"
+  },
+  "notes": {
+    "title": {
+      "kind": "title1",
+      "maxW": 11030,
+      "text": "ErnestLinks Consult: home and services",
+      "w": 240,
+      "x": 0,
+      "y": -320,
+      "page": "services"
+    },
+    "title-res": {
+      "kind": "title1",
+      "maxW": 9040,
+      "text": "Blog & Resources",
+      "x": 0,
+      "y": -320,
+      "page": "resources"
+    },
+    "title-parts": {
+      "kind": "title1",
+      "maxW": 1440,
+      "text": "Shared header and footer",
+      "x": 0,
+      "y": -320,
+      "page": "parts"
+    },
+    "title-forms": {
+      "kind": "title1",
+      "maxW": 1440,
+      "text": "Start online: forms",
+      "x": 0,
+      "y": -320,
+      "page": "forms"
+    },
+    "forms-note": {
+      "x": 1540,
+      "y": 0,
+      "w": 420,
+      "text": "Use the service tabs at the top of the form, then press Play to step through it. Step 1 is saved as a lead the moment someone taps Save and continue. Seven services, including Work abroad.",
+      "size": "m",
+      "fill": "blue",
+      "page": "forms"
+    },
+    "title-company": {
+      "kind": "title1",
+      "maxW": 2960,
+      "text": "About & contact",
+      "x": 0,
+      "y": -320,
+      "page": "company"
+    },
+    "title-portal": {
+      "kind": "title1",
+      "maxW": 9040,
+      "text": "Staff portal (portal.ernestlinksconsult.com)",
+      "x": 0,
+      "y": -320,
+      "page": "portal"
+    },
+    "portal-note": {
+      "x": 340,
+      "y": 1330,
+      "w": 460,
+      "text": "All names, numbers and leads on these screens are sample data. Each staff member signs in with their own email; what they see depends on their role (Admin, Editor, Front desk).",
+      "size": "m",
+      "fill": "orange",
+      "page": "portal"
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Home-Phone.dc.html",
+    "Passports.dc.html",
+    "School-Applications.dc.html",
+    "Visa-Applications.dc.html",
+    "Work-Abroad.dc.html",
+    "Exams.dc.html",
+    "Travel.dc.html",
+    "Start-Online.dc.html",
+    "Resources.dc.html",
+    "Blog.dc.html",
+    "Scholarship-Hunt.dc.html",
+    "Videos.dc.html",
+    "FAQs.dc.html",
+    "Blog-Post.dc.html",
+    "About.dc.html",
+    "Contact.dc.html",
+    "Header.dc.html",
+    "Footer.dc.html",
+    "Portal-Dashboard.dc.html",
+    "Portal-Leads.dc.html",
+    "Portal-Scholarships.dc.html",
+    "Portal-Videos.dc.html",
+    "Portal-Blog.dc.html",
+    "Portal-Settings.dc.html",
+    "PortalNav.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "services",
+      "name": "Home & services"
+    },
+    {
+      "id": "forms",
+      "name": "Start online forms"
+    },
+    {
+      "id": "resources",
+      "name": "Blog & Resources"
+    },
+    {
+      "id": "company",
+      "name": "About & contact"
+    },
+    {
+      "id": "portal",
+      "name": "Staff portal"
+    },
+    {
+      "id": "parts",
+      "name": "Header & footer"
+    }
+  ],
+  "title": "ErnestLinks Consult Website Redesign"
+}
