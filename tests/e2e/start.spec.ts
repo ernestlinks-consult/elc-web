@@ -56,8 +56,14 @@ test("all passport steps save, and Back keeps answers", async ({ page }) => {
   await main.getByRole("radio", { name: "Mr", exact: true }).check();
   await main.getByRole("textbox", { name: "Surname" }).fill("Mensah");
   await main.getByLabel("Date of birth").fill("1999-02-03");
-  await main.getByRole("combobox", { name: "Marital status" }).click();
-  await page.getByRole("option", { name: "Single" }).click();
+  // By keyboard: under load the open list can stay out of reach of a click.
+  const maritalStatus = main.getByRole("combobox", { name: "Marital status" });
+  await maritalStatus.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("option", { name: "Single" })).toBeAttached();
+  await page.keyboard.type("Single");
+  await page.keyboard.press("Enter");
+  await expect(maritalStatus).toHaveText(/Single/);
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(
@@ -701,16 +707,7 @@ test("the Start online journey logs no browser errors", async ({ page }) => {
   await expect(page.getByText("What happens next")).toBeVisible();
 
   expect(errors).toEqual([]);
-  // TODO(step 6b): the shell links to these pages, so the router prefetches them.
-  // Once they exist, nothing should 404 here.
-  expect(
-    missing.filter(
-      (path) =>
-        !/^\/(about|contact|privacy|terms|payments|resources)(\/|$)/.test(
-          path,
-        ),
-    ),
-  ).toEqual([]);
+  expect(missing).toEqual([]);
 });
 
 test("/start has no horizontal overflow from 320px to 1600px", async ({ page }) => {

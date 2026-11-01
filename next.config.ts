@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
+  // Legal pages read their text at render time, so it must ship with the server.
+  outputFileTracingIncludes: { "/*": ["./content/legal/**"] },
   images: {
     remotePatterns: process.env.NEXT_PUBLIC_SUPABASE_URL
       ? [new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/**`)]

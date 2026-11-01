@@ -3,6 +3,8 @@
 // (VERCEL_ENV=production, or --strict) fails here and lists them. Local and
 // staging builds use the seed, which holds placeholders on purpose: they warn.
 
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import nextEnv from "@next/env";
 import { createClient } from "@supabase/supabase-js";
 
@@ -35,6 +37,15 @@ async function findPlaceholders(url, key) {
   ];
 }
 
+/** Legal pages hold ELC's own text, so they are checked with the same rule. */
+function legalPlaceholders() {
+  const folder = join(process.cwd(), "content", "legal");
+
+  return readdirSync(folder)
+    .filter((file) => readFileSync(join(folder, file), "utf8").includes(marker))
+    .map((file) => `legal page: ${file}`);
+}
+
 nextEnv.loadEnvConfig(process.cwd());
 
 const strict =
@@ -48,7 +59,7 @@ if (!url || !key) {
   ]);
 } else {
   try {
-    const found = await findPlaceholders(url, key);
+    const found = [...(await findPlaceholders(url, key)), ...legalPlaceholders()];
     if (found.length > 0) {
       report(strict, "public values still waiting on ELC:", found);
     }

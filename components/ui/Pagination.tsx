@@ -9,6 +9,8 @@ export type PaginationProps = Omit<
   page: number;
   totalPages: number;
   hrefForPage: (page: number) => string;
+  /** Full page loads, for pages the client router can't reach (query rewrites). */
+  plainLinks?: boolean;
 };
 
 const itemClasses =
@@ -34,12 +36,15 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       page,
       totalPages,
       hrefForPage,
+      plainLinks,
       className,
       "aria-label": ariaLabel = "Pagination",
       ...rest
     },
     ref,
   ) {
+    const PageLink = plainLinks ? "a" : Link;
+
     return (
       <nav
         {...rest}
@@ -50,9 +55,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         <ul className="flex flex-wrap items-center gap-space-1">
           <li>
             {page > 1 ? (
-              <Link href={hrefForPage(page - 1)} className={itemClasses}>
+              <PageLink href={hrefForPage(page - 1)} className={itemClasses}>
                 Previous
-              </Link>
+              </PageLink>
             ) : (
               <span className={cn(itemClasses, "text-ink-muted")}>
                 Previous
@@ -66,7 +71,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
                   …
                 </span>
               ) : (
-                <Link
+                <PageLink
                   href={hrefForPage(item)}
                   aria-label={`Page ${item}`}
                   aria-current={item === page ? "page" : undefined}
@@ -76,15 +81,15 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
                   )}
                 >
                   {item}
-                </Link>
+                </PageLink>
               )}
             </li>
           ))}
           <li>
             {page < totalPages ? (
-              <Link href={hrefForPage(page + 1)} className={itemClasses}>
+              <PageLink href={hrefForPage(page + 1)} className={itemClasses}>
                 Next
-              </Link>
+              </PageLink>
             ) : (
               <span className={cn(itemClasses, "text-ink-muted")}>Next</span>
             )}

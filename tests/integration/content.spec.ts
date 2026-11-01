@@ -14,7 +14,11 @@ const allTags = [
 async function revalidate(tags: string[]) {
   const response = await fetch("http://localhost:3000/api/revalidate", {
     method: "POST",
-    headers: { "x-revalidate-secret": secret, "Content-Type": "application/json" },
+    headers: {
+      "x-revalidate-secret": secret,
+      "Content-Type": "application/json",
+      "x-forwarded-for": `10.0.0.${Math.floor(Math.random() * 250) + 1}`,
+    },
     body: JSON.stringify({ tags }),
   });
   expect(response.status).toBe(200);
@@ -27,6 +31,37 @@ async function expectSoon(check: () => Promise<boolean>) {
 
 const html = async (path: string) =>
   (await fetch(`http://localhost:3000${path}`)).text();
+
+test("the revalidate route only accepts POST", async () => {
+  const response = await fetch("http://localhost:3000/api/revalidate");
+
+  expect(response.status).toBe(405);
+});
+
+test("the revalidate route needs a secret", async () => {
+  const response = await fetch("http://localhost:3000/api/revalidate", {
+    method: "POST",
+    body: JSON.stringify({ tags: ["prices"] }),
+  });
+
+  expect(response.status).toBe(401);
+});
+
+test("guessing the secret is rate limited", async () => {
+  const headers = { "x-revalidate-secret": "wrong", "x-forwarded-for": `10.9.9.${Date.now() % 250}` };
+  const statuses: number[] = [];
+
+  for (let attempt = 0; attempt < 62; attempt += 1) {
+    const response = await fetch("http://localhost:3000/api/revalidate", {
+      method: "POST",
+      headers,
+    });
+    statuses.push(response.status);
+  }
+
+  expect(statuses.slice(0, 60).every((status) => status === 401)).toBe(true);
+  expect(statuses.at(-1)).toBe(429);
+});
 
 test("the revalidate route refuses a bad secret and unknown tags", async () => {
   const bad = await fetch("http://localhost:3000/api/revalidate", {
@@ -52,13 +87,27 @@ test("sections disappear when their tables are empty, and come back", async ({ p
     "scholarships", "faqs",
   ] as const;
 
-  const hide = (state: "draft" | "published") =>
+  const hidden = new Map<string, string[]>();
+
+  const hide = () =>
+    Promise.all(
+      contentTables.map(async (table) => {
+        const { data } = await database
+          .from(table)
+          .update({ publish_state: "draft" } as never)
+          .eq("publish_state", "published")
+          .select("id");
+        hidden.set(table, (data ?? []).map(({ id }) => id));
+      }),
+    );
+
+  const restore = () =>
     Promise.all(
       contentTables.map((table) =>
         database
           .from(table)
-          .update({ publish_state: state } as never)
-          .eq("publish_state", state === "draft" ? "published" : "draft"),
+          .update({ publish_state: "published" } as never)
+          .in("id", hidden.get(table) ?? []),
       ),
     );
 
@@ -68,15 +117,8 @@ test("sections disappear when their tables are empty, and come back", async ({ p
       .update({ is_public: value })
       .in("key", ["passport_standard", "passport_express"]);
 
-  // Drafts created by this suite's seed are none, so restoring is exact.
-  const { count: drafts } = await database
-    .from("posts")
-    .select("id", { count: "exact", head: true })
-    .eq("publish_state", "draft");
-  expect(drafts).toBe(0);
-
   try {
-    await hide("draft");
+    await hide();
     await pricesPublic(false);
     await revalidate(allTags);
 
@@ -99,7 +141,7 @@ test("sections disappear when their tables are empty, and come back", async ({ p
     await expect(page.locator("#open-now")).toContainText("Nothing for your field yet?");
     await expect(page.locator("#open-now")).not.toContainText("Hospitality roles");
   } finally {
-    await hide("published");
+    await restore();
     await pricesPublic(true);
     await revalidate(allTags);
   }
@@ -121,4 +163,43 @@ test("a changed price reaches the page after revalidation", async () => {
   }
 
   await expectSoon(async () => (await html("/")).includes("GH¢600"));
+});
+
+test("a post published after the build opens, and 404s once pulled", async ({ page }) => {
+  const slug = `sample-after-build-${Date.now()}`;
+  const author = "00000000-0000-4000-8000-000000000004";
+  const { data, error } = await database
+    .from("posts")
+    .insert({
+      slug,
+      title: "[Sample] Published after the build",
+      summary: "A late post.",
+      body_html: "<p>Late post body.</p>",
+      category: "travel",
+      author_id: author,
+      owner_id: author,
+      publish_state: "published",
+      published_at: new Date().toISOString(),
+      reviewed_by: "00000000-0000-4000-8000-000000000002",
+    })
+    .select("id")
+    .single();
+  expect(error).toBeNull();
+
+  try {
+    await revalidate(["posts"]);
+
+    const response = await page.goto(`/resources/blog/${slug}`);
+    expect(response!.status()).toBe(200);
+    await expect(page.getByTestId("article-body")).toContainText("Late post body.");
+
+    await database.from("posts").update({ publish_state: "draft" }).eq("id", data!.id);
+    await revalidate(["posts"]);
+
+    const pulled = await page.goto(`/resources/blog/${slug}`);
+    expect(pulled!.status()).toBe(404);
+  } finally {
+    await database.from("posts").delete().eq("id", data!.id);
+    await revalidate(["posts"]);
+  }
 });

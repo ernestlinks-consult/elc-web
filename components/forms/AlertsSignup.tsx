@@ -12,11 +12,16 @@ import { Honeypot } from "./Honeypot";
 
 export type AlertsSignupProps = {
   privacyHref: string;
+  /** A page and the footer can both show this form, so they need different names. */
+  heading?: string;
 };
 
 type Values = AlertsInput & { website?: string };
 
-export function AlertsSignup({ privacyHref }: AlertsSignupProps) {
+export function AlertsSignup({
+  privacyHref,
+  heading = "Get Scholarship Hunt alerts",
+}: AlertsSignupProps) {
   const headingId = useId();
   const consentErrorId = useId();
   const [subscribed, setSubscribed] = useState(false);
@@ -63,7 +68,7 @@ export function AlertsSignup({ privacyHref }: AlertsSignupProps) {
     >
       <Honeypot {...register("website")} />
       <h2 id={headingId} className="text-eyebrow text-on-blue">
-        Get Scholarship Hunt alerts
+        {heading}
       </h2>
       <p>Verified opportunities on WhatsApp. One or two messages a week.</p>
       <Field

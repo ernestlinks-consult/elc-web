@@ -188,6 +188,33 @@ values
     'Which test your schools accept and how to prepare in six weeks.', '{"type": "doc", "content": []}', 'exams',
     '00000000-0000-4000-8000-000000000005', '00000000-0000-4000-8000-000000000005', 'published', now(), '00000000-0000-4000-8000-000000000002');
 
+update public.posts
+set body_html = '<p>[Sample] Standard takes about a month and express is faster.</p><h2>Which one do you need?</h2><p>Choose by your travel date, not by habit.</p><ul><li>Check your date</li><li>Check your documents</li></ul>'
+where slug = 'sample-standard-or-express-passport';
+
+update public.posts
+set body = '{"type": "doc", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "[Sample] Which test your schools accept comes first."}]}, {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "Three mistakes to avoid"}]}, {"type": "paragraph", "content": [{"type": "text", "text": "Booking too late is the commonest.", "marks": [{"type": "bold"}]}]}]}'
+where slug = 'sample-ielts-or-toefl';
+
+insert into public.posts (slug, title, summary, body_html, category, author_id, owner_id, publish_state, published_at, reviewed_by)
+select
+  'sample-exam-tip-' || n, '[Sample] Exam tip ' || n, 'A short sample tip.', '<p>[Sample] Tip ' || n || '.</p>', 'exams',
+  '00000000-0000-4000-8000-000000000004', '00000000-0000-4000-8000-000000000004', 'published', now() - (n || ' days')::interval,
+  '00000000-0000-4000-8000-000000000002'
+from generate_series(1, 11) as n;
+
+-- Proves the sanitiser: every hostile part of this body must be gone from the page.
+insert into public.posts (slug, title, summary, body_html, category, author_id, owner_id, publish_state, published_at, reviewed_by)
+values
+  ('sample-sanitiser-check', '[Sample] Sanitiser check', 'A post with hostile HTML in its body.',
+    '<p onclick="window.hacked=1">Safe paragraph.</p><script>window.hacked=1</script><img src=x onerror="window.hacked=1"><iframe src="https://example.test/frame"></iframe><a href="javascript:window.hacked=1">Bad link</a><a href="https://example.test/good" style="color:red">Good link</a>',
+    'travel', '00000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000002', 'published', now() - interval '30 days', '00000000-0000-4000-8000-000000000002');
+
+insert into public.posts (slug, title, summary, body_html, category, author_id, owner_id, publish_state)
+values
+  ('sample-draft-post', '[Sample] Draft post', 'Must never be visible.', '<p>Draft.</p>', 'exams',
+    '00000000-0000-4000-8000-000000000004', '00000000-0000-4000-8000-000000000004', 'draft');
+
 with added as (
   insert into public.videos (platform, url, title, keyword, publish_state, added_by, owner_id, published_at)
   values
@@ -203,6 +230,8 @@ insert into public.video_placements (video_id, page_key)
 select added.id, page.key
 from added
 cross join (values ('videos'), ('home'), ('school'), ('visa')) as page (key);
+
+update public.videos set pinned = true where url like '%sampleVideo1';
 
 update public.videos set pinned = true where url like '%sampleVideo1';
 
@@ -243,6 +272,14 @@ values
   ('visa', '[Sample] Can you guarantee my visa?', 'No. The embassy decides. We make sure your application is complete, accurate and on time.',
     1, 'published', '00000000-0000-4000-8000-000000000005'),
   ('exams', '[Sample] Which test do I need?', 'It depends on your schools. Some waive the English test, so check with us before you pay for one.',
+    1, 'published', '00000000-0000-4000-8000-000000000004'),
+  ('birth', '[Sample] How do I start a birth certificate?', 'Start online and we tell you what we need from you. Times depend on the registry.',
+    1, 'published', '00000000-0000-4000-8000-000000000004'),
+  ('school', '[Sample] Can you choose a school for me?', 'We shortlist programmes that fit your goals and budget, and you decide.',
+    1, 'published', '00000000-0000-4000-8000-000000000004'),
+  ('work', '[Sample] Do you find jobs abroad?', 'We guide you through the options and paperwork. Employers make the hiring decision.',
+    1, 'published', '00000000-0000-4000-8000-000000000004'),
+  ('travel', '[Sample] Do you plan group trips?', 'Yes. Published trips are listed on our travel page, and you can ask about others.',
     1, 'published', '00000000-0000-4000-8000-000000000004'),
   (null, '[Sample] Do you guarantee admissions, visas or jobs?', 'No. Schools, embassies and employers make those decisions. We make sure your application is complete, accurate and on time, and we tell you honestly where you stand.',
     3, 'published', '00000000-0000-4000-8000-000000000004');

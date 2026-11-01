@@ -5,8 +5,8 @@ import {
   signInPath,
   type AccessRow,
 } from "@/lib/auth/access";
-import { serviceKeys, type ServiceKey } from "@/lib/forms/types";
-import { servicePageSlugs } from "@/lib/site-structure";
+import { passesDatabaseCheck } from "@/lib/public-route-checks";
+import { resolvePublicRoute } from "@/lib/public-routes";
 import type { Database } from "@/lib/supabase/database.types";
 
 // Guards every /portal request and keeps the session fresh. Server actions and
@@ -22,25 +22,28 @@ function protect(response: NextResponse) {
   return response;
 }
 
-/** Dynamic public routes render a shell first, so an unknown slug must stop here. */
-function unknownPublicPath(pathname: string) {
-  const service = pathname.match(/^\/services\/([^/]+)$/)?.[1];
-  if (service) return !servicePageSlugs.has(service);
+/** Dynamic public routes render a shell first, so a bad URL must stop here. */
+async function publicResponse(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl;
+  const decision = resolvePublicRoute(pathname, searchParams);
+  // No route lives here, so Next answers with app/not-found.tsx and a real 404.
+  const notFound = () =>
+    NextResponse.rewrite(new URL("/page-not-found", request.url));
 
-  const start = pathname.match(/^\/start\/([^/]+)$/)?.[1];
-  if (start) return start !== "done" && !serviceKeys.includes(start as ServiceKey);
+  if (decision.action === "notFound") return notFound();
+  if (decision.check && !(await passesDatabaseCheck(decision.check))) {
+    return notFound();
+  }
 
-  return false;
+  return decision.action === "rewrite"
+    ? NextResponse.rewrite(new URL(decision.path, request.url))
+    : NextResponse.next();
 }
 
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
 
-  if (!pathname.startsWith("/portal")) {
-    return unknownPublicPath(pathname)
-      ? NextResponse.rewrite(new URL("/page-not-found", request.url))
-      : NextResponse.next();
-  }
+  if (!pathname.startsWith("/portal")) return publicResponse(request);
 
   let response = NextResponse.next({ request });
 
@@ -136,5 +139,6 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/portal", "/portal/:path*", "/services/:path*", "/start/:path*"],
+  // Everything but assets, so an unknown URL always gets the real 404 page.
+  matcher: ["/((?!_next/|api/|brand/|.*\\.).*)"],
 };

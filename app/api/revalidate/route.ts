@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import { revalidateTag } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 import { cacheTags } from "@/lib/content/cache";
+import { clientIp, withinRateLimit } from "@/lib/leads/request";
 
 // Refreshes public pages when content changes. The portal's content editors
 // (phase 2) and the nightly scholarship job will call this.
@@ -20,6 +21,10 @@ function authorised(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  if (!(await withinRateLimit("revalidate", await clientIp(), 60, "10 minutes"))) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   if (!authorised(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

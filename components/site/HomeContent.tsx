@@ -11,6 +11,7 @@ import type {
 } from "@/lib/content/listings";
 import type { PublicPrice } from "@/lib/content/prices";
 import type { TeamMember } from "@/lib/content/staff";
+import { cn } from "@/lib/cn";
 import type { Service } from "@/lib/site-config";
 import { ImageOrPattern } from "./ImageOrPattern";
 import { VideoEmbed } from "./VideoEmbed";
@@ -158,7 +159,7 @@ function ServiceCards({ services, prices }: Pick<HomeData, "services" | "prices"
                 className="flex h-full flex-col gap-space-2 rounded-lg border border-line bg-surface p-space-5 text-ink no-underline"
               >
                 <strong className="text-h4">{service.name}</strong>
-                <span className="text-ink-muted">{copy.text}</span>
+                <span className="text-ink-muted max-phone:hidden">{copy.text}</span>
                 <span className="mt-auto pt-space-1 font-bold text-blue">{action}</span>
               </Link>
             </li>
@@ -258,7 +259,9 @@ function Packages({ prices, whatsappHref }: Pick<HomeData, "prices" | "whatsappH
             <h3 className="text-h4">{name}</h3>
             <strong className="text-h2">{price.amount}</strong>
             {price.timeText && <p className="text-ink-muted">{price.timeText}</p>}
-            <CheckList items={features} />
+            <div className="max-phone:hidden">
+              <CheckList items={features} />
+            </div>
             <div className="mt-auto flex flex-wrap items-center gap-space-3 pt-space-2">
               <Button href="/start?service=passport">Start online</Button>
               <a href={whatsappHref} className="inline-flex min-h-11 items-center">
@@ -284,7 +287,7 @@ function TrackRecord({ drives, testimonials, whatsappHref }: Pick<HomeData, "dri
       {drives.length > 0 && (
         <>
           <ul className={cardGrid}>
-            {drives.slice(0, 4).map((drive) => {
+            {drives.slice(0, 4).map((drive, index) => {
               const details = [
                 drive.drive_date ? monthYear(drive.drive_date) : null,
                 drive.applicants_count !== null
@@ -293,8 +296,18 @@ function TrackRecord({ drives, testimonials, whatsappHref }: Pick<HomeData, "dri
               ].filter(Boolean);
 
               return (
-                <li key={drive.id} className="overflow-hidden rounded-lg border border-line">
-                  <ImageOrPattern path={drive.photo_path} alt={drive.host_name} className="h-36" />
+                <li
+                  key={drive.id}
+                  className={cn(
+                    "overflow-hidden rounded-lg border border-line",
+                    index > 1 && "max-phone:hidden",
+                  )}
+                >
+                  <ImageOrPattern
+                    path={drive.photo_path}
+                    alt={drive.host_name}
+                    className="h-36 max-phone:h-20"
+                  />
                   <div className="flex flex-col gap-1 p-space-4">
                     <h3 className="text-h4">{drive.host_name}</h3>
                     {details.length > 0 && (
@@ -312,8 +325,14 @@ function TrackRecord({ drives, testimonials, whatsappHref }: Pick<HomeData, "dri
       )}
       {testimonials.length > 0 && (
         <div className={cardGrid} data-testid="testimonials">
-          {testimonials.slice(0, 2).map((item) => (
-            <figure key={item.id} className="flex min-w-0 flex-col gap-space-3 rounded-lg bg-blue-tint p-space-5">
+          {testimonials.slice(0, 2).map((item, index) => (
+            <figure
+              key={item.id}
+              className={cn(
+                "flex min-w-0 flex-col gap-space-3 rounded-lg bg-blue-tint p-space-5",
+                index > 0 && "max-phone:hidden",
+              )}
+            >
               <blockquote className="text-lead">“{item.quote}”</blockquote>
               <figcaption className="text-body-sm text-ink-muted">
                 {[item.display_name, item.year].filter(Boolean).join(" · ")}
@@ -369,7 +388,7 @@ function Resources({ posts, scholarships, video }: Pick<HomeData, "posts" | "sch
         )}
       </ul>
       {video && (
-        <div className="max-w-120">
+        <div className="max-w-120 max-phone:hidden">
           <VideoEmbed
             platform={video.platform}
             url={video.url}
@@ -398,7 +417,10 @@ function AboutTeam({ team }: Pick<HomeData, "team">) {
         More about us and our team →
       </Link>
       {team.length > 0 && (
-        <ul className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-space-4">
+        <ul
+          data-testid="home-team"
+          className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-space-4 max-phone:hidden"
+        >
           {team.map((member) => (
             <li key={member.id} className="flex flex-col gap-1">
               <ImageOrPattern
@@ -429,8 +451,13 @@ function Contact({ whatsappDisplay, privacyHref }: Pick<HomeData, "whatsappDispl
         Office details and directions are on our{" "}
         <Link href="/contact">contact page</Link>.
       </p>
-      <div className="max-w-180 rounded-lg bg-surface p-space-5">
+      <div className="max-w-180 rounded-lg bg-surface p-space-5 max-phone:hidden">
         <ContactForm privacyHref={privacyHref} />
+      </div>
+      <div className="phone:hidden">
+        <Button href="/contact#message" variant="secondary">
+          Send us a message
+        </Button>
       </div>
     </Section>
   );
