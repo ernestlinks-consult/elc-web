@@ -1,11 +1,11 @@
 import { defineStep } from "./build";
-import { heardFrom, reviewStep, startStep } from "./common";
+import { reviewStep, startStep } from "./common";
 import type { ServiceForm } from "./types";
 
 export const examsForm: ServiceForm = {
   service: "exams",
   name: "Exams",
-  version: 1,
+  version: 2,
   timeHint: "About 2 minutes in total",
   later: ["Passport or Ghana Card details for registration", "Test fee payment"],
   nextSteps: [
@@ -57,7 +57,6 @@ export const examsForm: ServiceForm = {
           options: ["Weekdays", "Evenings", "Weekends"],
           full: true,
         },
-        heardFrom,
       ],
     }),
     reviewStep,

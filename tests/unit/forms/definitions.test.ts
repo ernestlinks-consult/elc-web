@@ -71,6 +71,89 @@ test("prices are never hard-coded: labels read them from the database", () => {
   }
 });
 
+test("the consent text is exactly the approved wording", () => {
+  for (const form of forms) {
+    const consent = form.steps[0].fields
+      .filter(isInputField)
+      .find((field) => field.key === "consent")!;
+
+    expect(consent.label).toBe(
+      "I agree that ErnestLinks Consult may keep these details and contact me by WhatsApp, SMS or phone about this request. I've read the privacy notice.",
+    );
+  }
+});
+
+test("every form asks how they heard about us once, on the last step, optionally", () => {
+  for (const form of forms) {
+    const asked = form.steps.map((step) =>
+      step.fields
+        .filter(isInputField)
+        .filter((field) => field.key === "heard_from"),
+    );
+    const last = asked.pop()!;
+
+    expect(asked.flat()).toEqual([]);
+    expect(last).toHaveLength(1);
+    expect(last[0].required).toBeFalsy();
+    expect(last[0].optional).toBe(true);
+    expect(last[0]).toMatchObject({
+      options: [
+        "TikTok LIVE",
+        "TikTok video",
+        "Instagram",
+        "Facebook",
+        "A friend",
+        "Passport drive",
+        "Google",
+        "Other",
+      ],
+    });
+  }
+});
+
+test("every phone field takes Ghana and international numbers", () => {
+  for (const form of forms) {
+    for (const step of form.steps) {
+      for (const field of step.fields.filter(isInputField)) {
+        if (field.kind !== "tel") continue;
+
+        const parsed = step.laterSchema.parse({
+          [field.key]: "+44 7911 123456",
+        }) as Record<string, string>;
+        expect(parsed[field.key]).toBe("+447911123456");
+      }
+    }
+  }
+});
+
+describe("Finish later schemas", () => {
+  test.each(forms.map((form) => [form.service, form] as const))(
+    "%s lets every required field be empty",
+    (_service, form) => {
+      for (const step of form.steps) {
+        expect(step.laterSchema.safeParse({}).success).toBe(true);
+      }
+    },
+  );
+
+  test("filled fields must still be valid", () => {
+    const step = serviceForms.passport.steps[2];
+
+    expect(step.laterSchema.safeParse({ email: "nope" }).success).toBe(false);
+    expect(step.laterSchema.safeParse({ secondary_phone: "12345" }).success).toBe(
+      false,
+    );
+  });
+
+  test("a future birth date is still refused", () => {
+    const step = serviceForms.passport.steps[1];
+
+    expect(
+      step.laterSchema.safeParse({ date_of_birth: "2099-01-01" }).success,
+    ).toBe(false);
+  });
+});
+
 describe("banned fields (F-06)", () => {
   const banned = [
     "ghana card",

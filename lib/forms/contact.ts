@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { normalizeGhanaPhone } from "./phone";
+import { normalizePhone, phoneExample } from "./phone";
 
 // General contact form. Saves to messages. Bump when fields change.
 export const contactFormVersion = 1;
@@ -17,8 +17,8 @@ export const contactSchema = z.object({
   full_name: z.string().trim().min(1, "Enter your full name.").max(200),
   whatsapp: z
     .string()
-    .transform((value) => normalizeGhanaPhone(value) ?? "")
-    .refine(Boolean, "Enter a WhatsApp number, like 024 000 0000."),
+    .transform((value) => normalizePhone(value) ?? "")
+    .refine(Boolean, `Enter a WhatsApp number, like ${phoneExample}.`),
   email: z.preprocess(
     (value) => (value === "" ? undefined : value),
     z.email("Enter an email address, like name@example.com.").optional(),

@@ -27,8 +27,8 @@ select results_eq(
   $$ select channel::text, to_address, template, status::text from public.notifications
      where lead_id = (select lead_id from first_lead) order by channel $$,
   $$ values
-       ('email'::text, 'grace@example.test'::text, 'lead_new_owner_email'::text, 'pending'::text),
-       ('sms'::text, '+233240001001'::text, 'lead_ack_sms'::text, 'pending'::text) $$,
+       ('email'::text, 'grace@example.test'::text, 'email.owner_new_lead'::text, 'pending'::text),
+       ('sms'::text, '+233240001001'::text, 'sms.lead_ack'::text, 'pending'::text) $$,
   'a new lead enqueues one SMS to the lead and one email to the owner, both pending'
 );
 select is(
@@ -60,7 +60,7 @@ select is(
   'notifications are enqueued once per new lead'
 );
 select is(
-  (select count(*)::int from public.lead_events where lead_id = (select lead_id from first_lead) and type = 'merged'),
+  (select count(*)::int from public.lead_events where lead_id = (select lead_id from first_lead) and type = 'resubmitted'),
   1,
   'the attach is on the timeline'
 );

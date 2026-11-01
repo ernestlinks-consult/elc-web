@@ -34,6 +34,11 @@ export type StepResult =
   | { status: "invalid"; errors: Record<string, string>; values: StepValues }
   | { status: "error"; message: string; values: StepValues };
 
+export type FinishLaterResult =
+  | { status: "finished"; ref: string }
+  | { status: "invalid"; errors: Record<string, string> }
+  | { status: "error"; message: string };
+
 export type SimpleFormResult =
   | { status: "ok" }
   | { status: "invalid"; errors: Record<string, string> }

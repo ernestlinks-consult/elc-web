@@ -384,8 +384,17 @@ inspector_port = 8083
 # The Deno major version to use.
 deno_version = 2
 
-# [edge_runtime.secrets]
-# secret_key = "env(SECRET_VALUE)"
+# Local values only: Supabase does not deploy these. Real environments set their
+# own with `supabase secrets set`.
+[edge_runtime.secrets]
+SMS_PROVIDER = "log"
+EMAIL_PROVIDER = "inbucket"
+INBUCKET_URL = "http://supabase_inbucket_elc-web:8025"
+SITE_URL = "http://localhost:3000"
+NOTIFY_CRON_SECRET = "local-notify-secret"
+
+[functions.send-notifications]
+verify_jwt = false
 
 [analytics]
 enabled = true

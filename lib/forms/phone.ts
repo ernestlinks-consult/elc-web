@@ -1,10 +1,19 @@
-/**
- * Accepts 0XX XXX XXXX, 233XXXXXXXXX or +233XXXXXXXXX, with or without spaces
- * and dashes. Returns E.164 (+233…), or null if it is not a Ghana number.
- */
-export function normalizeGhanaPhone(value: string): string | null {
-  const compact = value.replace(/[\s-]/g, "");
-  const match = compact.match(/^(?:0|\+?233)(\d{9})$/);
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
-  return match ? `+233${match[1]}` : null;
+export const phoneExample = "024 000 0000 or +44 7911 123456";
+
+/**
+ * Accepts Ghana numbers (0XX XXX XXXX, +233…) and any international number in +
+ * form. Returns E.164, or null. Ghana numbers are checked strictly. Foreign ones
+ * only need a possible length: the library's data rejects real numbers in ranges
+ * it does not know, and turning away a real lead costs more than one bad number.
+ */
+export function normalizePhone(value: string): string | null {
+  const parsed = parsePhoneNumberFromString(value.trim(), "GH");
+  if (!parsed) return null;
+
+  const accepted =
+    parsed.country === "GH" ? parsed.isValid() : parsed.isPossible();
+
+  return accepted ? parsed.number : null;
 }

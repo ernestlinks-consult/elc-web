@@ -1,11 +1,11 @@
 import { defineStep } from "./build";
-import { heardFrom, reviewStep, startStep } from "./common";
+import { reviewStep, startStep } from "./common";
 import type { ServiceForm } from "./types";
 
 export const workForm: ServiceForm = {
   service: "work",
   name: "Work abroad",
-  version: 1,
+  version: 2,
   timeHint: "About 3 minutes in total",
   later: [
     "Professional licence and certificates",
@@ -80,7 +80,6 @@ export const workForm: ServiceForm = {
           options: ["No", "Yes, I’d like you to check it"],
           full: true,
         },
-        heardFrom,
       ],
     }),
     reviewStep,

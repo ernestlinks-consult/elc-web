@@ -7,7 +7,7 @@ import {
   startLead,
   stepOneChoices,
   uniquePhone,
-  useOwnIp,
+  setOwnIp,
 } from "./leads";
 import {
   desktop,
@@ -20,7 +20,7 @@ const finishLater = "Finish later, just contact me";
 const services = Object.keys(stepOneChoices);
 
 test.beforeEach(async ({ page }) => {
-  await useOwnIp(page);
+  await setOwnIp(page);
 });
 
 for (const service of services) {
@@ -135,13 +135,13 @@ test("a new lead enqueues one SMS and one owner email, nothing sent", async ({
     {
       channel: "sms",
       to_address: phone.stored,
-      template: "lead_ack_sms",
+      template: "sms.lead_ack",
       status: "pending",
     },
     {
       channel: "email",
       to_address: "peace@example.test",
-      template: "lead_new_owner_email",
+      template: "email.owner_new_lead",
       status: "pending",
     },
   ]);
@@ -156,6 +156,154 @@ test("Finish later marks the lead partial", async ({ page }) => {
 
   const [lead] = await leadByPhone(phone.stored);
   expect(lead).toMatchObject({ is_partial: true, steps_completed: 1 });
+});
+
+test("Finish later saves what is filled in and skips required fields", async ({
+  page,
+}) => {
+  const phone = uniquePhone();
+  await startLead(page, "visa", phone.typed);
+  const main = page.getByRole("main");
+
+  await main.getByLabel("Planned travel date").fill("2027-09");
+  await page.getByRole("button", { name: finishLater }).click();
+  await page.waitForURL("**/start/done**");
+
+  const [lead] = await leadByPhone(phone.stored);
+  const { data } = await database
+    .from("lead_steps")
+    .select("step_key, answers")
+    .eq("lead_id", lead.id)
+    .eq("step_index", 1);
+  expect(data![0].answers).toMatchObject({ travel_month: "2027-09" });
+  expect(lead.is_partial).toBe(true);
+});
+
+test("Finish later still checks the format of filled fields", async ({ page }) => {
+  const phone = uniquePhone();
+  await startLead(page, "passport", phone.typed);
+  const main = page.getByRole("main");
+
+  await main.getByLabel("Date of birth").fill("2099-01-01");
+  await page.getByRole("button", { name: finishLater }).click();
+
+  await expect(page.getByText("This date must be in the past.")).toBeVisible();
+  expect(page.url()).not.toContain("/start/done");
+});
+
+test("Finish later with nothing typed saves no empty step", async ({ page }) => {
+  const phone = uniquePhone();
+  await startLead(page, "exams", phone.typed);
+
+  await page.getByRole("button", { name: finishLater }).click();
+  await page.waitForURL("**/start/done**");
+
+  const [lead] = await leadByPhone(phone.stored);
+  const { count } = await database
+    .from("lead_steps")
+    .select("id", { count: "exact", head: true })
+    .eq("lead_id", lead.id);
+  expect(count).toBe(1);
+});
+
+test("an international WhatsApp number is stored in E.164", async ({ page }) => {
+  const number = `+447911${String(Date.now()).slice(-6)}`;
+  await page.goto("/start?service=travel");
+  await fillStepOne(page, "travel", number);
+  await saveButton(page).click();
+  await expect(page.getByText("Saved. We have your details")).toBeVisible();
+
+  expect(await leadByPhone(number)).toHaveLength(1);
+});
+
+test("the school form lists the next six intakes", async ({ page }) => {
+  await page.goto("/start?service=school");
+  const group = page.getByRole("radiogroup", {
+    name: "When do you want to start?",
+  });
+
+  await expect(group.getByRole("radio")).toHaveCount(7);
+  await expect(group.getByRole("radio", { name: "Not sure" })).toBeVisible();
+  await expect(group.getByRole("radio").first()).toHaveAccessibleName(
+    /^(Jan|May|Sep) \d{4}$/,
+  );
+});
+
+test("the last step asks how they heard about us and stores it", async ({
+  page,
+}) => {
+  const phone = uniquePhone();
+  await startLead(page, "exams", phone.typed);
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  const main = page.getByRole("main");
+  await main.getByRole("combobox", { name: /How did you hear/ }).click();
+  await page.getByRole("option", { name: "Passport drive" }).click();
+  await main.getByRole("checkbox", { name: /I confirm/ }).check();
+  await page.getByRole("button", { name: "Send my application" }).click();
+  await page.waitForURL("**/start/done**");
+
+  const [lead] = await leadByPhone(phone.stored);
+  expect(lead.heard_from).toBe("Passport drive");
+});
+
+test("a second session never overwrites saved answers", async ({ page, browser }) => {
+  const phone = uniquePhone();
+  await startLead(page, "exams", phone.typed);
+  const [lead] = await leadByPhone(phone.stored);
+
+  const other = await browser.newContext();
+  const second = await other.newPage();
+  await setOwnIp(second);
+  await second.goto("/start?service=exams");
+  await fillStepOne(second, "exams", phone.typed, "Someone Else");
+  await saveButton(second).click();
+  await expect(second.getByText("Saved. We have your details")).toBeVisible();
+  await other.close();
+
+  const { data: steps } = await database
+    .from("lead_steps")
+    .select("version, answers")
+    .eq("lead_id", lead.id)
+    .eq("step_index", 0)
+    .order("version");
+  expect(steps!.map((step) => step.version)).toEqual([1, 2]);
+  expect(steps![0].answers).toMatchObject({ full_name: "Test Lead" });
+  expect(steps![1].answers).toMatchObject({ full_name: "Someone Else" });
+
+  const { count } = await database
+    .from("lead_events")
+    .select("id", { count: "exact", head: true })
+    .eq("lead_id", lead.id)
+    .eq("type", "resubmitted");
+  expect(count).toBe(1);
+});
+
+test("the same session saving again keeps one version", async ({ page }) => {
+  const phone = uniquePhone();
+  await startLead(page, "exams", phone.typed);
+  await page.getByRole("button", { name: "Back" }).click();
+  await saveButton(page).click();
+  await expect(page.getByText("Saved. We have your details")).toBeVisible();
+
+  const [lead] = await leadByPhone(phone.stored);
+  const { data } = await database
+    .from("lead_steps")
+    .select("version")
+    .eq("lead_id", lead.id)
+    .eq("step_index", 0);
+  expect(data).toEqual([{ version: 1 }]);
+});
+
+test("the consent text links the privacy notice", async ({ page }) => {
+  await page.goto("/start");
+  const main = page.getByRole("main");
+
+  await expect(main.getByText("I've read the")).toBeVisible();
+  await expect(main.getByRole("link", { name: "privacy notice" })).toHaveAttribute(
+    "href",
+    "/privacy",
+  );
 });
 
 test("empty step 1 shows errors, a summary and moves focus", async ({ page }) => {
@@ -181,7 +329,7 @@ test("one error shows no summary, and a bad number is explained", async ({
   await saveButton(page).click();
 
   const main = page.getByRole("main");
-  await expect(main.getByText("Enter a Ghana phone number")).toBeVisible();
+  await expect(main.getByText("Enter a phone number")).toBeVisible();
   await expect(main.getByText(/Please check/)).toHaveCount(0);
   await expect(main.getByRole("textbox", { name: "WhatsApp number" })).toBeFocused();
 });
@@ -232,7 +380,7 @@ test("a duplicate submit attaches to the same lead", async ({ page, browser }) =
 
   const other = await browser.newContext();
   const second = await other.newPage();
-  await useOwnIp(second);
+  await setOwnIp(second);
   await startLead(second, "exams", phone.typed);
   await second.getByRole("button", { name: finishLater }).click();
   await second.waitForURL("**/start/done**");
@@ -593,7 +741,11 @@ test.describe("on a phone", () => {
 
       const buttonBox = (await button.boundingBox())!;
       const barBox = (await bar.boundingBox())!;
-      expect(buttonBox.y + buttonBox.height, name).toBeLessThanOrEqual(barBox.y);
+      const scrollY = await page.evaluate(() => window.scrollY);
+      expect(
+        buttonBox.y + buttonBox.height,
+        `${name} at scrollY ${scrollY}`,
+      ).toBeLessThanOrEqual(barBox.y);
     }
   });
 
@@ -615,7 +767,7 @@ test.describe("on a phone", () => {
     await page.goto("/start");
 
     const small = await page
-      .locator("main a, main button, main label:has(input[type=radio])")
+      .locator("main a:not(label a), main button, main label:has(input[type=radio])")
       .evaluateAll((elements) =>
         elements
           .filter((element) => element.getClientRects().length > 0)

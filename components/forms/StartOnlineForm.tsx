@@ -32,6 +32,7 @@ import { ThankYou } from "./ThankYou";
 export type StartOnlineFormProps = {
   service: ServiceKey;
   priceLabels: Record<string, string>;
+  dynamicOptions: Record<string, string[]>;
   privacyHref: string;
   whatsappNumber: string;
 };
@@ -128,6 +129,7 @@ function StepForm({
   onSaved,
   onBack,
   priceLabels,
+  dynamicOptions,
   privacyHref,
   whatsappNumber,
 }: StepFormProps) {
@@ -190,9 +192,7 @@ function StepForm({
       } else if (result.status === "finished") {
         router.push(doneUrl(result.ref));
       } else if (result.status === "invalid") {
-        Object.entries(result.errors).forEach(([key, text], index) =>
-          methods.setError(key, { message: text }, { shouldFocus: index === 0 }),
-        );
+        showErrors(result.errors);
       } else if (result.status === "error") {
         setMessage(result.message);
       }
@@ -203,13 +203,44 @@ function StepForm({
     }
   }
 
+  function showErrors(errors: Record<string, string>) {
+    Object.entries(errors).forEach(([key, text], index) =>
+      methods.setError(key, { message: text }, { shouldFocus: index === 0 }),
+    );
+  }
+
   async function finish() {
     setMessage(null);
-    setSaving(true);
+    methods.clearErrors();
+    const values = methods.getValues();
 
+    const parsed = step.laterSchema.safeParse(values);
+    if (!parsed.success) {
+      showErrors(
+        Object.fromEntries(
+          parsed.error.issues.map((issue) => [issue.path[0], issue.message]),
+        ),
+      );
+      return;
+    }
+
+    setSaving(true);
     try {
-      const { ref } = await finishLater();
-      router.push(doneUrl(ref));
+      const result = await finishLater({
+        service: form.service,
+        stepIndex,
+        values,
+        attribution,
+        sessionId,
+      });
+
+      if (result.status === "finished") {
+        router.push(doneUrl(result.ref));
+        return;
+      }
+      if (result.status === "invalid") showErrors(result.errors);
+      else if (result.status === "error") setMessage(result.message);
+      setSaving(false);
     } catch {
       setMessage(saveFailedMessage);
       setSaving(false);
@@ -274,6 +305,7 @@ function StepForm({
           control={methods.control as unknown as Control}
           serverErrors={serverErrors}
           priceLabels={priceLabels}
+          dynamicOptions={dynamicOptions}
           privacyHref={privacyHref}
         />
 

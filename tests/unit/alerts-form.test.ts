@@ -17,7 +17,13 @@ test("stores the number in international form", () => {
   );
 });
 
-test.each(["", "12345", "024 000 000", "+1 415 555 0100"])(
+test("accepts an international number", () => {
+  expect(alertsSchema.parse({ whatsapp: "+44 7911 123456", consent: true }).whatsapp).toBe(
+    "+447911123456",
+  );
+});
+
+test.each(["", "12345", "024 000 000"])(
   "rejects %s",
   (number) => {
     expect(parse(number)).toBe(false);

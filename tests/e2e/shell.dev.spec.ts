@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { database, uniquePhone, useOwnIp } from "./leads";
+import { database, uniquePhone, setOwnIp } from "./leads";
 import {
   desktop,
   expectNoAxeViolations,
@@ -42,7 +42,7 @@ for (const [name, viewport] of Object.entries({ desktop, phone })) {
 
 test("the contact form saves to messages", async ({ page }) => {
   const phone = uniquePhone();
-  await useOwnIp(page);
+  await setOwnIp(page);
   await page.goto("/dev/shell");
   const main = page.getByRole("main");
 

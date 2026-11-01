@@ -1,11 +1,12 @@
 import { defineStep } from "./build";
-import { heardFromWithDrive, reviewStep, startStep } from "./common";
+import { reviewStep, startStep } from "./common";
+import { intakePattern, notSure } from "./intakes";
 import type { ServiceForm } from "./types";
 
 export const schoolForm: ServiceForm = {
   service: "school",
   name: "School applications",
-  version: 1,
+  version: 2,
   timeHint: "About 5 minutes in total",
   later: [
     "Transcripts and certificates",
@@ -39,7 +40,9 @@ export const schoolForm: ServiceForm = {
         kind: "radio",
         key: "start_intake",
         label: "When do you want to start?",
-        options: ["Jan 2027", "May 2027", "Sep 2027", "Jan 2028", "Not sure"],
+        // The page fills in the next six intakes from today's date.
+        options: [notSure],
+        optionPattern: intakePattern,
         full: true,
       },
     ]),
@@ -161,7 +164,6 @@ export const schoolForm: ServiceForm = {
           options: ["Transcript", "Certificate", "CV", "References", "Statement of purpose"],
           full: true,
         },
-        heardFromWithDrive,
         { kind: "textarea", key: "notes", label: "Anything else we should know?", optional: true },
       ],
     }),

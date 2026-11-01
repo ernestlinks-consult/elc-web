@@ -42,9 +42,11 @@ export type Field =
       options: string[];
       /** Option to prices.key, so the label can show the current price. */
       optionPrices?: Record<string, string>;
+      /** For options built at runtime: replaces the fixed list in validation. */
+      optionPattern?: RegExp;
     })
   | (FieldBase & { kind: "textarea"; placeholder?: string })
-  | (FieldBase & { kind: "tick"; privacyLink?: boolean })
+  | (FieldBase & { kind: "tick" })
   | { kind: "heading" | "note"; label: string };
 
 export type InputField = Exclude<Field, { kind: "heading" | "note" }>;
@@ -55,6 +57,8 @@ export type Step = {
   intro?: string;
   fields: Field[];
   schema: z.ZodType;
+  /** "Finish later": required fields may be empty, filled ones must be valid. */
+  laterSchema: z.ZodType;
 };
 
 export type ServiceForm = {

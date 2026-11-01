@@ -34,16 +34,23 @@ const step = defineStep({
       required: true,
       options: ["Valid", "Expired"],
     },
-    { kind: "tick", key: "agree", label: "I agree", required: true, privacyLink: true },
+    {
+      kind: "tick",
+      key: "agree",
+      label: "I agree. I've read the privacy notice.",
+      required: true,
+    },
   ],
 });
 
 function Harness({
   onValid,
   serverErrors,
+  dynamicOptions,
 }: {
   onValid: (values: Record<string, unknown>) => void;
   serverErrors?: Record<string, string>;
+  dynamicOptions?: Record<string, string[]>;
 }) {
   const { control, handleSubmit } = useForm<Record<string, unknown>>({
     resolver: zodResolver(step.schema as never) as Resolver<
@@ -60,6 +67,7 @@ function Harness({
         control={control as unknown as Control}
         serverErrors={serverErrors}
         priceLabels={{ passport_standard: "GH¢600" }}
+        dynamicOptions={dynamicOptions}
         privacyHref="/privacy"
       />
       <button type="submit">Save</button>
@@ -122,6 +130,13 @@ test("unticking a chip clears it again", async () => {
   expect(uk).not.toBeChecked();
 });
 
+test("the choices can come from the page", () => {
+  render(<Harness onValid={vi.fn()} dynamicOptions={{ plan: ["May 2031"] }} />);
+
+  expect(screen.getByRole("radio", { name: "May 2031" })).toBeInTheDocument();
+  expect(screen.queryByRole("radio", { name: "Express" })).toBeNull();
+});
+
 test("server errors show when the browser posted without JavaScript", () => {
   render(
     <Harness onValid={vi.fn()} serverErrors={{ plan: "Choose one, please." }} />,
@@ -133,7 +148,7 @@ test("server errors show when the browser posted without JavaScript", () => {
 test("the consent tick links to the privacy notice", () => {
   render(<Harness onValid={vi.fn()} />);
 
-  expect(screen.getByRole("link", { name: "Privacy notice" })).toHaveAttribute(
+  expect(screen.getByRole("link", { name: "privacy notice" })).toHaveAttribute(
     "href",
     "/privacy",
   );

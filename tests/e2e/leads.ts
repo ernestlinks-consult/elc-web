@@ -18,7 +18,7 @@ export function uniquePhone() {
 }
 
 /** Rate limits are per IP, so each test gets its own. */
-export async function useOwnIp(page: Page) {
+export async function setOwnIp(page: Page) {
   await page.setExtraHTTPHeaders({
     "x-forwarded-for": `10.${randomInt(0, 255)}.${randomInt(0, 255)}.${randomInt(1, 255)}`,
   });

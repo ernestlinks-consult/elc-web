@@ -17,7 +17,7 @@ insert into public.messages (full_name, whatsapp, body, consent_at)
 values ('Test Person', '+233240000000', 'Hello', now());
 insert into public.subscribers (whatsapp, consent_at) values ('+233240000000', now());
 insert into public.events (name) values ('form_open');
-insert into public.notifications (channel, to_address, template) values ('sms', '+233240000000', 'ack');
+insert into public.notifications (channel, to_address, template, idempotency_key) values ('sms', '+233240000000', 'ack', 'test:ack');
 
 select ok((select count(*) > 0 from public.audit_log), 'fixtures: audit_log has rows');
 

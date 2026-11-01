@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { normalizeGhanaPhone } from "./phone";
+import { normalizePhone, phoneExample } from "./phone";
 import {
   isInputField,
   type Field,
@@ -42,8 +42,8 @@ function filledSchema(field: InputField): z.ZodType {
     case "tel":
       return z
         .string({ error: required })
-        .transform((value) => normalizeGhanaPhone(value) ?? "")
-        .refine(Boolean, "Enter a Ghana phone number, like 024 000 0000.");
+        .transform((value) => normalizePhone(value) ?? "")
+        .refine(Boolean, `Enter a phone number, like ${phoneExample}.`);
     case "number":
       return z
         .string({ error: required })
@@ -64,6 +64,10 @@ function filledSchema(field: InputField): z.ZodType {
         .regex(/^\d{4}-(0[1-9]|1[0-2])$/, "Enter a month and year.");
     case "select":
     case "radio":
+      // Options built from today's date cannot be a fixed list.
+      if (field.optionPattern) {
+        return z.string({ error: required }).regex(field.optionPattern, required);
+      }
       return z.enum(field.options as [string, ...string[]], { error: required });
     case "checkboxes":
       return z.array(z.enum(field.options as [string, ...string[]]));
@@ -97,14 +101,22 @@ function fieldSchema(field: InputField): z.ZodType {
     : z.preprocess(emptyToUndefined, filled.optional());
 }
 
-export function defineStep(
-  step: Omit<Step, "schema"> & { fields: Field[] },
-): Step {
-  const shape = Object.fromEntries(
-    step.fields
-      .filter(isInputField)
-      .map((field) => [field.key, fieldSchema(field)]),
+function stepSchema(fields: InputField[]) {
+  return z.object(
+    Object.fromEntries(fields.map((field) => [field.key, fieldSchema(field)])),
   );
+}
 
-  return { ...step, schema: z.object(shape) };
+export function defineStep(
+  step: Omit<Step, "schema" | "laterSchema"> & { fields: Field[] },
+): Step {
+  const fields = step.fields.filter(isInputField);
+
+  return {
+    ...step,
+    schema: stepSchema(fields),
+    laterSchema: stepSchema(
+      fields.map((field) => ({ ...field, required: false })),
+    ),
+  };
 }

@@ -26,8 +26,8 @@ async function Details({
 }: PageProps & { whatsappNumber: string }) {
   // The session check reads the clock, so it must wait for a real request.
   await connection();
-  const leadId = await getLeadSession();
-  const details = leadId ? await getThankYouDetails(leadId) : null;
+  const session = await getLeadSession();
+  const details = session ? await getThankYouDetails(session.leadId) : null;
 
   if (!details) {
     return (

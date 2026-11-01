@@ -1,11 +1,11 @@
 import { defineStep } from "./build";
-import { heardFrom, reviewStep, startStep } from "./common";
+import { reviewStep, startStep } from "./common";
 import type { ServiceForm } from "./types";
 
 export const visaForm: ServiceForm = {
   service: "visa",
   name: "Visa",
-  version: 1,
+  version: 2,
   timeHint: "About 4 minutes in total",
   later: [
     "Passport bio page",
@@ -91,7 +91,6 @@ export const visaForm: ServiceForm = {
           options: ["Myself", "Parent or family", "Sponsor", "Employer", "Scholarship"],
           full: true,
         },
-        heardFrom,
       ],
     }),
     reviewStep,

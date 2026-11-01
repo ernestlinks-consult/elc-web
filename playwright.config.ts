@@ -18,6 +18,11 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"], baseURL: productionURL },
     },
     {
+      name: "integration",
+      testMatch: "integration/**/*.spec.ts",
+      use: { ...devices["Desktop Chrome"], baseURL: productionURL },
+    },
+    {
       name: "development",
       testMatch: "**/*.dev.spec.ts",
       use: { ...devices["Desktop Chrome"], baseURL: developmentURL },

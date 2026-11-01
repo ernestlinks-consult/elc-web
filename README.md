@@ -16,7 +16,7 @@ npm run db:reset
 npm run dev
 ```
 
-Copy the API URL and anon key that `npm run db:start` prints into `.env.local`. The app runs at http://localhost:3000. `npm run db:reset` rebuilds the database from the migrations and `supabase/seed.sql`, `npm run db:test` runs the pgTAP tests, `npm run db:types` regenerates `lib/supabase/database.types.ts`, and `npm run db:stop` shuts the database down.
+Copy the API URL and anon key that `npm run db:start` prints into `.env.local`. The app runs at http://localhost:3000. `npm run db:reset` rebuilds the database from the migrations and `supabase/seed.sql`, `npm run db:test` runs the pgTAP tests, `npm run db:types` regenerates `lib/supabase/database.types.ts`, `npm run notify:run` sends queued notifications once, and `npm run db:stop` shuts the database down.
 
 `npm run dev` falls back to `lib/site-config.ts` with a warning if the database is down. `npm run build` and `npm run test:e2e` need it running and fail without it.
 

@@ -157,14 +157,14 @@ isOneToOne: false
                   ]
                 },"lead_steps": {
                   Row: {
-                    "answers": NonNullable<Json>,"created_at": string,"id": string,"lead_id": string,"saved_at": string,"step_index": number,"step_key": string,"updated_at": string
+                    "answers": NonNullable<Json>,"created_at": string,"id": string,"lead_id": string,"saved_at": string,"step_index": number,"step_key": string,"updated_at": string,"version": number
                   }
                   ComputedFields: never
                   Insert: {
-                    "answers"?: NonNullable<Json>,"created_at"?: string,"id"?: string,"lead_id": string,"saved_at"?: string,"step_index": number,"step_key": string,"updated_at"?: string
+                    "answers"?: NonNullable<Json>,"created_at"?: string,"id"?: string,"lead_id": string,"saved_at"?: string,"step_index": number,"step_key": string,"updated_at"?: string,"version"?: number
                   }
                   Update: {
-                    "answers"?: NonNullable<Json>,"created_at"?: string,"id"?: string,"lead_id"?: string,"saved_at"?: string,"step_index"?: number,"step_key"?: string,"updated_at"?: string
+                    "answers"?: NonNullable<Json>,"created_at"?: string,"id"?: string,"lead_id"?: string,"saved_at"?: string,"step_index"?: number,"step_key"?: string,"updated_at"?: string,"version"?: number
                   }
                   Relationships: [
                     {
@@ -177,14 +177,14 @@ isOneToOne: false
                   ]
                 },"leads": {
                   Row: {
-                    "best_time": string,"closed_reason": string | null,"consent_at": string,"created_at": string,"first_reply_at": string | null,"form_version": number,"full_name": string,"heard_from": string | null,"id": string,"is_partial": boolean,"owner_id": string | null,"ref": string,"referrer": string | null,"service_key": string,"source_page": string | null,"status": Database["public"]['Enums']["lead_status"],"steps_completed": number,"steps_total": number,"updated_at": string,"utm_campaign": string | null,"utm_medium": string | null,"utm_source": string | null,"whatsapp": string
+                    "best_time": string,"closed_reason": string | null,"consent_at": string,"created_at": string,"first_reply_at": string | null,"form_version": number,"full_name": string,"heard_from": string | null,"id": string,"is_partial": boolean,"owner_id": string | null,"ref": string,"referrer": string | null,"service_key": string,"source_page": string | null,"status": Database["public"]['Enums']["lead_status"],"steps_completed": number,"steps_total": number,"submission_count": number,"updated_at": string,"utm_campaign": string | null,"utm_medium": string | null,"utm_source": string | null,"whatsapp": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "best_time": string,"closed_reason"?: string | null,"consent_at": string,"created_at"?: string,"first_reply_at"?: string | null,"form_version": number,"full_name": string,"heard_from"?: string | null,"id"?: string,"is_partial"?: boolean,"owner_id"?: string | null,"ref": string,"referrer"?: string | null,"service_key": string,"source_page"?: string | null,"status"?: Database["public"]['Enums']["lead_status"],"steps_completed"?: number,"steps_total": number,"updated_at"?: string,"utm_campaign"?: string | null,"utm_medium"?: string | null,"utm_source"?: string | null,"whatsapp": string
+                    "best_time": string,"closed_reason"?: string | null,"consent_at": string,"created_at"?: string,"first_reply_at"?: string | null,"form_version": number,"full_name": string,"heard_from"?: string | null,"id"?: string,"is_partial"?: boolean,"owner_id"?: string | null,"ref": string,"referrer"?: string | null,"service_key": string,"source_page"?: string | null,"status"?: Database["public"]['Enums']["lead_status"],"steps_completed"?: number,"steps_total": number,"submission_count"?: number,"updated_at"?: string,"utm_campaign"?: string | null,"utm_medium"?: string | null,"utm_source"?: string | null,"whatsapp": string
                   }
                   Update: {
-                    "best_time"?: string,"closed_reason"?: string | null,"consent_at"?: string,"created_at"?: string,"first_reply_at"?: string | null,"form_version"?: number,"full_name"?: string,"heard_from"?: string | null,"id"?: string,"is_partial"?: boolean,"owner_id"?: string | null,"ref"?: string,"referrer"?: string | null,"service_key"?: string,"source_page"?: string | null,"status"?: Database["public"]['Enums']["lead_status"],"steps_completed"?: number,"steps_total"?: number,"updated_at"?: string,"utm_campaign"?: string | null,"utm_medium"?: string | null,"utm_source"?: string | null,"whatsapp"?: string
+                    "best_time"?: string,"closed_reason"?: string | null,"consent_at"?: string,"created_at"?: string,"first_reply_at"?: string | null,"form_version"?: number,"full_name"?: string,"heard_from"?: string | null,"id"?: string,"is_partial"?: boolean,"owner_id"?: string | null,"ref"?: string,"referrer"?: string | null,"service_key"?: string,"source_page"?: string | null,"status"?: Database["public"]['Enums']["lead_status"],"steps_completed"?: number,"steps_total"?: number,"submission_count"?: number,"updated_at"?: string,"utm_campaign"?: string | null,"utm_medium"?: string | null,"utm_source"?: string | null,"whatsapp"?: string
                   }
                   Relationships: [
                     {
@@ -261,14 +261,14 @@ isOneToOne: false
                   ]
                 },"notifications": {
                   Row: {
-                    "attempts": number,"channel": Database["public"]['Enums']["notify_channel"],"created_at": string,"id": string,"last_error": string | null,"lead_id": string | null,"payload": NonNullable<Json>,"send_after": string,"sent_at": string | null,"status": Database["public"]['Enums']["notify_status"],"template": string,"to_address": string,"updated_at": string
+                    "attempts": number,"channel": Database["public"]['Enums']["notify_channel"],"claimed_at": string | null,"created_at": string,"id": string,"idempotency_key": string,"last_error": string | null,"lead_id": string | null,"payload": NonNullable<Json>,"provider_id": string | null,"send_after": string,"sent_at": string | null,"status": Database["public"]['Enums']["notify_status"],"template": string,"to_address": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "attempts"?: number,"channel": Database["public"]['Enums']["notify_channel"],"created_at"?: string,"id"?: string,"last_error"?: string | null,"lead_id"?: string | null,"payload"?: NonNullable<Json>,"send_after"?: string,"sent_at"?: string | null,"status"?: Database["public"]['Enums']["notify_status"],"template": string,"to_address": string,"updated_at"?: string
+                    "attempts"?: number,"channel": Database["public"]['Enums']["notify_channel"],"claimed_at"?: string | null,"created_at"?: string,"id"?: string,"idempotency_key": string,"last_error"?: string | null,"lead_id"?: string | null,"payload"?: NonNullable<Json>,"provider_id"?: string | null,"send_after"?: string,"sent_at"?: string | null,"status"?: Database["public"]['Enums']["notify_status"],"template": string,"to_address": string,"updated_at"?: string
                   }
                   Update: {
-                    "attempts"?: number,"channel"?: Database["public"]['Enums']["notify_channel"],"created_at"?: string,"id"?: string,"last_error"?: string | null,"lead_id"?: string | null,"payload"?: NonNullable<Json>,"send_after"?: string,"sent_at"?: string | null,"status"?: Database["public"]['Enums']["notify_status"],"template"?: string,"to_address"?: string,"updated_at"?: string
+                    "attempts"?: number,"channel"?: Database["public"]['Enums']["notify_channel"],"claimed_at"?: string | null,"created_at"?: string,"id"?: string,"idempotency_key"?: string,"last_error"?: string | null,"lead_id"?: string | null,"payload"?: NonNullable<Json>,"provider_id"?: string | null,"send_after"?: string,"sent_at"?: string | null,"status"?: Database["public"]['Enums']["notify_status"],"template"?: string,"to_address"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -684,7 +684,21 @@ isOneToOne: false
                 }
           }
           Views: {
-            "live_schedule_public": {
+            "lead_steps_latest": {
+                  Row: {
+                    "answers": NonNullable<Json>,"created_at": string,"id": string,"lead_id": string,"saved_at": string,"step_index": number,"step_key": string,"updated_at": string,"version": number
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "lead_steps_lead_id_fkey"
+      columns: ["lead_id"]
+isOneToOne: false
+      referencedRelation: "leads"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"live_schedule_public": {
                   Row: {
                     "ends_at_time": string,"host_name": string | null,"starts_at_time": string,"topic": string | null,"weekday": number
                   }
@@ -772,15 +786,54 @@ isOneToOne: false
                         Relationships: [
                     
                   ]
+                },"subscribers_active": {
+                  Row: {
+                    "consent_at": string,"id": string,"list": string,"whatsapp": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                           "consent_at"?: string | null,"id"?: string | null,"list"?: string | null,"whatsapp"?: string | null
+                         }
+                        Update: {
+                           "consent_at"?: string | null,"id"?: string | null,"list"?: string | null,"whatsapp"?: string | null
+                         }
+                        Relationships: [
+                    
+                  ]
                 }
           }
           Functions: {
             "check_rate_limit":
 { Args: { "p_key": string,"p_limit": number,"p_scope": string,"p_window": string }; Returns: boolean
                            },
+"claim_notifications":
+{ Args: { "p_limit"?: number }; Returns: {
+              "attempts": number,
+"channel": Database["public"]['Enums']["notify_channel"],
+"claimed_at": string | null,
+"created_at": string,
+"id": string,
+"idempotency_key": string,
+"last_error": string | null,
+"lead_id": string | null,
+"payload": NonNullable<Json>,
+"provider_id": string | null,
+"send_after": string,
+"sent_at": string | null,
+"status": Database["public"]['Enums']["notify_status"],
+"template": string,
+"to_address": string,
+"updated_at": string
+            }[]
+                          SetofOptions: {
+        from: "*"
+        to: "notifications"
+        isOneToOne: false
+        isSetofReturn: true
+      } },
 "create_or_attach_lead":
-{ Args: { "p_best_time": string,"p_form_version": number,"p_full_name": string,"p_referrer"?: string,"p_service": string,"p_source_page"?: string,"p_steps_total": number,"p_utm_campaign"?: string,"p_utm_medium"?: string,"p_utm_source"?: string,"p_whatsapp": string }; Returns: {
-              "is_new": boolean,"lead_id": string,"ref": string
+{ Args: { "p_best_time": string,"p_form_version": number,"p_full_name": string,"p_referrer"?: string,"p_service": string,"p_session_lead"?: string,"p_session_submission"?: number,"p_source_page"?: string,"p_steps_total": number,"p_utm_campaign"?: string,"p_utm_medium"?: string,"p_utm_source"?: string,"p_whatsapp": string }; Returns: {
+              "is_new": boolean,"lead_id": string,"ref": string,"submission": number
             }[]
                            },
 "find_duplicate_lead":
@@ -795,17 +848,29 @@ isOneToOne: false
 "next_lead_ref":
 { Args: { "p_service": string }; Returns: string
                            },
+"record_notification_failure":
+{ Args: { "p_error": string,"p_id": string,"p_retry_minutes"?: number }; Returns: Database["public"]['Enums']["notify_status"]
+                           },
+"record_notification_sent":
+{ Args: { "p_id": string,"p_provider_id": string }; Returns: boolean
+                           },
 "save_lead_step":
-{ Args: { "p_answers": Json,"p_heard_from"?: string,"p_lead_id": string,"p_referrer"?: string,"p_source_page"?: string,"p_step_index": number,"p_step_key": string,"p_utm_campaign"?: string,"p_utm_medium"?: string,"p_utm_source"?: string }; Returns: {
+{ Args: { "p_answers": Json,"p_heard_from"?: string,"p_lead_id": string,"p_referrer"?: string,"p_source_page"?: string,"p_step_index": number,"p_step_key": string,"p_submission"?: number,"p_utm_campaign"?: string,"p_utm_medium"?: string,"p_utm_source"?: string }; Returns: {
               "is_partial": boolean,"steps_completed": number,"steps_total": number
             }[]
                            },
 "staff_role":
 { Args: Record<PropertyKey, never>; Returns: Database["public"]['Enums']["staff_role"]
+                           },
+"trigger_send_notifications":
+{ Args: Record<PropertyKey, never>; Returns: undefined
+                           },
+"unsubscribe":
+{ Args: { "p_whatsapp": string }; Returns: boolean
                            }
           }
           Enums: {
-            "content_type": "scholarship"|"post"|"video"|"programme"|"opening"|"drive"|"trip"|"faq"|"testimonial"|"team","lead_event_type": "created"|"step_saved"|"completed"|"status_changed"|"assigned"|"note"|"sms_sent"|"email_sent"|"merged","lead_status": "new"|"contacted"|"started"|"paid"|"closed","notify_channel": "sms"|"email","notify_status": "pending"|"sent"|"failed","post_category": "passports"|"school_applications"|"visas"|"exams"|"scholarships"|"student_stories"|"work_abroad"|"travel","programme_kind": "study"|"bridging","publish_state": "draft"|"in_review"|"published"|"archived","staff_role": "admin"|"editor"|"front_desk","video_platform": "tiktok"|"instagram"|"facebook"|"youtube"
+            "content_type": "scholarship"|"post"|"video"|"programme"|"opening"|"drive"|"trip"|"faq"|"testimonial"|"team","lead_event_type": "created"|"step_saved"|"completed"|"status_changed"|"assigned"|"note"|"sms_sent"|"email_sent"|"merged"|"resubmitted","lead_status": "new"|"contacted"|"started"|"paid"|"closed","notify_channel": "sms"|"email","notify_status": "pending"|"sending"|"sent"|"failed","post_category": "passports"|"school_applications"|"visas"|"exams"|"scholarships"|"student_stories"|"work_abroad"|"travel","programme_kind": "study"|"bridging","publish_state": "draft"|"in_review"|"published"|"archived","staff_role": "admin"|"editor"|"front_desk","video_platform": "tiktok"|"instagram"|"facebook"|"youtube"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -921,7 +986,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "content_type": ["scholarship", "post", "video", "programme", "opening", "drive", "trip", "faq", "testimonial", "team"],"lead_event_type": ["created", "step_saved", "completed", "status_changed", "assigned", "note", "sms_sent", "email_sent", "merged"],"lead_status": ["new", "contacted", "started", "paid", "closed"],"notify_channel": ["sms", "email"],"notify_status": ["pending", "sent", "failed"],"post_category": ["passports", "school_applications", "visas", "exams", "scholarships", "student_stories", "work_abroad", "travel"],"programme_kind": ["study", "bridging"],"publish_state": ["draft", "in_review", "published", "archived"],"staff_role": ["admin", "editor", "front_desk"],"video_platform": ["tiktok", "instagram", "facebook", "youtube"]
+            "content_type": ["scholarship", "post", "video", "programme", "opening", "drive", "trip", "faq", "testimonial", "team"],"lead_event_type": ["created", "step_saved", "completed", "status_changed", "assigned", "note", "sms_sent", "email_sent", "merged", "resubmitted"],"lead_status": ["new", "contacted", "started", "paid", "closed"],"notify_channel": ["sms", "email"],"notify_status": ["pending", "sending", "sent", "failed"],"post_category": ["passports", "school_applications", "visas", "exams", "scholarships", "student_stories", "work_abroad", "travel"],"programme_kind": ["study", "bridging"],"publish_state": ["draft", "in_review", "published", "archived"],"staff_role": ["admin", "editor", "front_desk"],"video_platform": ["tiktok", "instagram", "facebook", "youtube"]
           }
         }
 } as const

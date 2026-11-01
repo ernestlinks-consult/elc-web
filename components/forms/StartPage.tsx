@@ -1,4 +1,5 @@
 import { Breadcrumbs } from "@/components/site";
+import { getDynamicOptions } from "@/lib/content/intakes";
 import { getPriceLabels } from "@/lib/content/prices";
 import { publicValue } from "@/lib/content/placeholder";
 import { getSettings } from "@/lib/content/settings";
@@ -9,10 +10,11 @@ import { ServiceTabs } from "./ServiceTabs";
 import { StartOnlineForm } from "./StartOnlineForm";
 
 export async function StartPage({ service }: { service: ServiceKey }) {
-  const [shell, settings, priceLabels] = await Promise.all([
+  const [shell, settings, priceLabels, dynamicOptions] = await Promise.all([
     getSiteShell(),
     getSettings(),
     getPriceLabels(),
+    getDynamicOptions(),
   ]);
   const privacy = shell.nav.legal.find((link) => link.href === "/privacy");
 
@@ -39,6 +41,7 @@ export async function StartPage({ service }: { service: ServiceKey }) {
           key={service}
           service={service}
           priceLabels={priceLabels}
+          dynamicOptions={dynamicOptions}
           privacyHref={privacy?.href ?? "/privacy"}
           whatsappNumber={shell.whatsappNumber}
         />

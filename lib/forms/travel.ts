@@ -5,7 +5,7 @@ import type { ServiceForm } from "./types";
 export const travelForm: ServiceForm = {
   service: "travel",
   name: "Travel",
-  version: 1,
+  version: 2,
   timeHint: "About 2 minutes in total",
   later: [
     "Passport details of each traveller",

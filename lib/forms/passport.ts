@@ -28,7 +28,7 @@ const guarantor = (number: number): Field[] => [
 export const passportForm: ServiceForm = {
   service: "passport",
   name: "Passport",
-  version: 1,
+  version: 2,
   timeHint: "About 8 minutes in total",
   later: [
     "Ghana Card number (and SSNIT number, optional)",

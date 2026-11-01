@@ -5,7 +5,7 @@ import type { ServiceForm } from "./types";
 export const birthForm: ServiceForm = {
   service: "birth",
   name: "Birth certificate",
-  version: 1,
+  version: 2,
   timeHint: "About 4 minutes in total",
   later: [
     "Informant’s Voter ID or Ghana Card number",

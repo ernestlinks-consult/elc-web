@@ -1,4 +1,5 @@
 import { defineStep } from "./build";
+import { phoneExample } from "./phone";
 import type { Field, Step } from "./types";
 
 // Step 1 is the same shape everywhere: name, WhatsApp, two service choices,
@@ -9,31 +10,27 @@ export const startIntro = "Just the basics. We can reach you once you tap Save."
 
 export const heardFromKey = "heard_from";
 
-const heardFromOptions = [
-  "TikTok LIVE",
-  "TikTok video",
-  "Instagram",
-  "Facebook",
-  "A friend",
-  "Google",
-  "Other",
-];
-
-export const heardFrom: Field = {
+const heardFrom: Field = {
   kind: "select",
   key: heardFromKey,
   label: "How did you hear about us?",
-  options: heardFromOptions,
+  optional: true,
+  options: [
+    "TikTok LIVE",
+    "TikTok video",
+    "Instagram",
+    "Facebook",
+    "A friend",
+    "Passport drive",
+    "Google",
+    "Other",
+  ],
 };
 
-export const heardFromWithDrive: Field = {
-  ...heardFrom,
-  options: [
-    ...heardFromOptions.slice(0, 5),
-    "Passport drive",
-    ...heardFromOptions.slice(5),
-  ],
-} as Field;
+export const consentLabel =
+  "I agree that ErnestLinks Consult may keep these details and contact me by WhatsApp, SMS or phone about this request. I've read the privacy notice.";
+
+export const privacyLinkText = "privacy notice";
 
 const startFields = (choices: Field[]): Field[] => [
   { kind: "text", key: "full_name", label: "Full name", required: true },
@@ -43,7 +40,7 @@ const startFields = (choices: Field[]): Field[] => [
     label: "WhatsApp number",
     required: true,
     placeholder: "024 000 0000",
-    requiredMessage: "Enter a WhatsApp number, like 024 000 0000.",
+    requiredMessage: `Enter a WhatsApp number, like ${phoneExample}.`,
   },
   ...choices,
   {
@@ -56,11 +53,9 @@ const startFields = (choices: Field[]): Field[] => [
   {
     kind: "tick",
     key: "consent",
-    label:
-      "I agree that ErnestLinks Consult may contact me on WhatsApp or by phone about this request and keep my details for my application.",
+    label: consentLabel,
     required: true,
     requiredMessage: "Tick the box so we can contact you.",
-    privacyLink: true,
     full: true,
   },
 ];
@@ -84,6 +79,7 @@ export const reviewStep = defineStep({
       label:
         "After you send, we will check everything and message you. Nothing is submitted to any government office until you confirm.",
     },
+    heardFrom,
     {
       kind: "tick",
       key: "confirm",

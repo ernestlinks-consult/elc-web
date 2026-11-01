@@ -8,6 +8,7 @@ import {
 } from "react-hook-form";
 import { ChipGroup, Field, Select } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { privacyLinkText } from "@/lib/forms/common";
 import { isInputField, type Field as FormField, type InputField } from "@/lib/forms/types";
 
 export type StepRendererProps = {
@@ -17,6 +18,8 @@ export type StepRendererProps = {
   /** Errors returned by the server when the browser posted without JavaScript. */
   serverErrors?: Record<string, string>;
   priceLabels: Record<string, string>;
+  /** Choices that depend on today's date, by field key. */
+  dynamicOptions?: Record<string, string[]>;
   privacyHref: string;
 };
 
@@ -33,12 +36,27 @@ function isWide(field: FormField) {
 function optionsFor(
   field: Extract<InputField, { options: string[] }>,
   priceLabels: Record<string, string>,
+  dynamicOptions?: Record<string, string[]>,
 ) {
-  return field.options.map((option) => {
+  return (dynamicOptions?.[field.key] ?? field.options).map((option) => {
     const priceKey = field.optionPrices?.[option];
     const price = priceKey ? priceLabels[priceKey] : undefined;
     return { value: option, label: price ? `${option} · ${price}` : option };
   });
+}
+
+/** Links the words "privacy notice" where they appear in a label. */
+function withPrivacyLink(label: string, privacyHref: string) {
+  const [before, after] = label.split(privacyLinkText);
+  if (after === undefined) return label;
+
+  return (
+    <>
+      {before}
+      <Link href={privacyHref}>{privacyLinkText}</Link>
+      {after}
+    </>
+  );
 }
 
 function renderInput({
@@ -47,6 +65,7 @@ function renderInput({
   id,
   error,
   priceLabels,
+  dynamicOptions,
   privacyHref,
 }: {
   field: InputField;
@@ -54,6 +73,7 @@ function renderInput({
   id: string;
   error?: string;
   priceLabels: Record<string, string>;
+  dynamicOptions?: Record<string, string[]>;
   privacyHref: string;
 }) {
   const shared = {
@@ -67,7 +87,7 @@ function renderInput({
   switch (field.kind) {
     case "radio":
     case "checkboxes": {
-      const options = optionsFor(field, priceLabels);
+      const options = optionsFor(field, priceLabels, dynamicOptions);
       const group = {
         id,
         legend: field.label,
@@ -146,7 +166,7 @@ function renderInput({
               className="mt-0.5 size-5.5 shrink-0 accent-blue"
             />
             <span>
-              {field.label}
+              {withPrivacyLink(field.label, privacyHref)}
               {field.required && (
                 <span aria-hidden="true" className="text-red-text">
                   {" *"}
@@ -154,14 +174,6 @@ function renderInput({
               )}
             </span>
           </label>
-          {field.privacyLink && (
-            <Link
-              href={privacyHref}
-              className="inline-flex min-h-11 items-center self-start pl-8.5"
-            >
-              Privacy notice
-            </Link>
-          )}
           {error && (
             <span
               id={`${id}-err`}
@@ -196,6 +208,7 @@ export function StepRenderer({
   control,
   serverErrors,
   priceLabels,
+  dynamicOptions,
   privacyHref,
 }: StepRendererProps) {
   return (
@@ -226,6 +239,7 @@ export function StepRenderer({
                   id: fieldId(stepKey, field.key),
                   error: fieldState.error?.message ?? serverErrors?.[field.key],
                   priceLabels,
+                  dynamicOptions,
                   privacyHref,
                 })
               }

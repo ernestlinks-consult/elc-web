@@ -133,6 +133,7 @@ values
     }
   $json$),
   ('booking_url', '"https://ernest-links-frontend.vercel.app/book"'),
+  ('front_desk_email', '"priscilla@example.test"'),
   ('reply_promise', '"[PLACEHOLDER: reply-time promise, waiting on ELC]"'),
   ('official_momo', '{"name": "[PLACEHOLDER: official MoMo name, waiting on ELC]", "number": "[PLACEHOLDER: official MoMo number, waiting on ELC]"}');
 

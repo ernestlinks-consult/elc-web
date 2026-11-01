@@ -10,12 +10,14 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=production --project=development",
+    "test:integration": "playwright test --project=integration --workers=1",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
     "db:test": "supabase test db",
     "db:types": "supabase gen types typescript --local --schema public > lib/supabase/database.types.ts",
+    "notify:run": "node scripts/notify-run.mjs",
     "tokens": "node scripts/generate-tokens.mjs"
   },
   "dependencies": {
@@ -28,10 +30,12 @@
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "clsx": "^2.1.1",
+    "libphonenumber-js": "^1.13.15",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-hook-form": "^7.91.0",
+    "resend": "^6.37.0",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.7.0",
     "zod": "^4.6.7"
