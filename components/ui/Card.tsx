@@ -40,7 +40,7 @@ export const Card = forwardRef<HTMLAnchorElement | HTMLDivElement, CardProps>(
           <span
             className={cn(
               "text-eyebrow",
-              onBlue ? "text-on-blue-muted" : "text-blue",
+              onBlue ? "text-on-blue-muted" : "text-red-text",
             )}
           >
             {eyebrow}

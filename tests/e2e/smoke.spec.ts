@@ -7,7 +7,7 @@ test("home page responds", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
-for (const path of ["/dev/tokens", "/dev/components"]) {
+for (const path of ["/dev/tokens", "/dev/components", "/dev/shell"]) {
   test(`${path} is not available in production`, async ({ page }) => {
     const response = await page.goto(path);
 

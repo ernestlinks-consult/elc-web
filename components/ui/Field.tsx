@@ -6,13 +6,20 @@ import {
   type TextareaHTMLAttributes,
 } from "react";
 import { cn } from "@/lib/cn";
-import { FieldMessages, LabelText, fieldIds } from "./field-parts";
+import {
+  FieldMessages,
+  LabelText,
+  fieldIds,
+  type FieldSurface,
+} from "./field-parts";
 
 type FieldOwnProps = {
   label: string;
   hint?: string;
   error?: string;
   optional?: boolean;
+  /** "deep" for blue-deep backgrounds, where red-text is not allowed. */
+  surface?: FieldSurface;
 };
 
 type InputFieldProps = FieldOwnProps &
@@ -27,7 +34,16 @@ export const Field = forwardRef<
   HTMLInputElement | HTMLTextAreaElement,
   FieldProps
 >(function Field(
-  { label, hint, error, optional, className, id: idProp, ...rest },
+  {
+    label,
+    hint,
+    error,
+    optional,
+    surface = "light",
+    className,
+    id: idProp,
+    ...rest
+  },
   ref,
 ) {
   const generatedId = useId();
@@ -39,9 +55,13 @@ export const Field = forwardRef<
     "aria-invalid": error ? true : undefined,
     "aria-describedby": describedBy,
   };
+  const onDeep = surface === "deep";
   const controlClasses = cn(
-    "w-full rounded-md border border-line-strong bg-surface px-3.5 py-3 text-body text-ink placeholder:text-ink-muted disabled:cursor-not-allowed disabled:bg-neutral-tint disabled:text-ink-muted",
-    error && "border-2 border-red-text",
+    "w-full rounded-md border px-3.5 py-3 text-body disabled:cursor-not-allowed disabled:bg-neutral-tint disabled:text-ink-muted",
+    onDeep
+      ? "border-line-on-deep bg-blue-deep text-on-blue placeholder:text-on-blue-muted"
+      : "border-line-strong bg-surface text-ink placeholder:text-ink-muted",
+    error && (onDeep ? "border-2 border-on-blue" : "border-2 border-red-text"),
   );
 
   let control;
@@ -73,8 +93,16 @@ export const Field = forwardRef<
 
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={id} className="text-label text-ink">
-        <LabelText label={label} required={rest.required} optional={optional} />
+      <label
+        htmlFor={id}
+        className={cn("text-label", onDeep ? "text-on-blue" : "text-ink")}
+      >
+        <LabelText
+          label={label}
+          required={rest.required}
+          optional={optional}
+          surface={surface}
+        />
       </label>
       {control}
       <FieldMessages
@@ -82,6 +110,7 @@ export const Field = forwardRef<
         error={error}
         hintId={hintId}
         errorId={errorId}
+        surface={surface}
       />
     </div>
   );

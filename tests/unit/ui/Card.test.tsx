@@ -44,6 +44,15 @@ test.each([
   expect(screen.getByRole("link")).toHaveClass(background);
 });
 
+test.each(["light", "tint"] as const)(
+  "%s cards use red-text for the eyebrow",
+  (tone) => {
+    render(<Card tone={tone} title="Care" eyebrow="Malta · BSc" />);
+
+    expect(screen.getByText("Malta · BSc")).toHaveClass("text-red-text");
+  },
+);
+
 test("blue cards keep muted text readable on blue", () => {
   render(
     <Card tone="blue" title="Next" eyebrow="Stage" action="Go →">

@@ -57,6 +57,17 @@ test("multiline renders a textarea with four rows", () => {
   expect(textarea).toHaveAttribute("rows", "4");
 });
 
+test("never uses red on the deep surface", () => {
+  render(
+    <Field label="Phone" surface="deep" required error="Check this number." />,
+  );
+
+  expect(screen.getByRole("alert")).toHaveClass("text-on-blue");
+  expect(screen.getByRole("textbox")).toHaveClass("border-on-blue");
+  expect(screen.getByText("*")).toHaveClass("text-on-blue");
+  expect(document.body.innerHTML).not.toMatch(/(text|border|bg)-red/);
+});
+
 test("works with react-hook-form register", async () => {
   const onValid = vi.fn();
 

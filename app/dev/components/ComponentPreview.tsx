@@ -353,6 +353,12 @@ export function ComponentPreview() {
               <AccordionContent>Not available.</AccordionContent>
             </AccordionItem>
           </Accordion>
+          <Accordion type="multiple" headingLevel={2}>
+            <AccordionItem value="level">
+              <AccordionTrigger>Multiple, with headingLevel 2</AccordionTrigger>
+              <AccordionContent>Triggers render as h2 here.</AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </Section>
 
         <Section title="Dialog">

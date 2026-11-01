@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
+import { cn } from "@/lib/cn";
 
 // Internal pieces shared by Field, Select and ChipGroup.
+
+export type FieldSurface = "light" | "deep";
 
 export function fieldIds(id: string, hint?: string, error?: string) {
   const hintId = hint ? `${id}-hint` : undefined;
@@ -16,21 +19,36 @@ export function LabelText({
   label,
   required,
   optional,
+  surface = "light",
 }: {
   label: ReactNode;
   required?: boolean;
   optional?: boolean;
+  surface?: FieldSurface;
 }) {
+  const onDeep = surface === "deep";
+
   return (
     <>
       {label}
       {required && (
-        <span className="text-red-text" aria-hidden="true">
+        <span
+          className={onDeep ? "text-on-blue" : "text-red-text"}
+          aria-hidden="true"
+        >
           {" *"}
         </span>
       )}
       {optional && (
-        <span className="font-medium text-ink-muted"> (optional)</span>
+        <span
+          className={cn(
+            "font-medium",
+            onDeep ? "text-on-blue-muted" : "text-ink-muted",
+          )}
+        >
+          {" "}
+          (optional)
+        </span>
       )}
     </>
   );
@@ -41,16 +59,26 @@ export function FieldMessages({
   error,
   hintId,
   errorId,
+  surface = "light",
 }: {
   hint?: string;
   error?: string;
   hintId?: string;
   errorId?: string;
+  surface?: FieldSurface;
 }) {
+  const onDeep = surface === "deep";
+
   return (
     <>
       {hint && (
-        <span id={hintId} className="text-caption font-normal text-ink-muted">
+        <span
+          id={hintId}
+          className={cn(
+            "text-caption font-normal",
+            onDeep ? "text-on-blue-muted" : "text-ink-muted",
+          )}
+        >
           {hint}
         </span>
       )}
@@ -58,7 +86,10 @@ export function FieldMessages({
         <span
           id={errorId}
           role="alert"
-          className="text-body-sm font-bold text-red-text"
+          className={cn(
+            "text-body-sm font-bold",
+            onDeep ? "text-on-blue" : "text-red-text",
+          )}
         >
           {error}
         </span>

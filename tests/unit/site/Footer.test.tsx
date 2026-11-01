@@ -1,0 +1,29 @@
+import { render, screen } from "@testing-library/react";
+import { expect, test } from "vitest";
+import { Footer } from "@/components/site";
+import { getSiteConfig } from "@/lib/site-config";
+
+test("shows the confirmed offices with map links in a new tab", async () => {
+  const config = await getSiteConfig();
+  render(<Footer config={config} year={2026} />);
+
+  for (const office of config.offices) {
+    expect(screen.getByText(office.name)).toBeInTheDocument();
+
+    const link = screen.getByRole("link", {
+      name: `Directions to ${office.name} (opens in a new tab)`,
+    });
+    expect(link).toHaveAttribute("href", office.mapUrl);
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener");
+  }
+});
+
+test("labels the hotline", async () => {
+  const config = await getSiteConfig();
+  render(<Footer config={config} year={2026} />);
+
+  expect(
+    screen.getByRole("link", { name: "Hotline 032 229 1161" }),
+  ).toHaveAttribute("href", "tel:+233322291161");
+});
