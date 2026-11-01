@@ -7,8 +7,10 @@ test("home page responds", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
-test("token preview is not available in production", async ({ page }) => {
-  const response = await page.goto("/dev/tokens");
+for (const path of ["/dev/tokens", "/dev/components"]) {
+  test(`${path} is not available in production`, async ({ page }) => {
+    const response = await page.goto(path);
 
-  expect(response?.status()).toBe(404);
-});
+    expect(response?.status()).toBe(404);
+  });
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import tokens from "@/design-system/tokens.json";
 
@@ -94,6 +95,7 @@ export default function TokensPage() {
         <p className="text-lead text-ink-muted">
           Generated from design-system/tokens.json. Development only.
         </p>
+        <Link href="/dev/components">Component preview</Link>
       </header>
 
       <section className="flex flex-col gap-space-4">

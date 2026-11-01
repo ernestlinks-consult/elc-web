@@ -79,7 +79,7 @@
   padding-inline: var(--space-5);
 }
 
-/* Fluid sizes run from the phone value to the desktop token. H2 stops at 46px, per the Design Spec. */
+/* Fluid sizes run from the phone value to the desktop token. */
 @utility text-display {
   font-size: clamp(40px, 5.6vw, var(--text-display-size));
   line-height: var(--text-display-line);
@@ -95,7 +95,7 @@
 }
 
 @utility text-h2 {
-  font-size: clamp(30px, 3.4vw, 46px);
+  font-size: clamp(30px, 3.4vw, var(--text-h2-size));
   line-height: var(--text-h2-line);
   font-weight: var(--text-h2-weight);
 }
