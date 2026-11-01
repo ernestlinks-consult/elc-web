@@ -95,9 +95,15 @@ export function Footer({ config, year }: FooterProps) {
             <ul className="flex flex-col gap-2.5 max-phone:gap-0">
               {group.links.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className={footerLinkClasses}>
-                    {link.label}
-                  </Link>
+                  {link.href.startsWith("/start") ? (
+                    <a href={link.href} className={footerLinkClasses}>
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link href={link.href} className={footerLinkClasses}>
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

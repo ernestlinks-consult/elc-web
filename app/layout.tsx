@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
+import { siteUrl } from "@/lib/site-metadata";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -10,8 +11,10 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "ErnestLinks Consult",
-  description: "New site in progress",
+  description:
+    "Passports, exams, school and visa applications, work abroad and travel, from a Kumasi team you can reach on WhatsApp.",
 };
 
 // Lets the phone bar reach the iOS safe area.

@@ -11,4 +11,13 @@ export const cacheTags = {
   services: "services",
   team: "team",
   prices: "prices",
+  drives: "drives",
+  testimonials: "testimonials",
+  programmes: "programmes",
+  openings: "openings",
+  faqs: "faqs",
+  trips: "trips",
+  videos: "videos",
+  posts: "posts",
+  scholarships: "scholarships",
 } as const;

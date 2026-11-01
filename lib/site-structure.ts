@@ -13,6 +13,15 @@ import { buildWhatsAppLink } from "./whatsapp";
 
 const startHref = "/start";
 
+export const servicePageSlugs = new Set([
+  "passports",
+  "school-applications",
+  "visa-applications",
+  "work-abroad",
+  "exams",
+  "travel",
+]);
+
 // Birth certificates share the passports page, so they have no page of their own.
 const hasOwnPage = (service: Service) => service.key !== "birth";
 

@@ -113,6 +113,21 @@ export const Button = forwardRef<
       );
     }
 
+    // The client router skips the rewrite behind /start?service=, so these must
+    // always be full page loads.
+    if (href.startsWith("/start")) {
+      return (
+        <a
+          {...anchorProps}
+          ref={ref as Ref<HTMLAnchorElement>}
+          href={href}
+          className={classes}
+        >
+          {content}
+        </a>
+      );
+    }
+
     return (
       <Link
         {...anchorProps}

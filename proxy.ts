@@ -5,6 +5,8 @@ import {
   signInPath,
   type AccessRow,
 } from "@/lib/auth/access";
+import { serviceKeys, type ServiceKey } from "@/lib/forms/types";
+import { servicePageSlugs } from "@/lib/site-structure";
 import type { Database } from "@/lib/supabase/database.types";
 
 // Guards every /portal request and keeps the session fresh. Server actions and
@@ -20,8 +22,26 @@ function protect(response: NextResponse) {
   return response;
 }
 
+/** Dynamic public routes render a shell first, so an unknown slug must stop here. */
+function unknownPublicPath(pathname: string) {
+  const service = pathname.match(/^\/services\/([^/]+)$/)?.[1];
+  if (service) return !servicePageSlugs.has(service);
+
+  const start = pathname.match(/^\/start\/([^/]+)$/)?.[1];
+  if (start) return start !== "done" && !serviceKeys.includes(start as ServiceKey);
+
+  return false;
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+
+  if (!pathname.startsWith("/portal")) {
+    return unknownPublicPath(pathname)
+      ? NextResponse.rewrite(new URL("/page-not-found", request.url))
+      : NextResponse.next();
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient<Database>(
@@ -97,9 +117,24 @@ export async function proxy(request: NextRequest) {
     return redirectTo("/portal");
   }
 
+  // Streaming sends the 200 first, so a page can't return a real 404 itself. RLS
+  // answers for this person, so "not yours" and "missing" look the same.
+  const leadId = pathname.match(/^\/portal\/leads\/([^/]+)$/)?.[1];
+  if (leadId) {
+    const { data: lead } = /^[0-9a-f-]{36}$/i.test(leadId)
+      ? await supabase.from("leads").select("id").eq("id", leadId).maybeSingle()
+      : { data: null };
+
+    if (!lead) {
+      const notFound = NextResponse.rewrite(new URL("/portal/missing", request.url));
+      response.cookies.getAll().forEach((cookie) => notFound.cookies.set(cookie));
+      return protect(notFound);
+    }
+  }
+
   return protect(response);
 }
 
 export const config = {
-  matcher: ["/portal", "/portal/:path*"],
+  matcher: ["/portal", "/portal/:path*", "/services/:path*", "/start/:path*"],
 };

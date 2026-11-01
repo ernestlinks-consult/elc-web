@@ -701,12 +701,12 @@ test("the Start online journey logs no browser errors", async ({ page }) => {
   await expect(page.getByText("What happens next")).toBeVisible();
 
   expect(errors).toEqual([]);
-  // TODO(step 6): the shell links to these pages, so the router prefetches them.
+  // TODO(step 6b): the shell links to these pages, so the router prefetches them.
   // Once they exist, nothing should 404 here.
   expect(
     missing.filter(
       (path) =>
-        !/^\/(about|contact|privacy|terms|payments|resources|services)(\/|$)/.test(
+        !/^\/(about|contact|privacy|terms|payments|resources)(\/|$)/.test(
           path,
         ),
     ),

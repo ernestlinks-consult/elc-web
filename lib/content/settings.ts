@@ -28,6 +28,7 @@ const publicSettingsSchema = z.object({
     url: z.string(),
     host_rotation: z.string(),
   }),
+  passport_what_to_bring: z.array(z.string()).default([]),
 });
 
 export type PublicSettings = z.infer<typeof publicSettingsSchema>;

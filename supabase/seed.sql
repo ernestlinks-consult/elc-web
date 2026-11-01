@@ -133,6 +133,7 @@ values
     }
   $json$),
   ('booking_url', '"https://ernest-links-frontend.vercel.app/book"'),
+  ('passport_what_to_bring', '["Ghana Card", "Birth certificate", "Old passport, for renewals", "[PLACEHOLDER: final list, waiting on ELC]"]'),
   ('front_desk_email', '"priscilla@example.test"'),
   ('reply_promise_minutes', '120'),
   ('working_hours', '{"days": [1, 2, 3, 4, 5], "start": "08:00", "end": "17:00", "time_zone": "Africa/Accra"}'),
@@ -193,13 +194,17 @@ with added as (
     ('tiktok', 'https://www.tiktok.com/@_ernestlinksconsult', '[Sample] Getting your passport in Kumasi: what it costs', 'PASSPORT', 'published',
       '00000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000002', now()),
     ('instagram', 'https://www.instagram.com/_ernestlinksconsult/', '[Sample] Malta nursing bridging: 6 months, explained', 'MALTA NURSING', 'published',
+      '00000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000002', now()),
+    ('youtube', 'https://www.youtube.com/watch?v=sampleVideo1', '[Sample] Choosing a programme that fits your budget', 'STUDY', 'published',
       '00000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000002', now())
   returning id
 )
 insert into public.video_placements (video_id, page_key)
 select added.id, page.key
 from added
-cross join (values ('videos'), ('home')) as page (key);
+cross join (values ('videos'), ('home'), ('school'), ('visa')) as page (key);
+
+update public.videos set pinned = true where url like '%sampleVideo1';
 
 insert into public.programmes (
   kind, country, city, level, title, duration_text, tuition_text, keyword,
@@ -233,6 +238,12 @@ values
     1, 'published', '00000000-0000-4000-8000-000000000004'),
   (null, '[Sample] Where are your offices?', 'Ayeduase, KNUST Engineering Gate office and Kotei Astro Turf office, next to Unik Pub, both in Kumasi. We are open Monday to Friday, 8:00–17:00.',
     2, 'published', '00000000-0000-4000-8000-000000000004'),
+  ('passport', '[Sample] How long does a passport take?', 'Standard takes about 1 month. Final dates depend on the Passport Office, and we tell you straight away if anything changes.',
+    1, 'published', '00000000-0000-4000-8000-000000000004'),
+  ('visa', '[Sample] Can you guarantee my visa?', 'No. The embassy decides. We make sure your application is complete, accurate and on time.',
+    1, 'published', '00000000-0000-4000-8000-000000000005'),
+  ('exams', '[Sample] Which test do I need?', 'It depends on your schools. Some waive the English test, so check with us before you pay for one.',
+    1, 'published', '00000000-0000-4000-8000-000000000004'),
   (null, '[Sample] Do you guarantee admissions, visas or jobs?', 'No. Schools, embassies and employers make those decisions. We make sure your application is complete, accurate and on time, and we tell you honestly where you stand.',
     3, 'published', '00000000-0000-4000-8000-000000000004');
 

@@ -30,6 +30,15 @@ test("Join the LIVE is a plain link to the LIVE", async () => {
   expect(link).not.toHaveClass("rounded-pill");
 });
 
+test("Start online is a plain link, so the full page loads", async () => {
+  const config = await getSiteConfig();
+  render(<Footer config={config} year={2026} />);
+
+  for (const link of screen.getAllByRole("link", { name: "Start online" })) {
+    expect(link).toHaveAttribute("href", "/start");
+  }
+});
+
 test("labels the hotline", async () => {
   const config = await getSiteConfig();
   render(<Footer config={config} year={2026} />);

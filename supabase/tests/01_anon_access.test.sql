@@ -44,7 +44,7 @@ select is(
 select ok((select count(*) > 0 from public.scholarships_public), 'anon reads scholarships_public');
 select ok((select count(*) > 0 from public.prices_public), 'anon reads prices_public');
 select is((select count(*)::int from public.staff_public), 6, 'anon reads six people from staff_public');
-select is((select count(*)::int from public.settings_public), 7, 'anon reads the seven public settings');
+select is((select count(*)::int from public.settings_public), 8, 'anon reads the eight public settings');
 select is((select count(*)::int from public.live_schedule_public), 5, 'anon reads five LIVE slots');
 select is(
   (select count(*)::int from public.live_schedule_public where topic is not null),

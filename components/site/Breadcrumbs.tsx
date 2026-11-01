@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { cn } from "@/lib/cn";
 
 export type BreadcrumbItem = {
   label: string;
@@ -9,28 +10,41 @@ export type BreadcrumbItem = {
 export type BreadcrumbsProps = {
   items: BreadcrumbItem[];
   className?: string;
+  /** For blue heroes. */
+  onBlue?: boolean;
 };
 
 /** Pages below the home page only. An empty list renders nothing. */
-export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
+export function Breadcrumbs({ items, className, onBlue }: BreadcrumbsProps) {
   if (items.length === 0) return null;
 
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ol className="flex flex-wrap items-center text-body-sm text-ink-muted">
+      <ol
+        className={cn(
+          "flex flex-wrap items-center text-body-sm",
+          onBlue ? "text-on-blue-muted" : "text-ink-muted",
+        )}
+      >
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
           return (
             <li key={item.label} className="flex items-center">
               {isLast ? (
-                <span aria-current="page" className="font-bold text-ink">
+                <span
+                  aria-current="page"
+                  className={cn("font-bold", onBlue ? "text-on-blue" : "text-ink")}
+                >
                   {item.label}
                 </span>
               ) : (
                 <>
                   <Link
                     href={item.href ?? "/"}
-                    className="inline-flex min-h-11 items-center"
+                    className={cn(
+                      "inline-flex min-h-11 items-center",
+                      onBlue && "text-on-blue",
+                    )}
                   >
                     {item.label}
                   </Link>
