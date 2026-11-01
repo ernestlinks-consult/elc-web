@@ -237,8 +237,13 @@ test("the last step asks how they heard about us and stores it", async ({
   await page.getByRole("button", { name: "Continue" }).click();
 
   const main = page.getByRole("main");
-  await main.getByRole("combobox", { name: /How did you hear/ }).click();
-  await page.getByRole("option", { name: "Passport drive" }).click();
+  // By keyboard: under heavy load Radix can open this list past the screen edge.
+  const heardFrom = main.getByRole("combobox", { name: /How did you hear/ });
+  await heardFrom.focus();
+  await page.keyboard.press("Enter");
+  await page.getByRole("option", { name: "Passport drive" }).focus();
+  await page.keyboard.press("Enter");
+  await expect(heardFrom).toHaveText(/Passport drive/);
   await main.getByRole("checkbox", { name: /I confirm/ }).check();
   await page.getByRole("button", { name: "Send my application" }).click();
   await page.waitForURL("**/start/done**");

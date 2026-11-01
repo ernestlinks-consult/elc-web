@@ -216,7 +216,7 @@ select throws_ok(
 
 reset role;
 set local role authenticated;
-set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated"}';
+set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated", "aal": "aal2"}';
 
 select throws_ok(
   $$ select * from public.create_or_attach_lead('passport', 'Staff', '+233240009998', 'Now', 7, 1) $$,

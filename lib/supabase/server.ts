@@ -2,6 +2,13 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "./database.types";
 
+/** All portal auth runs on the server, so no script ever needs these cookies. */
+export const sessionCookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+} as const;
+
 // Create one client per request; never share it between requests.
 export async function createClient() {
   const cookieStore = await cookies();
@@ -10,6 +17,7 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: sessionCookieOptions,
       cookies: {
         getAll() {
           return cookieStore.getAll();

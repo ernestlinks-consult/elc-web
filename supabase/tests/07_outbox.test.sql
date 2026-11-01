@@ -301,7 +301,7 @@ select throws_ok($$ select * from public.lead_steps_latest $$, '42501', null, 'a
 
 reset role;
 set local role authenticated;
-set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated"}';
+set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated", "aal": "aal2"}';
 
 select throws_ok($$ select * from public.claim_notifications(1) $$, '42501', null, 'staff cannot claim');
 select throws_ok($$ select public.trigger_send_notifications() $$, '42501', null, 'staff cannot trigger the worker');

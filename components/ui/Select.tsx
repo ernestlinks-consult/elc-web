@@ -61,7 +61,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             aria-invalid={error ? true : undefined}
             aria-describedby={describedBy}
             className={cn(
-              "flex min-h-12 w-full cursor-pointer items-center justify-between gap-space-2 rounded-md border border-line-strong bg-surface px-3.5 py-3 text-left text-body text-ink",
+              "flex min-h-12 w-full cursor-pointer items-center justify-between gap-space-2 rounded-md border in-data-portal:rounded-sm border-line-strong bg-surface px-3.5 py-3 text-left text-body text-ink",
               "data-[placeholder]:text-ink-muted",
               "disabled:cursor-not-allowed disabled:bg-neutral-tint disabled:text-ink-muted",
               error && "border-2 border-red-text",
@@ -76,7 +76,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             <RadixSelect.Content
               position="popper"
               sideOffset={4}
-              className="z-50 max-h-80 w-(--radix-select-trigger-width) overflow-hidden rounded-md border border-line-strong bg-surface shadow-menu"
+              className="z-50 max-h-[min(20rem,var(--radix-select-content-available-height))] w-(--radix-select-trigger-width) overflow-hidden rounded-md border border-line-strong bg-surface shadow-menu"
             >
               <RadixSelect.Viewport className="p-space-2">
                 {options.map((option) => (

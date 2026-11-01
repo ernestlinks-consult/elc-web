@@ -7,6 +7,8 @@ export default defineConfig({
   testDir: "./tests",
   testMatch: ["e2e/**/*.spec.ts", "a11y/**/*.spec.ts"],
   fullyParallel: true,
+  // Sign-in, axe and the build share one machine across about 160 browser tests.
+  timeout: 60_000,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   use: { trace: "on-first-retry" },

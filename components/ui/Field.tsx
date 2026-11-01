@@ -57,7 +57,7 @@ export const Field = forwardRef<
   };
   const onDeep = surface === "deep";
   const controlClasses = cn(
-    "w-full rounded-md border px-3.5 py-3 text-body disabled:cursor-not-allowed disabled:bg-neutral-tint disabled:text-ink-muted",
+    "w-full rounded-md border px-3.5 py-3 text-body in-data-portal:rounded-sm disabled:cursor-not-allowed disabled:bg-neutral-tint disabled:text-ink-muted",
     onDeep
       ? "border-line-on-deep bg-blue-deep text-on-blue placeholder:text-on-blue-muted"
       : "border-line-strong bg-surface text-ink placeholder:text-ink-muted",

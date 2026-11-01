@@ -134,6 +134,8 @@ values
   $json$),
   ('booking_url', '"https://ernest-links-frontend.vercel.app/book"'),
   ('front_desk_email', '"priscilla@example.test"'),
+  ('reply_promise_minutes', '120'),
+  ('working_hours', '{"days": [1, 2, 3, 4, 5], "start": "08:00", "end": "17:00", "time_zone": "Africa/Accra"}'),
   ('reply_promise', '"[PLACEHOLDER: reply-time promise, waiting on ELC]"'),
   ('official_momo', '{"name": "[PLACEHOLDER: official MoMo name, waiting on ELC]", "number": "[PLACEHOLDER: official MoMo number, waiting on ELC]"}');
 

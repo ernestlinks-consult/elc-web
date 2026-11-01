@@ -60,7 +60,7 @@ reset role;
 
 -- Ernest: admin ----------------------------------------------------------------
 set local role authenticated;
-set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated"}';
+set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated", "aal": "aal2"}';
 
 select is(tests.affected($$ update public.posts set publish_state = 'archived' where slug = 'live-post' $$), 1, 'admin archives a published post');
 select is(tests.affected($$ update public.programmes set publish_state = 'draft' where id = '10000000-0000-4000-8000-000000000003' $$), 1, 'admin unpublishes a programme');

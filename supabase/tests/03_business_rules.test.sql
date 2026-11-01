@@ -174,7 +174,7 @@ select is(public.find_duplicate_lead('+233240000009', 'passport'), null, 'a lead
 
 -- Audit ----------------------------------------------------------------------
 set local role authenticated;
-set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000002", "role": "authenticated"}';
+set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000002", "role": "authenticated", "aal": "aal2"}';
 update public.prices set time_text = 'About 5 weeks' where key = 'passport_standard';
 reset role;
 set local request.jwt.claims to '';

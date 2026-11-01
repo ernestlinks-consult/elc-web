@@ -43,6 +43,8 @@ Accounts: ELC owns the GitHub organisation, the Vercel team and the Supabase pro
 - `.env.local` holds only local values: the Supabase URL and anon key, plus the local service-role key, `LEAD_SESSION_SECRET` and `NOTIFY_CRON_SECRET`. Real keys live in Vercel and Supabase settings.
 - Notifications run through the outbox. Locally nothing sends on a schedule: run `npm run notify:run`. SMS appears in `docker logs supabase_edge_runtime_elc-web`, email in the mail viewer at http://127.0.0.1:44324. Only the worker in `lib/notify` may call a provider.
 - `supabase/seed.sql` is for local and staging only. It creates sign-ins with a shared password and must never run on production.
+- Seeded logins use the password in `supabase/seed.sql`. Ernest and Godfred are admins, so they enrol TOTP on first sign-in; `npm run db:reset` clears that.
+- In `supabase/config.toml`, `[auth] enable_signup = false` blocks sign-ups. `[auth.email] enable_signup` must stay true: false turns off email sign-in altogether.
 - `npm run build`, `npm run test:e2e` and `npm run test:integration` need the database running. Run the integration suite on its own: its worker takes every due row.
 
 ## Design rules (from the design system)

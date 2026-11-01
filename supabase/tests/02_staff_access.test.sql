@@ -102,7 +102,7 @@ select is(tests.affected($$ update public.staff set role = 'admin' where id = au
 select ok((select count(*) > 0 from public.staff_content_access), 'front desk reads staff_content_access');
 select is((select count(*)::int from public.audit_log), 0, 'front desk cannot read audit_log');
 select is((select count(*)::int from public.events), 0, 'front desk cannot read events');
-select is((select count(*)::int from public.notifications), 0, 'front desk cannot read the outbox');
+select is((select count(*)::int from public.notifications), 0, 'front desk reads no outbox rows without a lead');
 select is((select count(*)::int from public.content_comments), 0, 'front desk reads no review comments');
 
 reset role;
@@ -194,7 +194,7 @@ select throws_ok(
 -- Admin: Ernest ------------------------------------------------------------------
 reset role;
 set local role authenticated;
-set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated"}';
+set local request.jwt.claims to '{"sub": "00000000-0000-4000-8000-000000000001", "role": "authenticated", "aal": "aal2"}';
 
 select is(
   tests.affected($$ update public.posts set publish_state = 'published' where id = '10000000-0000-4000-8000-000000000001' $$),

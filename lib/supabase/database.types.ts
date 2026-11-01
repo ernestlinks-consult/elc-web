@@ -89,6 +89,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "leads"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "events_lead_id_fkey"
+      columns: ["lead_id"]
+isOneToOne: false
+      referencedRelation: "leads_inbox"
+      referencedColumns: ["id"]
     }
                   ]
                 },"faqs": {
@@ -153,6 +159,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "leads"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lead_events_lead_id_fkey"
+      columns: ["lead_id"]
+isOneToOne: false
+      referencedRelation: "leads_inbox"
+      referencedColumns: ["id"]
     }
                   ]
                 },"lead_steps": {
@@ -172,6 +184,12 @@ isOneToOne: false
       columns: ["lead_id"]
 isOneToOne: false
       referencedRelation: "leads"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lead_steps_lead_id_fkey"
+      columns: ["lead_id"]
+isOneToOne: false
+      referencedRelation: "leads_inbox"
       referencedColumns: ["id"]
     }
                   ]
@@ -276,6 +294,12 @@ isOneToOne: false
       columns: ["lead_id"]
 isOneToOne: false
       referencedRelation: "leads"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notifications_lead_id_fkey"
+      columns: ["lead_id"]
+isOneToOne: false
+      referencedRelation: "leads_inbox"
       referencedColumns: ["id"]
     }
                   ]
@@ -696,6 +720,38 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "leads"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lead_steps_lead_id_fkey"
+      columns: ["lead_id"]
+isOneToOne: false
+      referencedRelation: "leads_inbox"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"leads_inbox": {
+                  Row: {
+                    "best_time": string,"closed_reason": string | null,"consent_at": string,"created_at": string,"first_reply_at": string | null,"form_version": number,"full_name": string,"heard_from": string | null,"id": string,"is_partial": boolean,"overdue": boolean | null,"owner_id": string | null,"owner_name": string | null,"ref": string,"referrer": string | null,"service_key": string,"service_name": string,"source_page": string | null,"status": Database["public"]['Enums']["lead_status"],"steps_completed": number,"steps_total": number,"submission_count": number,"updated_at": string,"utm_campaign": string | null,"utm_medium": string | null,"utm_source": string | null,"whatsapp": string
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "leads_owner_id_fkey"
+      columns: ["owner_id"]
+isOneToOne: false
+      referencedRelation: "staff"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "leads_owner_id_fkey"
+      columns: ["owner_id"]
+isOneToOne: false
+      referencedRelation: "staff_public"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "leads_service_key_fkey"
+      columns: ["service_key"]
+isOneToOne: false
+      referencedRelation: "services"
+      referencedColumns: ["key"]
     }
                   ]
                 },"live_schedule_public": {
@@ -845,6 +901,17 @@ isOneToOne: false
 "is_admin":
 { Args: Record<PropertyKey, never>; Returns: boolean
                            },
+"lead_is_overdue":
+{ Args: { "p_created_at": string,"p_now"?: string,"p_status": Database["public"]['Enums']["lead_status"] }; Returns: boolean
+                           },
+"log_export":
+{ Args: { "p_filters": Json,"p_table": string }; Returns: undefined
+                           },
+"my_staff_access":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "aal": string,"full_name": string,"is_active": boolean,"role": Database["public"]['Enums']["staff_role"]
+            }[]
+                           },
 "next_lead_ref":
 { Args: { "p_service": string }; Returns: string
                            },
@@ -853,6 +920,9 @@ isOneToOne: false
                            },
 "record_notification_sent":
 { Args: { "p_id": string,"p_provider_id": string }; Returns: boolean
+                           },
+"resend_lead_ack":
+{ Args: { "p_lead_id": string }; Returns: string
                            },
 "save_lead_step":
 { Args: { "p_answers": Json,"p_heard_from"?: string,"p_lead_id": string,"p_referrer"?: string,"p_source_page"?: string,"p_step_index": number,"p_step_key": string,"p_submission"?: number,"p_utm_campaign"?: string,"p_utm_medium"?: string,"p_utm_source"?: string }; Returns: {
@@ -867,6 +937,9 @@ isOneToOne: false
                            },
 "unsubscribe":
 { Args: { "p_whatsapp": string }; Returns: boolean
+                           },
+"working_minutes_between":
+{ Args: { "p_cap"?: number,"p_from": string,"p_to": string }; Returns: number
                            }
           }
           Enums: {

@@ -3,6 +3,7 @@
 import * as RadixToast from "@radix-ui/react-toast";
 import {
   forwardRef,
+  useSyncExternalStore,
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
@@ -35,6 +36,46 @@ export function ToastProvider({
       <RadixToast.Viewport className="fixed right-0 bottom-0 z-50 flex w-full max-w-110 flex-col gap-space-3 p-space-5" />
     </RadixToast.Provider>
   );
+}
+
+type QueuedToast = { id: number; title: string; tone: ToastTone };
+
+let queued: QueuedToast[] = [];
+let nextId = 1;
+const listeners = new Set<() => void>();
+
+function setQueue(next: QueuedToast[]) {
+  queued = next;
+  listeners.forEach((listener) => listener());
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+
+/** Shows a toast from anywhere. Needs one <Toaster /> inside a ToastProvider. */
+export function toast(title: string, tone: ToastTone = "success") {
+  setQueue([...queued, { id: nextId++, title, tone }]);
+}
+
+export function Toaster() {
+  const items = useSyncExternalStore(
+    subscribe,
+    () => queued,
+    () => queued,
+  );
+
+  return items.map((item) => (
+    <Toast
+      key={item.id}
+      title={item.title}
+      tone={item.tone}
+      onOpenChange={(open) => {
+        if (!open) setQueue(queued.filter(({ id }) => id !== item.id));
+      }}
+    />
+  ));
 }
 
 export const Toast = forwardRef<HTMLLIElement, ToastProps>(function Toast(
