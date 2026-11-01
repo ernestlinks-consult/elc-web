@@ -36,6 +36,14 @@ Accounts: ELC owns the GitHub organisation, the Vercel team and the Supabase pro
 - Public pages are static with cache tags; publishing in the portal calls `revalidateTag`.
 - Run `npm run lint`, `npm test` and the Playwright suite before calling a step done. Add an axe check for every new page.
 
+## Local setup
+
+- Docker Desktop must be running. It is installed on drive D here, not C.
+- `npm run db:start` starts local Supabase. Its API is on port 44321, not 54321, because Windows reserves the 543xx range on this machine. `npm run db:reset` rebuilds it from migrations and the seed.
+- `.env.local` holds only local values: the Supabase URL and anon key, plus the local service-role key and `LEAD_SESSION_SECRET` that the form server actions need. Real keys live in Vercel and Supabase settings.
+- `supabase/seed.sql` is for local and staging only. It creates sign-ins with a shared password and must never run on production.
+- `npm run build` and `npm run test:e2e` need the database running.
+
 ## Design rules (from the design system)
 
 - Colours: blue #0505C6 (primary), blue-deep #04048F (footer, portal sidebar), blue-tint #F5F6FF, ink #0B0B1F, ink-muted #4A4A68, red #EA0606 for the star and red fills with white text only, **red-text #C70404 for any red words**. Control borders #8A8FC7 on white, #6E6EF0 on navy. Never put red text or icons on blue.

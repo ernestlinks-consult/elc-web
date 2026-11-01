@@ -407,6 +407,20 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"rate_limits": {
+                  Row: {
+                    "created_at": string,"id": number,"key_hash": string,"scope": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"id"?: number,"key_hash": string,"scope": string
+                  }
+                  Update: {
+                    "created_at"?: string,"id"?: number,"key_hash"?: string,"scope"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"scholarships": {
                   Row: {
                     "covers": string | null,"created_at": string,"deadline_on": string | null,"deadline_text": string | null,"id": string,"levels": (string)[],"name": string,"not_pay_to_apply": boolean,"official_url": string | null,"opens_on": string | null,"owner_id": string | null,"publish_state": Database["public"]['Enums']["publish_state"],"slug": string,"updated_at": string,"verified_by": string | null,"verified_on": string | null,"where_text": string | null
@@ -761,7 +775,15 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "find_duplicate_lead":
+            "check_rate_limit":
+{ Args: { "p_key": string,"p_limit": number,"p_scope": string,"p_window": string }; Returns: boolean
+                           },
+"create_or_attach_lead":
+{ Args: { "p_best_time": string,"p_form_version": number,"p_full_name": string,"p_referrer"?: string,"p_service": string,"p_source_page"?: string,"p_steps_total": number,"p_utm_campaign"?: string,"p_utm_medium"?: string,"p_utm_source"?: string,"p_whatsapp": string }; Returns: {
+              "is_new": boolean,"lead_id": string,"ref": string
+            }[]
+                           },
+"find_duplicate_lead":
 { Args: { "p_service": string,"p_whatsapp": string }; Returns: string
                            },
 "has_content_access":
@@ -772,6 +794,11 @@ isOneToOne: false
                            },
 "next_lead_ref":
 { Args: { "p_service": string }; Returns: string
+                           },
+"save_lead_step":
+{ Args: { "p_answers": Json,"p_heard_from"?: string,"p_lead_id": string,"p_referrer"?: string,"p_source_page"?: string,"p_step_index": number,"p_step_key": string,"p_utm_campaign"?: string,"p_utm_medium"?: string,"p_utm_source"?: string }; Returns: {
+              "is_partial": boolean,"steps_completed": number,"steps_total": number
+            }[]
                            },
 "staff_role":
 { Args: Record<PropertyKey, never>; Returns: Database["public"]['Enums']["staff_role"]

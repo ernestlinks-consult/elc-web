@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import { Footer } from "@/components/site";
 import { getSiteConfig } from "@/lib/site-config";
+
+vi.mock("@/app/(site)/actions", () => ({ subscribeToAlerts: vi.fn() }));
 
 test("shows the confirmed offices with map links in a new tab", async () => {
   const config = await getSiteConfig();

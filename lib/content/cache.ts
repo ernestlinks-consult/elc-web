@@ -10,4 +10,5 @@ export const cacheTags = {
   settings: "settings",
   services: "services",
   team: "team",
+  prices: "prices",
 } as const;

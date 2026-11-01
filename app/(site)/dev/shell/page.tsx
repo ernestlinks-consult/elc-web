@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ContactForm } from "@/components/forms/ContactForm";
 import { Breadcrumbs } from "@/components/site";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function ShellPage() {
       <p className="text-lead text-ink-muted">
         A temporary inner page for checking the shell. Development only.
       </p>
+      <ContactForm privacyHref="/privacy" />
     </div>
   );
 }

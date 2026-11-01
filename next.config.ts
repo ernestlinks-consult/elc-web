@@ -4,6 +4,27 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // Each Start online tab is a static page, so /start?service=visa needs no
+  // searchParams and no streaming, and works without JavaScript.
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/start",
+          has: [
+            {
+              type: "query",
+              key: "service",
+              value: "(?<service>passport|birth|school|visa|work|exams|travel)",
+            },
+          ],
+          destination: "/start/:service",
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
   turbopack: {
     rules: {
       "*.css": {

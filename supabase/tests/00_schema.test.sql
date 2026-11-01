@@ -5,8 +5,8 @@ select is(
   (select count(*)::int from pg_class c
    join pg_namespace n on n.oid = c.relnamespace
    where n.nspname = 'public' and c.relkind = 'r'),
-  25,
-  'the public schema has the 25 tables from the Data Model'
+  26,
+  'the 25 tables from the Data Model, plus rate_limits'
 );
 
 select is_empty(

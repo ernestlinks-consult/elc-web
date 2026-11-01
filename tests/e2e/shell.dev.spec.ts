@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { database, uniquePhone, useOwnIp } from "./leads";
 import {
   desktop,
   expectNoAxeViolations,
@@ -38,6 +39,30 @@ for (const [name, viewport] of Object.entries({ desktop, phone })) {
     expect(errors).toEqual([]);
   });
 }
+
+test("the contact form saves to messages", async ({ page }) => {
+  const phone = uniquePhone();
+  await useOwnIp(page);
+  await page.goto("/dev/shell");
+  const main = page.getByRole("main");
+
+  await main.getByRole("textbox", { name: /Full name/ }).fill("Ama Mensah");
+  await main.getByRole("textbox", { name: /WhatsApp number/ }).fill(phone.typed);
+  await main.getByRole("combobox", { name: /Topic/ }).click();
+  await page.getByRole("option", { name: "Partnership" }).click();
+  await main.getByRole("textbox", { name: /Message/ }).fill("Hello");
+  await main.getByRole("checkbox", { name: /I agree/ }).check();
+  await main.getByRole("button", { name: "Send message" }).click();
+
+  await expect(main.getByText("reached our team")).toBeVisible();
+  const { data } = await database
+    .from("messages")
+    .select("full_name, topic, body, status")
+    .eq("whatsapp", phone.stored);
+  expect(data).toEqual([
+    { full_name: "Ama Mensah", topic: "Partnership", body: "Hello", status: "new" },
+  ]);
+});
 
 test("/dev/shell shows the breadcrumb on an inner page", async ({ page }) => {
   await page.goto("/dev/shell");

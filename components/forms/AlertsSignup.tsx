@@ -3,31 +3,55 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useId, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
+import { subscribeToAlerts } from "@/app/(site)/actions";
 import { Button, Field } from "@/components/ui";
-import { alertsSchema, type AlertsValues } from "@/lib/forms/alerts";
+import { alertsSchema, type AlertsInput } from "@/lib/forms/alerts";
+import { saveFailedMessage } from "@/lib/leads/results";
+import { Honeypot } from "./Honeypot";
 
 export type AlertsSignupProps = {
   privacyHref: string;
 };
 
+type Values = AlertsInput & { website?: string };
+
 export function AlertsSignup({ privacyHref }: AlertsSignupProps) {
   const headingId = useId();
   const consentErrorId = useId();
-  const [submitted, setSubmitted] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<AlertsValues>({
-    resolver: zodResolver(alertsSchema),
-    defaultValues: { whatsapp: "", consent: false },
+    getValues,
+    reset,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<Values>({
+    resolver: zodResolver(alertsSchema) as unknown as Resolver<Values>,
+    defaultValues: { whatsapp: "", consent: false, website: "" },
   });
 
-  // TODO(step 5): save to `subscribers` through a server action. Until then
-  // nothing is stored or sent anywhere, and the message below says so.
-  function onSubmit() {
-    setSubmitted(true);
+  async function onSubmit() {
+    setFailure(null);
+
+    try {
+      const result = await subscribeToAlerts(getValues());
+
+      if (result.status === "ok") {
+        setSubscribed(true);
+        reset();
+      } else if (result.status === "invalid") {
+        Object.entries(result.errors).forEach(([key, message]) =>
+          setError(key as keyof Values, { message }),
+        );
+      } else {
+        setFailure(result.message);
+      }
+    } catch {
+      setFailure(saveFailedMessage);
+    }
   }
 
   return (
@@ -37,6 +61,7 @@ export function AlertsSignup({ privacyHref }: AlertsSignupProps) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex min-w-0 flex-col gap-2.5 phone:col-span-2"
     >
+      <Honeypot {...register("website")} />
       <h2 id={headingId} className="text-eyebrow text-on-blue">
         Get Scholarship Hunt alerts
       </h2>
@@ -80,12 +105,23 @@ export function AlertsSignup({ privacyHref }: AlertsSignupProps) {
           </span>
         )}
       </div>
-      <Button type="submit" variant="red" className="self-start">
+      <Button
+        type="submit"
+        variant="red"
+        className="self-start"
+        loading={isSubmitting}
+        loadingText="Saving…"
+      >
         Subscribe
       </Button>
-      {submitted && (
+      {failure && (
+        <p role="alert" className="font-bold text-on-blue">
+          {failure}
+        </p>
+      )}
+      {subscribed && (
         <p role="status" className="font-bold text-on-blue">
-          Alerts sign-up isn&apos;t open yet, so your number was not saved.
+          You’re on the list. Reply STOP anytime to leave it.
         </p>
       )}
     </form>
