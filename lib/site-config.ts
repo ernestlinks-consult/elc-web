@@ -1,9 +1,8 @@
-import { buildWhatsAppLink } from "./whatsapp";
+import { buildSiteConfig } from "./site-structure";
 
-// Temporary data source for the site shell. Step 4 replaces getSiteConfig()
-// with Supabase reads (settings, services, live_schedule). Components get this
-// data as props from app/(site)/layout.tsx and never import this file.
-// A null value is never rendered.
+// Source for supabase/seed.sql and the development fallback when the database
+// is unreachable. The site reads from the database through lib/content/shell.ts.
+// Keep these values in step with the seed. A null value is never rendered.
 
 export type Phone = {
   display: string;
@@ -59,8 +58,8 @@ export type LiveInfo = {
   /** Who presents; the host changes each weekday. */
   hostRotation: string;
   /** 24-hour local times, in timeZone. */
-  startsAt: string;
-  endsAt: string;
+  startsAt: string | null;
+  endsAt: string | null;
   timeZone: string;
   /** Per-weekday topics. Null until ELC sets them. */
   topics: string[] | null;
@@ -102,7 +101,6 @@ export type SiteConfig = {
 const whatsappNumber = "+233537783166";
 const whatsappDefaultMessage = "HELLO";
 const bookingUrl = "https://ernest-links-frontend.vercel.app/book";
-const startHref = "/start";
 const whatsappChannelUrl =
   "https://whatsapp.com/channel/0029VastSo8DTkK2lkyUSY0g";
 const tiktokUrl = "https://www.tiktok.com/@_ernestlinksconsult";
@@ -152,12 +150,7 @@ const services: Service[] = [
   },
 ];
 
-const serviceHref = (slug: string) => `/services/${slug}`;
-
-const whatsappKeywordLink = (keyword: string) =>
-  buildWhatsAppLink(whatsappNumber, { keyword });
-
-const siteConfig: SiteConfig = {
+const siteConfig: SiteConfig = buildSiteConfig({
   phones: [
     { display: "+233 53 778 3166", tel: "+233537783166" },
     { display: "+233 20 401 0168", tel: "+233204010168" },
@@ -165,9 +158,6 @@ const siteConfig: SiteConfig = {
   hotline: { display: "032 229 1161", tel: "+233322291161" },
   whatsappNumber,
   whatsappDefaultMessage,
-  whatsappHref: buildWhatsAppLink(whatsappNumber, {
-    message: whatsappDefaultMessage,
-  }),
   whatsappChannelUrl,
   email: "office@ernestlinksconsult.com",
   hours: {
@@ -184,7 +174,6 @@ const siteConfig: SiteConfig = {
     topics: null,
   },
   bookingUrl,
-  startHref,
   offices: [
     {
       name: "Ayeduase, KNUST Engineering Gate office",
@@ -212,106 +201,9 @@ const siteConfig: SiteConfig = {
     },
   ],
   services,
-  nav: {
-    main: [
-      { type: "link", label: "Home", href: "/" },
-      {
-        type: "menu",
-        key: "services",
-        label: "Services",
-        section: "/services",
-        links: services.map((service) => ({
-          label: service.name,
-          href: serviceHref(service.slug),
-          description: service.shortDescription,
-        })),
-      },
-      {
-        type: "menu",
-        key: "resources",
-        label: "Blog & Resources",
-        section: "/resources",
-        links: [
-          {
-            label: "Blog",
-            href: "/resources/blog",
-            description: "Guides, updates and student stories",
-          },
-          {
-            label: "Scholarship Hunt",
-            href: "/resources/scholarships",
-            description: "Verified opportunities and deadlines",
-          },
-          {
-            label: "Videos",
-            href: "/resources/videos",
-            description: "Our TikTok, Instagram and YouTube posts",
-          },
-          {
-            label: "FAQs",
-            href: "/resources/faqs",
-            description: "Answers by service",
-          },
-        ],
-      },
-      { type: "link", label: "About", href: "/about" },
-      { type: "link", label: "Contact", href: "/contact" },
-    ],
-    footer: [
-      {
-        title: "Services",
-        links: [
-          { label: "Passports", href: serviceHref("passports") },
-          { label: "Birth certificates", href: `${serviceHref("passports")}#birth` },
-          { label: "School applications", href: serviceHref("school-applications") },
-          { label: "Visa applications", href: serviceHref("visa-applications") },
-          { label: "Work abroad", href: serviceHref("work-abroad") },
-          { label: "Proficiency exams", href: serviceHref("exams") },
-          { label: "Travel & tours", href: serviceHref("travel") },
-        ],
-      },
-      {
-        title: "Resources",
-        links: [
-          { label: "All resources", href: "/resources" },
-          { label: "Blog", href: "/resources/blog" },
-          { label: "Scholarship Hunt", href: "/resources/scholarships" },
-          { label: "Videos", href: "/resources/videos" },
-          { label: "FAQs", href: "/resources/faqs" },
-          { label: "WhatsApp channel", href: whatsappChannelUrl },
-        ],
-      },
-      {
-        title: "Company",
-        links: [
-          { label: "About us", href: "/about" },
-          { label: "Our team", href: "/about#team" },
-          { label: "Host a passport drive", href: whatsappKeywordLink("DRIVE") },
-          { label: "Partner with us", href: whatsappKeywordLink("PARTNER") },
-          { label: "Internships & NSS", href: whatsappKeywordLink("INTERNSHIP") },
-          { label: "Book the CEO", href: bookingUrl },
-          { label: "Contact us", href: "/contact" },
-          { label: "Start online", href: startHref },
-        ],
-      },
-    ],
-    legal: [
-      { label: "Privacy notice", href: "/privacy" },
-      { label: "Terms of service", href: "/terms" },
-      { label: "Payments & refunds", href: "/payments" },
-    ],
-  },
-  brand: {
-    name: "ErnestLinks Consult",
-    tagline: "Making Impact Through Education and Travels.",
-    summary:
-      "A Kumasi consultancy helping students and young professionals with passports, exams, school and visa applications, work abroad and travel.",
-    noGuarantee:
-      "We do not guarantee admissions, visas or jobs. Schools, embassies and employers make those decisions. Immigration rules change; we confirm current rules for each case.",
-  },
-};
+});
 
-// Async on purpose: the Supabase version will have the same signature.
+// Async on purpose: it stands in for the database reads.
 export async function getSiteConfig(): Promise<SiteConfig> {
   return siteConfig;
 }

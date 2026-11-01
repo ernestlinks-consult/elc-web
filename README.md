@@ -6,13 +6,21 @@ The new ernestlinksconsult.com (public site and "Start online" lead forms) and t
 
 Requires Node.js 24 and, for the local database, Docker.
 
+Needs Docker running.
+
 ```bash
 npm install
 cp .env.example .env.local
+npm run db:start
+npm run db:reset
 npm run dev
 ```
 
-The app runs at http://localhost:3000. To run the database too, use `npm run db:start`, then copy the URL and keys it prints into `.env.local`. `npm run db:reset` rebuilds it from the migrations and `npm run db:stop` shuts it down.
+Copy the API URL and anon key that `npm run db:start` prints into `.env.local`. The app runs at http://localhost:3000. `npm run db:reset` rebuilds the database from the migrations and `supabase/seed.sql`, `npm run db:test` runs the pgTAP tests, `npm run db:types` regenerates `lib/supabase/database.types.ts`, and `npm run db:stop` shuts the database down.
+
+`npm run dev` falls back to `lib/site-config.ts` with a warning if the database is down. `npm run build` and `npm run test:e2e` need it running and fail without it.
+
+The local ports are 443xx, not Supabase's default 543xx, because Windows reserves the default range on machines with Hyper-V.
 
 ## Checks
 

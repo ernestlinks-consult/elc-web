@@ -6,15 +6,15 @@ import {
   SkipLink,
   TopBar,
 } from "@/components/site";
+import { getSiteShell } from "@/lib/content/shell";
 import { getCurrentYear } from "@/lib/current-year";
-import { getSiteConfig } from "@/lib/site-config";
 
 export default async function SiteLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const [config, year] = await Promise.all([getSiteConfig(), getCurrentYear()]);
+  const [config, year] = await Promise.all([getSiteShell(), getCurrentYear()]);
 
   return (
     <>
