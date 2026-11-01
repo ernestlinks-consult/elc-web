@@ -12,6 +12,7 @@ export type FooterProps = {
     | "email"
     | "hotline"
     | "hours"
+    | "live"
     | "nav"
     | "offices"
     | "phones"
@@ -44,7 +45,7 @@ export function Footer({ config, year }: FooterProps) {
               person will reply.
             </p>
           </div>
-          <div className="flex flex-wrap gap-space-3">
+          <div className="flex flex-wrap items-center gap-space-3">
             <Button href={config.startHref} variant="on-blue">
               Start online
             </Button>
@@ -54,6 +55,12 @@ export function Footer({ config, year }: FooterProps) {
             <Button href={config.bookingUrl} variant="outline-on-blue">
               Book the CEO
             </Button>
+            <a
+              href={config.live.url}
+              className="inline-flex min-h-11 items-center font-bold text-on-blue"
+            >
+              Join the LIVE
+            </a>
           </div>
         </div>
       </div>

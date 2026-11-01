@@ -73,6 +73,10 @@
 @custom-variant phone (@media (width >= 820px));
 @custom-variant max-phone (@media (width < 820px));
 
+/* Header only: below 1080px the WhatsApp button shrinks to keep one row. */
+@custom-variant wide (@media (width >= 1080px));
+@custom-variant max-wide (@media (width < 1080px));
+
 @utility container {
   max-width: var(--container);
   margin-inline: auto;
@@ -171,7 +175,8 @@
 
   /*
    * red-text is the only red allowed for words; red itself is for the star and
-   * for fills with white text. Red text or icons must never sit on blue.
+   * for fills with white text. On blue surfaces: no red text or icons, but red
+   * fills with white text are allowed (the LIVE badge, Subscribe).
    */
   a {
     color: var(--color-blue);

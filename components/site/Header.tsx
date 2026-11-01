@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui";
-import { ChevronDownIcon } from "@/components/ui/icons";
+import { ChatIcon, ChevronDownIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 import type { NavItem, NavMenu } from "@/lib/site-config";
 import { MobileMenu } from "./MobileMenu";
@@ -18,7 +18,7 @@ export type HeaderProps = {
 };
 
 const navItemClasses =
-  "inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-sm px-3 text-body font-medium text-ink no-underline";
+  "inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-sm px-1.5 text-body font-medium whitespace-nowrap text-ink no-underline wide:gap-1.5 wide:px-3";
 const currentClasses = "font-extrabold text-blue";
 
 function MenuPanel({
@@ -97,8 +97,8 @@ export function Header({ nav, whatsappHref, startHref }: HeaderProps) {
 
   return (
     <header className="relative z-40 border-b border-line bg-surface">
-      <div className="container flex flex-wrap items-center justify-between gap-x-7 gap-y-3 py-3">
-        <Link href="/" className="flex items-center">
+      <div className="container flex items-center justify-between gap-x-3 py-3 wide:gap-x-7">
+        <Link href="/" className="flex shrink-0 items-center">
           <Image
             src="/brand/web-elc-logo-vertical-stack.svg"
             alt="ErnestLinks Consult home"
@@ -117,7 +117,7 @@ export function Header({ nav, whatsappHref, startHref }: HeaderProps) {
             if (next && !event.currentTarget.contains(next)) setOpenKey(null);
           }}
         >
-          <ul className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+          <ul className="flex items-center wide:gap-x-1.5">
             {nav.map((item) => {
               if (item.type === "link") {
                 const current = isCurrentPath(pathname, item.href);
@@ -174,11 +174,19 @@ export function Header({ nav, whatsappHref, startHref }: HeaderProps) {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2.5 max-phone:hidden">
-          <Button href={whatsappHref} variant="secondary">
-            WhatsApp
+        <div className="flex shrink-0 items-center gap-2.5 max-phone:hidden">
+          <Button
+            href={whatsappHref}
+            variant="secondary"
+            aria-label="Chat on WhatsApp"
+            className="max-wide:size-11 max-wide:px-0"
+          >
+            <ChatIcon className="wide:hidden" />
+            <span className="max-wide:hidden">WhatsApp</span>
           </Button>
-          <Button href={startHref}>Start online</Button>
+          <Button href={startHref} className="max-wide:px-4">
+            Start online
+          </Button>
         </div>
 
         <MobileMenu

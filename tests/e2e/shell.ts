@@ -17,12 +17,24 @@ export async function expectNoHorizontalOverflow(page: Page) {
   for (const width of [320, 375, 480, 768, 819, 820, 1024, 1280, 1600]) {
     await page.setViewportSize({ width, height: 800 });
 
-    const overflow = await page.evaluate(
-      () =>
-        document.documentElement.scrollWidth -
-        document.documentElement.clientWidth,
-    );
+    const { overflow, offenders } = await page.evaluate(() => {
+      const root = document.documentElement;
 
-    expect(overflow, `sideways scroll at ${width}px`).toBeLessThanOrEqual(0);
+      return {
+        overflow: root.scrollWidth - root.clientWidth,
+        offenders: [...document.querySelectorAll("body *")]
+          .filter(
+            (element) =>
+              element.getBoundingClientRect().right > root.clientWidth + 0.5,
+          )
+          .slice(0, 5)
+          .map((element) => `${element.tagName}.${element.getAttribute("class")}`),
+      };
+    });
+
+    expect(
+      overflow,
+      `sideways scroll at ${width}px: ${offenders.join(", ")}`,
+    ).toBeLessThanOrEqual(0);
   }
 }

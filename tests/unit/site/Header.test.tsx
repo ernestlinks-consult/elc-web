@@ -163,10 +163,9 @@ test("the logo links home and the buttons have the right targets", () => {
   expect(
     screen.getByRole("link", { name: "ErnestLinks Consult home" }),
   ).toHaveAttribute("href", "/");
-  expect(screen.getByRole("link", { name: "WhatsApp" })).toHaveAttribute(
-    "href",
-    "https://wa.me/233",
-  );
+  expect(
+    screen.getByRole("link", { name: "Chat on WhatsApp" }),
+  ).toHaveAttribute("href", "https://wa.me/233");
   expect(screen.getByRole("link", { name: "Start online" })).toHaveAttribute(
     "href",
     "/start",

@@ -19,6 +19,15 @@ test("shows the confirmed offices with map links in a new tab", async () => {
   }
 });
 
+test("Join the LIVE is a plain link to the LIVE", async () => {
+  const config = await getSiteConfig();
+  render(<Footer config={config} year={2026} />);
+
+  const link = screen.getByRole("link", { name: "Join the LIVE" });
+  expect(link).toHaveAttribute("href", config.live.url);
+  expect(link).not.toHaveClass("rounded-pill");
+});
+
 test("labels the hotline", async () => {
   const config = await getSiteConfig();
   render(<Footer config={config} year={2026} />);

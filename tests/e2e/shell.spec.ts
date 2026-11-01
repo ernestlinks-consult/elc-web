@@ -250,6 +250,69 @@ test.describe("phone", () => {
   });
 });
 
+for (const width of [820, 900, 1000, 1280]) {
+  test(`the header stays on one row at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+
+    const logo = page.getByRole("link", { name: "ErnestLinks Consult home" });
+    const navItems = page.getByRole("navigation", { name: "Main" }).locator(
+      "a:visible, button:visible",
+    );
+    const whatsapp = page
+      .getByRole("banner")
+      .getByRole("link", { name: "Chat on WhatsApp" });
+    const start = page
+      .getByRole("banner")
+      .getByRole("link", { name: "Start online" });
+
+    const boxes = await Promise.all(
+      [logo, ...(await navItems.all()), whatsapp, start].map(
+        async (item) => (await item.boundingBox())!,
+      ),
+    );
+
+    expect(boxes.length).toBe(8);
+    const centre = boxes[0].y + boxes[0].height / 2;
+    for (const [index, box] of boxes.entries()) {
+      expect(Math.abs(box.y + box.height / 2 - centre)).toBeLessThanOrEqual(1);
+      if (index > 0) {
+        const previous = boxes[index - 1];
+        expect(box.x).toBeGreaterThanOrEqual(previous.x + previous.width);
+      }
+    }
+    const last = boxes[boxes.length - 1];
+    expect(last.x + last.width).toBeLessThanOrEqual(width);
+  });
+}
+
+test("WhatsApp is an icon under 1080px and a full label from 1080px", async ({
+  page,
+}) => {
+  const whatsapp = page
+    .getByRole("banner")
+    .getByRole("link", { name: "Chat on WhatsApp" });
+
+  await page.setViewportSize({ width: 1079, height: 800 });
+  await page.goto("/");
+  await expect(whatsapp.locator("svg")).toBeVisible();
+  await expect(whatsapp.getByText("WhatsApp")).toBeHidden();
+  const box = (await whatsapp.boundingBox())!;
+  expect(box.width).toBeGreaterThanOrEqual(44);
+  expect(box.height).toBeGreaterThanOrEqual(44);
+
+  await page.setViewportSize({ width: 1080, height: 800 });
+  await expect(whatsapp.locator("svg")).toBeHidden();
+  await expect(whatsapp.getByText("WhatsApp")).toBeVisible();
+});
+
+test("/ has no axe violations with the icon header", async ({ page }) => {
+  await page.setViewportSize({ width: 900, height: 800 });
+  await page.goto("/");
+
+  await expectNoAxeViolations(page);
+});
+
 test("/ has no horizontal overflow from 320px to 1600px", async ({ page }) => {
   await page.goto("/");
 
